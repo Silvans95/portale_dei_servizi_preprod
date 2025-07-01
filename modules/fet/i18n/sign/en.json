@@ -1,0 +1,99 @@
+{
+
+	"LOADING": "Loading",
+	"HERE": "here",
+	
+	"TIME.SECONDS": "seconds",
+
+	"MENU.ROOT": "Transversal digital signature",
+	"MENU.STANDALONE": "Standalone signature",
+	"MENU.SESSION": "Documents signature",
+
+	"WELCOME.MESSAGE.LINE1": "Welcome to the Transversal digital signature area.",
+	"WELCOME.MESSAGE.LINE2": "To start signing please expand the menu on the left and select Sign.",
+
+	"SIGN.INITIALZING.MSG": "Initializing...",
+
+	"SIGN.STATUS.TITLE": "Signing status",
+
+	"SIGN.METHOD.ARSS.LABEL": "Remote signature",
+	"SIGN.METHOD.ASOL.LABEL": "Local signature",
+	"SIGN.METHOD.ASOL.LABEL_ONLINE": "Local signature (Java applet)",
+
+
+	"SIGN.CHANNEL.SIST.LABEL": "Signature in the online system",
+	"SIGN.CHANNEL.EXSYST.LABEL": "Extra system signature (on your PC)",
+
+	"SIGN.TYPOLOGY.OLOG.LABEL": "Holographic signature",
+	"SIGN.TYPOLOGY.DIGT.LABEL": "Digital signature (PADES/CADES)",
+
+	"SIGN.TYPE.CADES.LABEL": "CADES",
+	"SIGN.TYPE.PADES.LABEL": "PADES",
+
+	"SIGN.LOAD_FILE_PANEL.TITLE": "1. File upload",
+	"SIGN.LOAD_FILE_PANEL.SUBMIT": "Upload",
+	"SIGN.LOAD_FILE_PANEL.FILES.TITLE": "Uploaded files",
+	"SIGN.LOAD_FILE_PANEL.ADD_FILE": "Add",
+	"SIGN.LOAD_FILE_PANEL.NEXT": "Next",
+
+	"SIGN.SET_SIGN_CHANNEL_PANEL.TITLE": "2. Select signature channel",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SELECT_METHOD.LABEL": "Signature Channel",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SUBMIT": "Select",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SELECTED_CHANNEL.LABEL": "Signature Channel",
+
+	"SIGN.SET_EXSYST_FILE_PANEL.TITLE": "3. Extra system signature (on your PC)",
+	"SIGN.SET_EXSYST_FILE_PANEL.MSG_ALERT": "Attention! Remember that: \n- in the case of signature Holographic in the pdf the identity document must be included \n- in the case of signature of multiple documents: \n- all documents must be signed with the same type of signature \n- it is necessary to check correspondence between the 'original document' and the 'uploaded document'",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ORIGINAL_DOCUMENT": "Original Document",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD": "Download",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.UPLOAD": "Upload",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED": "Document uploaded",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED.TITLE": "Delete file",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.TYPE_SIGNATURE": "Select the type of signature",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.RESULT": "Saved",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE": "Done",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD_ZIP": "Download as a ZIP",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ERROR.UPLOAD": "Error loading file: The uploaded file is in an invalid format",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ERROR.SELECT_TYPOLOGY": "Select type signature",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.WARNING.CLICK_TYPOLOGY": "Warning! By selecting a different type, the uploaded files will be deleted",
+
+	"SIGN.SET_SIGN_METHOD_PANEL.TITLE": "Select signature method",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECT_METHOD.LABEL": "Signature method",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECT_TYPE.LABEL": "Signature type",
+	"SIGN.SET_SIGN_METHOD_PANEL.SUBMIT": "Select",
+	"SIGN.SET_SIGN_METHOD_PANEL.LOADING_ASOL.MSG": "Initializing. Please wait...",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECTED_METHOD.LABEL": "Signature method",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECTED_TYPE.LABEL": "Signature type",
+	"SIGN.SIGNED_PANEL.TIMEOUT.BUTTON.LABEL": "The operation will end in ",
+
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.TITLE": "Sign",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SUBMIT": "Sign",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.USERNAME.LABEL": "Username",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.PASSWORD.LABEL": "Password",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.OTP.LABEL": "OTP",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNING.LABEL": "Signing  ...",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNED.LABEL": "Sign complete",
+
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.TITLE": "Sign",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SUBMIT": "Sign",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.PIN.LABEL": "Pin",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.CERTIFICATE.LABEL": "Signature Certificate",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.PREPARING_FILES.LABEL": "Preparing files ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNING.LABEL": "Signing  ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FINALIZING.LABEL": "Finalizing signature process ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNED.LABEL": "Sign complete",
+	
+	"SIGN.SIGNED_EXSYST_PANEL.TITLE": "4. Signature completed",
+	"SIGN.SIGNED_EXSYST_PANEL.DONE.MSG": "Documents saved correctly",
+	"SIGN.SIGNED_EXSYST_PANEL.ERROR.MSG": "Error in the signing process",
+	"SIGN.SIGNED_EXSYST_PANEL.FAILURE.MSG": "Result verify signature",
+	"SIGN.SIGNED_EXSYST_PANEL.REDIRECT.BUTTON.LABEL": "Back to Site",
+	"SIGN.SIGNED_EXSYST_PANEL.LOADING" : "Signature verification in progress...",
+
+	"SIGN.SIGNED_PANEL.TITLE": "Signature completed",
+	"SIGN.SIGNED_PANEL.DONE.MSG": "Signature process has been completed",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES.TITLE": "Signed files",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.TITLE": "All files",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.DOWNLOAD.LABEL": "Download",
+	"SIGN.SIGNED_PANEL.REDIRECT.BUTTON.LABEL": "Back to site"
+
+}

@@ -1,0 +1,15 @@
+{
+	"PATENT_EXPIRY_SEARCH": "Search patent expirations",
+	"ACTIVE_INGREDIENT": "Active ingredient",
+	"ATC":"ATC",
+	"PATENTED": "Patented",
+	"EXPIRATION_DATA":"Patent expiration data",
+	"EXPIRATION_DATA_CCP":"CCP expiration data",
+	"CCP": "Codice Principio Attivo",
+	"CCD": "Descrizione Codice Principio",
+	"PATENT_TITLE": "Patent title",
+	"PATENT_NUMBER": "Patent number",
+	"CCP_NUMBER": "CCP number*",
+	"CCP_NUMBER_DESCRIPTION": "Complementary Protection Certificate Number (CCP)",
+	"CCP_EXPIRE_DESCRIPTION": "Complementary Protection Certificate Expiration Date (CCP)"
+}

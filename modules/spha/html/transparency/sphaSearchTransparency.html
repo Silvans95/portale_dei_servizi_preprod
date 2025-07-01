@@ -1,0 +1,272 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="transparencyCtrl.anagraphicTable">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4 ng-if="!(transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL)">
+                    {{'TRASPARENZE_SEARCH' | translate }}
+            	</h4>
+                <h4 ng-if="transparencyCtrl.isRectificationAic6ADD">
+                    {{'TRASPARENZE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'ADD_AIC6' | translate}}
+            	</h4>
+                <h4 ng-if="transparencyCtrl.isRectificationAic6DEL">
+                    {{'TRASPARENZE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'DEL_AIC6' | translate}}
+            	</h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="transparencyCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+         </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="transparencyCtrl.alertClass" ng-show="transparencyCtrl.message">
+						<strong translate="{{transparencyCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="transparencyCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionRefPeriod.html'"></div>
+                        <div ng-if="!(transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL)">
+                            <div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionMedicineData.html'"></div>
+                            <div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionMarketingAndMore.html'"></div>
+                            <div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionMoreInfo.html'"></div>
+                        </div>
+                        <div ng-if="transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL">
+                            <div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionRectificationFilters.html'"></div>
+                        </div>
+						<br/>
+						<div class="text-right">
+							<button type="button" 
+                                    class="btn btn-primary" 
+                                    ng-if="actions['EDIT'] && !(transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL)"
+                                    ng-click="transparencyCtrl.aic6Rectification('ADD_AIC6')"
+                                    ng-disabled="transparencyCtrl.isLoading">
+								{{'NEW' | translate}}
+							</button>
+	                        <button  type="button"
+										class="btn btn-primary"
+										ng-click = "transparencyCtrl.reset()"
+										id="reset-button"
+										translate="{{'RESET' | translate}}"
+                                        ng-disabled="transparencyCtrl.isLoading">
+							</button>
+							<button type="submit"
+									class="btn btn-primary"
+									id="search-button"
+									translate="{{'SEARCH' | translate}}"
+									ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !transparencyCtrl.showData || transparencyCtrl.isLoading">
+							</button>
+						</div>
+						<br/>
+					</form>
+                    <div ng-if="transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL">
+                        <div ng-include="'modules/spha/html/transparency/transparencyFiltersAccordions/accordionAic6RectificationSaveForm.html'"></div>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <div class="panel-body-section" ng-if="transparencyCtrl.showData">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table
+                            ng-table="transparencyCtrl.anagraphicTable"
+                            class="table table-bordered">
+                        <tr role="row"
+                            ng-hide="transparencyCtrl.isLoading"
+                            ng-init="transparencyCtrl.isCollapsed[$index] = true;"
+                            ng-repeat="row in $data"
+                            id="rows">
+                            <!-- Abilitare se si prevede la debugMode
+                            <td
+                                    class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+                                    data-title="'ID' | translate"
+                                    ng-if="debugMode"
+                                    sortable="'id'">
+                                <div class="text-center">
+                                    {{row.id}}
+                                </div>
+                            </td>-->
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('aic6') !== -1)"
+                                    class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+                                    data-title="'AIC6' | translate"
+                                    sortable="'aic6'">
+                                <div class="text-center">
+                                    <a title="{{'AIC6' | translate}}" href="">
+                                        {{row.aic6}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('medicineDescription') !== -1)"
+                                    class="col-xs-12 col-sm-12 col-md-3 col-lg-3"
+                                    data-title="'MEDICINE' | translate"
+                                    ng-init="transparencyCtrl.isCollapsed[$index] = true"
+                                    ng-class="{'tableDataTitleCollapseIn': transparencyCtrl.isCollapsed[$index] && row.medicineDescription.length > 150, 'tableDataTitleCollapseOut': !transparencyCtrl.isCollapsed[$index] && row.medicineDescription.length > 150 }"
+                                    sortable="'medicineDescription'">
+                                {{row.medicineDescription}}
+                                <div class="text-center">
+										<span
+                                                ng-click="transparencyCtrl.isCollapsed[$index] = !transparencyCtrl.isCollapsed[$index]"
+                                                ng-if="row.medicineDescription.length > 150"
+                                                style="cursor: pointer;"
+                                                class="glyphicon"
+                                                title="{{ (transparencyCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                                ng-class="{
+												'glyphicon-chevron-down': transparencyCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !transparencyCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('aic9') !== -1)"
+                                    class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+                                    data-title="'AIC9' | translate"
+                                    sortable="'aic9'">
+                                <div class="text-center">
+                                    <img ng-if="actions && actions.RECTIFICATION_VIEW_DETAIL && row.rectificationDetailInfo.type"
+                                         ng-src="modules/spha/icons/{{transparencyCtrl.rectificationDetailInfoTypeIconsUrl[row.rectificationDetailInfo.type]}}"
+                                         width="25" height="25"
+                                         alt="{{row.rectificationDetailInfo.type}}">
+                                    <a title="{{'AIC9' | translate}}" href="">
+                                        {{row.aic9}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('boxDescription') !== -1)"
+                                    class="col-xs-12 col-sm-12 col-md-3 col-lg-3"
+                                    data-title="'BOX_DESCRIPTION' | translate"
+                                    ng-init="transparencyCtrl.isCollapsed[$index] = true"
+                                    ng-class="{'tableDataTitleCollapseIn': transparencyCtrl.isCollapsed[$index] && row.boxDescription.length > 150, 'tableDataTitleCollapseOut': !transparencyCtrl.isCollapsed[$index] && row.boxDescription.length > 150 }"
+                                    sortable="'boxDescription'">
+                                {{row.boxDescription}}
+                                <div class="text-center">
+										<span
+                                                ng-click="transparencyCtrl.isCollapsed[$index] = !transparencyCtrl.isCollapsed[$index]"
+                                                ng-if="row.boxDescription.length > 150"
+                                                style="cursor: pointer;"
+                                                class="glyphicon"
+                                                title="{{ (transparencyCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                                ng-class="{
+												'glyphicon-chevron-down': transparencyCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !transparencyCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('dateInTransparency') !== -1)"
+                                    class="datesTable"
+                                    data-title="'DATE_IN_TRANSPARENCY_LIST' | translate"
+                                    sortable="'firstMarketing'">
+                                <div class="text-center">
+                                    <a title="{{'DATE_IN_TRANSPARENCY_LIST' | translate}}">
+                                        {{row.dateInTransparency | date : "dd/MM/yyyy"}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('dateOutTransparency') !== -1)"
+                                    class="datesTable"
+                                    data-title="'DATE_OUT_TRANSPARENCY_LIST' | translate"
+                                    sortable="'dateOutTransparency'">
+                                <div class="text-center">
+                                    <a title="{{'DATE_OUT_TRANSPARENCY_LIST' | translate}}">
+                                        {{row.dateOutTransparency | date : "dd/MM/yyyy" }}
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td ng-if="!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('referencePriceSSN') !== -1)"
+                                    class="col-xs-12 col-sm-6 col-md-2 col-lg-2"
+                                    data-title="'TRANSPARENCY_LIST_PRICE' | translate"
+                                    sortable="'referencePriceSSN'">
+                                <div class="text-center">
+                                    <a title="{{'TRANSPARENCY_LIST_PRICE' | translate}}">
+                                        {{row.referencePriceSSN | number: 2}}
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td ng-if="(!transparencyCtrl.fieldsToNotShow
+                                        || !(transparencyCtrl.fieldsToNotShow && transparencyCtrl.fieldsToNotShow.indexOf('actions') !== -1))
+                                        && !(transparencyCtrl.isRectificationAic6ADD || transparencyCtrl.isRectificationAic6DEL)"
+								class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+                        </tr>
+                        <tr ng-show="transparencyCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="text-right">
+				<button type="button" class="btn btn-primary" ng-if="actions['SUBMIT']" ng-disabled="transparencyCtrl.isLoading" ng-click="transparencyCtrl.submitRectification()" >
+					{{'SUBMIT' | translate}}
+				</button>
+				<input type="file" style="display:none;" accept=".xlsx" id="file_content" onchange="angular.element(this).scope().fileChanged();this.value=null; return false;" >
+				<button type="button" class="btn btn-primary" ng-disabled="!actions['IMPORT'] || transparencyCtrl.isLoading" ng-click="transparencyCtrl.upload()">
+					{{'IMPORT' | translate}}
+				</button>
+				<div class="btn-group">
+		   			 <a 
+	  					href=""
+	  					class="btn btn-primary"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || transparencyCtrl.isLoading"
+						title="{{'EXPORT'| translate}}"
+						translate="{{'EXPORT'| translate}}">
+					</a>
+					<button 
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || transparencyCtrl.isLoading || transparencyCtrl.isLoading"
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						title=""
+						data-toggle="dropdown" 
+						aria-haspopup="true" 
+						aria-expanded="false">
+								<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+					</button>
+				    <ul class="dropdown-menu">
+			   			<li  ng-repeat="exportType in exportTypes">
+			   				<a  class="text-center"
+					    		href=""
+					    		ng-click="transparencyCtrl.switchExportType(filtersForm,exportType.value)"
+					    		title="{{exportType.label | translate}}" > 
+					    		<span translate="{{exportType.label | translate}}"></span>
+					    		<img ng-src="{{ exportType.value == 1 ? 'modules/spha/images/file/pdf.png' : 'modules/spha/images/file/excel.png' }}" width="25" height="25">
+					    	</a>
+			   			</li>
+					</ul>
+				</div>	
+			</div>
+			<br/>
+			<div class = "text-right">
+			   <button type="button"
+                  class="btn btn-default"
+                  ng-click="transparencyCtrl.goToTop()"
+                  translate="{{'GO_TO_TOP' | translate}}">
+        	  	</button>
+				<button id="back-button-bottom" type="button" class="btn btn-default" ng-click="transparencyCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+        </div>
+    </div>
+</div>

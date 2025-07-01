@@ -1,0 +1,267 @@
+<link rel="stylesheet" href="modules/notifiche/css/notifiche.css">
+
+<div class="panel notifiche">
+  <div class="panel-header pb10">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="bold text-uppercase " translate>INSERIMENTO_NOTIFICA</h4>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div ng-show="success">
+      <div class="message success icon">
+        <i class="fa fa-check icon"></i>
+        <div class="content">
+          <div class="header">
+            {{message.header}}
+          </div>
+          <p>
+            {{message.body}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <form name="nuovaNotifica" class="form" ng-submit="inserisciNotifica()" ng-hide="success" novalidate>
+      <div class="panel-body-section">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="field subtitle icon">
+              <i class="fa fa-bell icon"></i>
+              <label translate>INSERIRE_INFO_NOTIFICA</label>
+            </div>
+            <div class="field">
+              <label translate>TITOLO</label>
+              <input name="titolo" type="text" placeholder="{{ 'INSERIRE_TITOLO' | translate}}" ng-model="notifica.notifica.titolo" required>
+              <div class="pt15 txt-red" ng-show="nuovaNotifica.$submitted || nuovaNotifica.titolo.$touched">
+                <div ng-show="nuovaNotifica.titolo.$error.required" translate>CAMPO_TITOLO_OBBLIGATORIO</div>
+              </div>
+            </div>
+            <div class="field">
+              <label translate>TESTO</label>
+              <textarea name="body" placeholder="{{ 'INSERIRE_TESTO' | translate}}" ng-model="notifica.notifica.body" required></textarea>
+              <div class="pt15 txt-red" ng-show="nuovaNotifica.$submitted || nuovaNotifica.body.$touched">
+                <div ng-show="nuovaNotifica.body.$error.required" translate>CAMPO_TESTO_OBBLIGATORIO</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="field">
+              <label translate>DATA_INIZIO_VISUALIZZAZIONE</label>
+              <input
+                placeholder="{{ 'INSERIRE_DATA' | translate}}"
+                ng-model="notifica.notifica.dataInizioVal"
+                name="dataInizio"
+                required
+                type="text"
+                class="datepicker form-control"
+                uib-datepicker-popup="dd/MM/yyyy"
+                ng-click="open1=true"
+                ng-init="open1=false"
+                is-open="open1"
+                close-text="Chiudi" max="{{notifica.notifica.dataFineVal}}"/>
+              <div class="pt15 txt-red" ng-show="nuovaNotifica.$submitted || nuovaNotifica.dataInizio.$touched">
+                <div ng-show="nuovaNotifica.dataInizio.$error.required" translate>CAMPO_DATA_INIZIO_OBBLIGATORIO</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="field">
+              <label translate>DATA_FINE_VISUALIZZAZIONE</label>
+              <input name="dataFine" placeholder="{{ 'INSERIRE_DATA' | translate}}" type="text" class="datepicker" uib-datepicker-popup="dd/MM/yyyy" ng-click="open2=true" ng-model="notifica.notifica.dataFineVal" ng-init="open2=false" is-open="open2" close-text="Chiudi" required/>
+              <div class="pt15 txt-red" ng-show="nuovaNotifica.$submitted || nuovaNotifica.dataFine.$touched">
+                <div ng-show="nuovaNotifica.dataFine.$error.required" translate>CAMPO_DATA_FINE_OBBLIGATORIO</div>
+                <div ng-show="notifica.notifica.dataFineVal && (notifica.notifica.dataFineVal <= notifica.notifica.dataInizioVal)"translate>COERENZA_DATAINIZIO_DATAFINE</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="field">
+              <label translate>GRADO_PRIORITA</label>
+              <ui-select ng-model="notifica.notifica.livello" class="dropdown" search-enabled="false">
+                <ui-select-match>
+                  <span ng-bind="$select.selected.descrizioneTipologica"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="elem.idTipologica as elem in (livelloNotifica)">
+                  {{elem.descrizioneTipologica}}
+                </ui-select-choices>
+              </ui-select>
+              <div class="pt15 txt-red" ng-show="nuovaNotifica.$submitted && !notifica.notifica.livello">
+                <div translate>SELEZ_GRADO_NOTIFICA</div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+        <div class="accordion legend">
+
+
+          <div id="legenda" >
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="field">
+                  <i class="fa fa-exclamation notificaNormal icon"></i>
+                  <label translate>GRADO_NORMALE</label>
+                  <p translate>GRADO_NORMALE_DESC</p>
+                </div>
+                <div class="field">
+                  <i class="fa fa-exclamation notificaAlert icon"></i>
+                  <label translate>GRADO_IMPORTANTE</label>
+                  <p translate>GRADO_IMPORTANTE_DESC</p>
+                </div>
+                <div class="field">
+                  <i class="fa fa-exclamation notificaWarning icon"></i>
+                  <label translate>GRADO_CRITICO</label>
+                  <p translate>GRADO_CRITICO_DESC</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="panel-body-section">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="field subtitle icon">
+              <i class="fa fa-users icon"></i>
+              <label translate>LISTA_DI_DISTRIBUZIONE</label>
+            </div>
+          </div>
+        </div>
+        <div class="distribution-list-container">
+          <div class="distribution-list" ng-repeat="lista in notifica.listaDistribuzione track by $index">
+           
+              <div class="criterio" ng-repeat="item in lista.listaCriteri track by $index">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="field">
+                    <label translate>CRITERIO</label>
+                    <select id="criterio_{{$parent.$index}}_{{$index}}" name="criterio_{{$parent.$index}}_{{$index}}"
+                      class="criterio-select form-control"
+                      style="width:100%"
+                      ng-model="notifica.listaDistribuzione[$parent.$index].listaCriteri[$index].idCriterio"
+                      ng-change="change(notifica.listaDistribuzione[$parent.$index].listaCriteri[$index].idCriterio, $parent.$index, $index)" required>
+                        <option value="{{criterio.idTipologica}}" ng-repeat="criterio in listaCriteri">
+                          {{ criterio.descrizioneTipologica }}
+                        </option>
+                      </select>
+                      <div class="pt15 txt-red" ng-show="nuovaNotifica.criterio_{{$parent.$index}}_{{$index}}.$invalid">
+                        <div translate>SELEZIONARE_UN_CRITERIO</div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="field">
+                    <label translate>VALORE</label>
+                    <select id="valore_{{$parent.$index}}_{{$index}}" name="valore_{{$parent.$index}}_{{$index}}" class="criterio-select form-control" style="width:100%" ng-model="notifica.listaDistribuzione[$parent.$index].listaCriteri[$index].valoreCriterio" required >
+                      <option ng-repeat="valore in listeValori[$parent.$index][$index]" value="{{valore.idTipologica}}">
+                        {{valore.descrizioneTipologica}}
+                      </option>
+                    </select>
+                    <div class="pt15 txt-red" ng-show="nuovaNotifica.valore_{{$parent.$index}}_{{$index}}.$invalid">
+                      <div translate>SELEZIONARE_VALORE_CRITERIO</div>
+                    </div>
+                  </div>
+                </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="field">
+                    <div class="add row">
+                            <a href="" id="removeCriterio" ng-show="notifica.listaDistribuzione[$parent.$index].listaCriteri.length > 1" class="remove" title="{{ 'RIMUOVI_CRITERIO' | translate}}" ng-click="removeCriterio($parent.$index, $index)">
+                                <i class="fa fa-minus"></i>
+                                <span translate>RIMUOVI_CRITERIO</span>
+                              </a>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="field">
+                <div class="add row">
+                  <a href="" id="addCriterio" title="{{ 'AGGIUNGI_CRITERIO' | translate}}" ng-click="addCriterio($index)">
+                    <i class="fa fa-plus"></i>
+                    <span translate>AGGIUNGI_CRITERIO</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+              </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="field">
+                  <div class="add row">
+                    <a href="" id="removeDistributionList" ng-show="notifica.listaDistribuzione.length > 1" class="remove" title="{{ 'RIMUOVI_LISTA_DISTRIBUZIONE' | translate}}" ng-click="removeListaDistribuzione($parent.$index)">
+                      <i class="fa fa-minus"></i>
+                      <span translate>RIMUOVI_LISTA_DISTRIBUZIONE</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">  
+                <div class="field">
+                    <div class="add row">
+            <a href="" id="addDistributionList" title="{{ 'AGGIUNGI_LISTA_DISTRIBUZIONE' | translate}}" ng-click="addListaDistribuzione()">
+              <i class="fa fa-plus"></i>
+              <span translate>AGGIUNGI_LISTA_DISTRIBUZIONE</span>
+            </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="field">
+          <label translate>CANALE_DISTRIBUZIONE</label>
+          <p translate>SELEZ_TAG_METODOLOGIA_NOTIFICA</p>
+          <button class="btn labeled icon">
+            <i class="fa fa-tag icon"></i>
+            <span translate>WEB</span>
+          </button>
+          <button class="btn labeled icon" ng-hide="true">
+            <i class="fa fa-tag icon"></i>
+            <span translate>SMS</span>
+          </button>
+        </div>
+        <div class="field">
+          <div class="text-right">
+            <button type="submit" class="btn green text-uppercase" translate>INSERISCI</button>
+            <button type="reset" class="btn grey text-uppercase" translate>ANNULLA</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  /* JQUERY: =Button
+   -----------------------------------------------
+  $(function() {
+    $('.btn.labeled.icon').click(function() {
+      $(this).toggleClass('active');
+    });
+  });
+
+  $('#addCriterio').click(function() {
+    $('.criterio').clone().appendTo('.criterio');
+    $('#removeCriterio').removeClass('hide');
+  });
+  $('#addDistributionList').click(function() {
+    $('.distribution-list').clone().appendTo('.distribution-list-container');
+    $('#removeDistributionList').removeClass('hide');
+  });*/
+</script>

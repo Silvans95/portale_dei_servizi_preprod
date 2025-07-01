@@ -1,0 +1,17 @@
+{
+	"OPERATION":"Operazione",
+	"OPERATION_FROM":"Dal",
+	"OPERATION_FROM_LABEL":"Data operazione dal",
+	"OPERATION_TO":"Al",
+	"OPERATION_TO_LABEL":"Data operazione al",
+	"RECTIFICATION_SUBMISSION":"Sottomissione rettifica",
+	"PAYMENT":"Pagamento",
+	"CREATION_PROC_INSTANCE":"Creazione istanza procedimento",
+	"USER_CN":"Utente",
+	"OPERATION_NUMBER":"Numero di operazioni",
+	"COMPANIES":"Azienda farmaceutica",
+	"COMPANIES_TOOLTIP": "Azienda farmaceutica (Codice SIS e/o descrizione)",
+	"PROCEDIMENTI_STATISTICHE":"Statistiche sui dati",
+	"EXPORT_ALL":"Esporta tutto",
+	"ACCEPTATION":"Compilazione modulo accettazione"
+}

@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionRectificationFilters">
+                <div uib-accordion-heading>
+                    <div ng-class="{'missing-element' : filtersForm.aic6ForRectification.$invalid}">               
+                        <span uib-tooltip="{{'REQUIRED_FIELDS' | translate}}" tooltip-placement="right" ng-if="(filtersForm.aic6ForRectification.$invalid)">  
+                            {{'MEDICINE_DATA' | translate}} 
+                        </span>
+                        <span ng-if="!(filtersForm.aic6ForRectification.$invalid)"> 
+                            {{'MEDICINE_DATA' | translate}} 
+                        </span>
+                        <custom-popover-spha custom-popover-text="{{'MEDICINE_DATA' | translate}}"></custom-popover-spha>
+                        <div class="pull-right">
+                            <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionRectificationFilters, 
+                                                            'glyphicon-chevron-right': !medicineCtrl.accordionRectificationFilters}">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="aic6ForRectification" translate="{{'detail.aic6' | translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'detail.aic6' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'detail.aic6' | translate}}"
+                                   type="text"
+                                   ng-model="medicineCtrl.aic6ForRectification"
+                                   id="aic6ForRectification"
+                                   name="aic6ForRectification"
+                                   class="form-control"
+                                   ng-class="addClass('aic6ForRectification', filtersForm)"
+                                   ng-minlength="6"
+                                   ng-maxlength="6"
+                                   ng-required="true"
+                                   ng-change="actions.SAVE_RECTIFICATION_AIC6 = false"
+                            />
+                        </div>
+                        <xt-validation-inline for="aic6ForRectification"></xt-validation-inline>
+                    </div>
+                
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label for="medicineDescriptionForRectification" translate="{{'MEDICINE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'MEDICINE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'MEDICINE'| translate}}"
+                                   type="text"
+                                   name="medicineDescriptionForRectification"
+                                   ng-model="medicineCtrl.medicineDescriptionForRectification"
+                                   ng-disabled="true"
+                                   id="medicineDescriptionForRectification"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

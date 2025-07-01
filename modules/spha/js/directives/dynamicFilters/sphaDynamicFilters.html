@@ -1,0 +1,3 @@
+<div ng-repeat="accordion in accordions">
+    <ng-include ng-if="accordion.show" ng-init="acc = accordion" src="accordion.template"></ng-include>
+</div>

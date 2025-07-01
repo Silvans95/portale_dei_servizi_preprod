@@ -1,0 +1,688 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<!-- <div class="panel spha" ng-cloak ng-if="NSISCtrl.NSISTable"> -->
+<div class="panel spha" ng-cloak ng>
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'NSIS_SEARCH' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="NSISCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="NSISCtrl.alertClass" ng-show="NSISCtrl.message">
+						<strong translate="{{NSISCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="NSISCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div class="row">
+
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label for="COMPANY" translate="{{'COMPANY'| translate}}">COMPANY</label>
+								<custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'COMPANY', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;"
+											   class="form-control"
+											   id="COMPANY"
+											   name="COMPANY"
+											   ng-model="NSISCtrl.companies"
+											   ng-required="true"/>
+									</div>
+									<ui-select id="select-company" ng-model="NSISCtrl.companies" ng-disabled="lockedMode">
+										<ui-select-match allow-clear="true" placeholder="{{'COMPANY'| translate}}">
+											<span>{{$select.selected.label != null ? $select.selected.value + ' - ' + $select.selected.label : $select.selected.value}}</span>
+										</ui-select-match>
+										<ui-select-choices 
+										refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label ? option.value + ' - ' +  option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+												<button
+														class="btn btn-xs btn-success"
+														style="width: 100%; margin-top: 5px;"
+														ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search )">
+													{{'SHOW_OTHER' | translate}}
+												</button>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANY"></xt-validation-inline>
+							</div>
+
+							<div style="margin-top:1.8%">
+								<a class="buttons" ng-click = "NSISCtrl.openHyperlink()" style="padding: 1%;" ng-if = "NSISCtrl.companies != null">
+										<span class="fa fa-link" title="{{'NSIS_LINK' | translate}}"></span>
+								</a>
+							</div>							
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<label translate="{{'MEDICINE'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'MEDICINE' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'MEDICINE'| translate}}"
+											type="text"
+											ng-model="NSISCtrl.medicineDescription"
+											id="medicineDescription"
+											class="form-control"/>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+								<label translate="{{'AIC9'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'AIC9' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'AIC9'| translate}}"
+											type="text"
+											ng-model="NSISCtrl.aic9"
+											id="aic"
+											class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<label translate="{{'BOX_DESCRIPTION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'BOX_DESCRIPTION' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'BOX_DESCRIPTION'| translate}}"
+											type="text"
+											ng-model="NSISCtrl.boxDescription"
+											id="boxDescription"
+											class="form-control"/>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="FIRST_MARKETING_FROM"
+										translate="{{'FIRST_MARKETING_FROM' | translate}}">
+										FIRST_MARKETING_FROM 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'FIRST_MARKETING_FROM_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'FIRST_MARKETING_FROM' | translate}}"
+										type="text"
+										class="form-control"
+										id="FIRST_MARKETING_FROM"
+										name="FIRST_MARKETING_FROM"
+										is-open="datesOptions.FIRST_MARKETING_FROM.opened"
+										ng-class="addClass( 'FIRST_MARKETING_FROM', filtersForm )"
+										ng-model="NSISCtrl.firstMarketingFrom"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('FIRST_MARKETING_FROM')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="FIRST_MARKETING_FROM"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="FIRST_MARKETING_TO"
+										translate="{{'FIRST_MARKETING_TO' | translate}}">
+										FIRST_MARKETING_TO 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'FIRST_MARKETING_TO_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'FIRST_MARKETING_TO' | translate}}"
+										type="text"
+										class="form-control"
+										id="FIRST_MARKETING_TO"
+										name="FIRST_MARKETING_TO"
+										is-open="datesOptions.FIRST_MARKETING_TO.opened"
+										ng-class="addClass( 'FIRST_MARKETING_TO, filtersForm' )"
+										ng-model="NSISCtrl.firstMarketingTo"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('FIRST_MARKETING_TO')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="FIRST_MARKETING_TO"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label translate="{{'REIMBURSEMENT_CLASS'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'REIMBURSEMENT_CLASS' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="REIMBURSEMENT_CLASS"
+											name="REIMBURSEMENT_CLASS"
+											ng-model="NSISCtrl.reimbursementClass"
+											/>		
+									</div>
+									<ui-select multiple ng-model="NSISCtrl.reimbursementClass">
+										<ui-select-match allow-clear="true" placeholder="{{'REIMBURSEMENT_CLASS'| translate}}"> 
+											<span>{{$item.label != null ? $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices 
+										refresh = "getPossibleValues( 0, 'reimbursementClass', $select.search )" 
+										refresh-delay ="500"
+										repeat="option.value as option in filters.reimbursementClass.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.reimbursementClass.total-1">
+                                                  <button 
+                                                    class="btn btn-xs btn-success" 
+                                                    style="width: 100%; margin-top: 5px;" 
+                                                    ng-mouseover="getPossibleValues( filters.reimbursementClass.page + 1, 'reimbursementClass', $select.search )">
+                                                      {{'SHOW_OTHER' | translate}}
+                                                  </button>
+                                              </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label translate="{{'ATC'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'ATC' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<div style="height:0px;">
+											<input style="opacity: 0;" 
+												class="form-control"
+												id="ATC"
+												name="ATC"
+												ng-model="NSISCtrl.atc"
+												/>		
+										</div>
+									<ui-select multiple ng-model="NSISCtrl.atc">
+										<ui-select-match allow-clear="true" placeholder="{{'ATC'| translate}}"> 
+											<span>{{$item.label != null ? $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices 
+										refresh = "getPossibleValues( 0, 'atc', $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.atc.elements | filter: $select.search track by $index">
+											<div>	
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+											
+                                            <div ng-if="$index == $select.items.length-1 && $index < filters.atc.total-1">
+                                                <button 
+                                                  class="btn btn-xs btn-success" 
+                                                  style="width: 100%; margin-top: 5px;" 
+                                                  ng-mouseover="getPossibleValues( filters.atc.page + 1, 'atc', $select.search )">
+                                                    {{'SHOW_OTHER' | translate}}
+                                                </button>
+                                            </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+								<label translate="{{'TRANSPARENCY'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'TRANSPARENCY' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<ui-select ng-model="NSISCtrl.transparency">
+										<ui-select-match allow-clear="true">
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.transparency | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+								<label translate="{{'ORPHAN'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'ORPHAN' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<ui-select ng-model="NSISCtrl.orphan">
+										<ui-select-match allow-clear="true"> 
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.orphan | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+								<label translate="{{'PATENTED'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'PATENTED' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<ui-select ng-model="NSISCtrl.patented">
+										<ui-select-match allow-clear="true"> 
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.patented | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label translate="{{'EROGATION_CHANNEL'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'EROGATION_CHANNEL' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="EROGATION_CHANNEL"
+											name="EROGATION_CHANNEL"
+											ng-model="NSISCtrl.erogationChannel"
+											/>		
+									</div>
+									<ui-select multiple ng-model="NSISCtrl.erogationChannel">
+										<ui-select-match allow-clear="true" placeholder="{{'EROGATION_CHANNEL'| translate}}"> 
+											<span>{{$item.label != null ? $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices 
+										refresh = "getPossibleValues( 0, 'erogationChannel', $select.search )" 
+										refresh-delay ="500"
+										repeat="option.value as option in filters.erogationChannel.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.erogationChannel.total-1">
+                                                  <button 
+                                                    class="btn btn-xs btn-success" 
+                                                    style="width: 100%; margin-top: 5px;" 
+                                                    ng-mouseover="getPossibleValues( filters.erogationChannel.page + 1, 'erogationChannel', $select.search )">
+                                                      {{'SHOW_OTHER' | translate}}
+                                                  </button>
+                                              </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="REGION" translate="{{'REGION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="REGION"
+											name="REGION"
+											ng-model="NSISCtrl.region"/>		
+									</div>
+									<ui-select id="select-region" multiple ng-model="NSISCtrl.region">
+										<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}"> 
+											<span>{{$item.label}}</span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option in filters.region | filter: $select.search track by $index">
+											<div>
+												<span>{{option.object + ' - ' + option.label}}</span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="REGION"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_FROM"
+										translate="{{'TIME_FROM' | translate}}">
+										TIME_FROM 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_FROM_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_FROM' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_FROM"
+										name="TIME_FROM"
+										is-open="datesOptions.TIME_FROM.opened"
+										ng-class="addClass( 'TIME_FROM', filtersForm )"
+										ng-model="NSISCtrl.timeFrom"
+										datepicker-options="datesOptions.TIME_FROM.datepickerOptions"
+										ng-required="true"
+										ng-change="validateDate(filtersForm,NSISCtrl.timeFrom,'TIME_FROM')"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_FROM')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_FROM"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_TO"
+										translate="{{'TIME_TO' | translate}}">
+										TIME_TO 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_TO_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_TO' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_TO"
+										name="TIME_TO"
+										is-open="datesOptions.TIME_TO.opened"
+										ng-class="addClass( 'TIME_TO', filtersForm )"
+										ng-model="NSISCtrl.timeTo"
+										ng-required="true"
+										datepicker-options="datesOptions.TIME_TO.datepickerOptions"
+										ng-change="validateDate(filtersForm,NSISCtrl.timeTo,'TIME_TO')"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_TO')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_TO"></xt-validation-inline>
+							</div>
+
+							
+						</div>
+						<br/>
+						<div class="text-right">
+							<button type="button"
+									class="btn btn-primary text-uppercase"
+									ng-click = "NSISCtrl.reset()"
+									id="reset-button"
+									translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit"
+									class="btn btn-primary text-uppercase"
+									translate="{{'SEARCH' | translate}}"
+									id="search-button"
+									ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !NSISCtrl.showData" >
+							</button>
+						</div>
+						<br/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body-section" ng-if="NSISCtrl.showData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					
+				 <table ng-table="NSISCtrl.NSISTable" class="table table-bordered">
+                        <tr role="row"
+                        	id="rows"
+                            ng-hide="NSISCtrl.isLoading"
+                            ng-init="NSISCtrl.isCollapsed[$index] = true;"
+                            ng-repeat="row in $data">
+
+                            <td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('aic9') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'AIC9' | translate"
+                                    sortable="'aic9'">
+                                <div class="text-center">
+                                    <a title="{{'AIC9' | translate}}" href="">
+                                        {{row.aic9}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('time') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'TIME' | translate"
+                                    sortable="'time'">
+                                <div class="text-center">
+                                    <a title="{{'TIME' | translate}}" href="">
+                                        {{row.time| date : "MM/yyyy"}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'REGION_CODE' | translate"
+                                    sortable="'region'">
+                                <div class="text-center">
+                                    <a title="{{'REGION_CODE' | translate}}" href="">
+                                        {{row.region}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'REGION' | translate"
+                                    sortable="'region'">
+                                <div class="text-center">
+                                    <a title="{{'REGION' | translate}}" href="">
+                                        {{row.regionCodeLabel}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('dataSourceFlow') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'DATA_SOURCE_FLOW' | translate"
+                                    sortable="'dataSourceFlow'">
+                                <div class="text-center">
+                                    <a title="{{'DATA_SOURCE_FLOW' | translate}}" href="">
+                                        {{row.dataSourceFlow}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('erogationChannel') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'EROGATION_CHANNEL' | translate"
+                                    sortable="'erogationChannel'">
+                                <div class="text-center">
+                                    <a title="{{'EROGATION_CHANNEL' | translate}}" href="">
+                                        {{row.erogationChannel}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('directPurchaseCost') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'DIRECT_PURCHASE_COST' | translate"
+                                    sortable="'directPurchaseCost'">
+                                <div class="text-center">
+                                    <a title="{{'DIRECT_PURCHASE_COST' | translate}}" href="">
+                                        {{row.directPurchaseCost | number:2 }}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('hospitalPurchaseCost') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'HOSPITAL_PURCHASE_COST' | translate"
+                                    sortable="'hospitalPurchaseCost'">
+                                <div class="text-center">
+                                    <a title="{{'HOSPITAL_PURCHASE_COST' | translate}}" href="">
+                                        {{row.hospitalPurchaseCost| number:2}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('salesValueTrack') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'SALES_VALUE_TRACK' | translate"
+                                    sortable="'salesValueTrack'">
+                                <div class="text-center">
+                                    <a title="{{'SALES_VALUE_TRACK' | translate}}" href="" ng-style="{'color': getColorForInvoice(row.totInvoice,row.salesValueTrack,
+                                     !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('totInvoice') !== -1)
+                                      )}">
+                                        {{row.salesValueTrack| number:2}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('totInvoice') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'TOT_INVOICE' | translate"
+                                    sortable="'totInvoice'">
+                                <div class="text-center">
+                                    <a title="{{'TOT_INVOICE' | translate}}" href="" ng-style="{'color': getColorForInvoice(row.totInvoice,row.salesValueTrack,
+                                     !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('totInvoice') !== -1)
+                                     )}">
+                                        {{row.totInvoice | number:2}}
+                                    </a>
+                                </div>
+                            </td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('expandedTrackSalesValue') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'EXPANDED_SALES_VALUE_TRACK' | translate"
+                                    sortable="'expandedTrackSalesValue'">
+                                <div class="text-center">
+                                    <a title="{{'EXPANDED_SALES_VALUE_TRACK' | translate}}" href="">
+                                        {{row.expandedTrackSalesValue| number:2}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('iva') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'VAT' | translate"
+                                    sortable="'vat'">
+                                <div class="text-center">
+                                    <a title="{{'VAT' | translate}}" href="">
+                                        {{row.iva}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('directPackagingQuantity') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'DIRECT_PACKAGING_QUANTITY' | translate"
+                                    sortable="'directPackagingQuantity'">
+                                <div class="text-center">
+                                    <a title="{{'DIRECT_PACKAGING_QUANTITY' | translate}}" href="">
+                                        {{row.directPackagingQuantity}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('hospitalPackagingQuantity') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'HOSPITAL_PACKAGING_QUANTITY' | translate"
+                                    sortable="'hospitalPackagingQuantity'">
+                                <div class="text-center">
+                                    <a title="{{'HOSPITAL_PACKAGING_QUANTITY' | translate}}" href="">
+                                        {{row.hospitalPackagingQuantity}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('quantityPacksEnhancedTrace') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'QUANTITY_PACKS_EHNANCED_TRACE' | translate"
+                                    sortable="'quantityPacksEnhancedTrace'">
+                                <div class="text-center">
+                                    <a title="{{'QUANTITY_PACKS_EHNANCED_TRACE' | translate}}" href="">
+                                        {{row.quantityPacksEnhancedTrace}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('quantityPacksNotEnhancedTrace') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'QUANTITY_PACKS_NOT_EHNANCED_TRACE' | translate"
+                                    sortable="'quantityPacksNotEnhancedTrace'">
+                                <div class="text-center">
+                                    <a title="{{'QUANTITY_PACKS_NOT_EHNANCED_TRACE' | translate}}" href="">
+                                        {{row.quantityPacksNotEnhancedTrace}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('negotiatingAgreementClauseValue') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'NEGOTIATING_AGREEMENT_CLAUSE_VALUE' | translate"
+                                    sortable="'negotiatingAgreementClauseValue'">
+                                <div class="text-center">
+                                    <a title="{{'NEGOTIATING_AGREEMENT_CLAUSE_VALUE' | translate}}" href="">
+                                        {{row.negotiatingAgreementClauseValue| number:2}}
+                                    </a>
+                                </div>
+                            </td>      
+							<td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('creditNoteValue') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'CREDIT_NOTE_VALUE' | translate"
+                                    sortable="'creditNoteValue'">
+                                <div class="text-center">
+                                    <a title="{{'CREDIT_NOTE_VALUE' | translate}}" href="">
+                                        {{row.creditNoteValue| number:2}}
+                                    </a>
+                                </div>
+                            </td>                           
+                            <td ng-if="!NSISCtrl.fieldsToNotShow
+                                        || !(NSISCtrl.fieldsToNotShow && NSISCtrl.fieldsToNotShow.indexOf('actions') !== -1)"
+								class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+                        </tr>
+                        <tr ng-show="NSISCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table> 
+				</div>
+			</div>
+			<br/>
+			<div class = "text-right">
+				<button type="submit"
+						class="btn btn-primary"
+						translate="{{'EXPORT' | translate}}"
+						ng-click="NSISCtrl.exportReport(filtersForm)"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT']" >
+				</button>
+			</div>
+			<br/>
+			<div class = "text-right">
+				<button type="button"
+                      class="btn btn-default"
+                      ng-click="NSISCtrl.goToTop()"
+                      translate="{{'GO_TO_TOP' | translate}}">
+           		</button>
+				<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="NSISCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>				
+		</div>
+	</div>
+</div>

@@ -1,0 +1,41 @@
+<div class="panel">
+  <div class="panel-header text-uppercase pb10">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      	<h4>SPHA DEBUG MODE PAGE</h4> 
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+   			<div class="row">
+            <div class="col-lg-2">
+              <label>BACK-END VERSIONS:</label>
+            </div>
+            <div class="col-lg-10">
+              <div>
+                <span>A) Profile SPHA Version: {{abilitationMicroserviceVersion}}</span>
+              </div>
+              <div>
+                  <span>B) Procedure SPHA Version: {{procedureMicroserviceVersion}}</span>
+              </div>
+              <div>
+                <span>C) Anagraphic SPHA Version: {{anagraphicMicroserviceVersion}}</span>
+              </div>
+            </div>
+			</div>
+      </div>
+    </div>
+    <br/>
+    <br/>
+  </div>
+  <div class="panel-footer">
+  	<div class="text-center">
+  		<a href="" target="_blank"><em>SPHA-Server</em></a>
+   	</div>
+	<div class="text-right">
+   		<a href="" ng-click="enablePrint = !enablePrint"><em>SPHA Client Version: {{ version }}</em></a>
+   	</div>
+  </div>
+</div>

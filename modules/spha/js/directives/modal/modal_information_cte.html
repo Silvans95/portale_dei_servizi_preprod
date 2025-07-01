@@ -1,0 +1,173 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title" translate="{{'CTE' | translate}}"></h3>
+    <button style="margin-top:-20px;" type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" id="modal-body">
+	<div class="panel spha">
+	    <div class="panel-body">
+		   	 <div 
+              		ng-class="alertClass" 
+              		ng-show="message">
+						<strong translate="{{message | translate}}"></strong> 
+		   	</div>
+		   	 <div class="panel-body-section" ng-if="data">
+			   	<div class="row">
+			   		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+			   			<label class="form-group-label text-base-color" class="form-group-label text-base-color">Eudra CT</label>
+			   			<div class="form-group">
+			   				{{data.eudraCt}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+			   			<label class="form-group-label text-base-color" class="form-group-label text-base-color">{{'PROTOCOL_CODE'|translate}}</label>
+			   			<div class="form-group">
+			   				{{data.protocolCode}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+			   			<label class="form-group-label text-base-color">{{'SUBMIT_DATE'|translate}}</label>
+			   			<div class="form-group">
+			   				{{data.submitDate | date: 'dd/MM/yyyy'}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+			   			<label class="form-group-label text-base-color">{{'VERSION'|translate}}</label>
+			   			<div class="form-group">
+			   				{{data.version}}			  				 		
+			   			</div>
+			   		</div>
+			   	</div>
+		   		<div class="row">
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+			   			<label class="form-group-label text-base-color">{{'AMENDMENT_CODE'|translate}}</label>
+			   			 <div class="form-group">
+			   				{{data.amendmentCode}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'REPRESENTATIVE'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.representative}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'PROMOTER'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.promoter}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'THERAPEUTIC_AREA'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.therapeuticArea | translate}}			  				 		
+			   			</div>
+			   		</div>
+			   	</div>
+		   	 	<div class="row">
+		   	 		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				   		<label class="form-group-label text-base-color">{{'TITLE'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.title}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'VALIDATOR'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.validator}}			  				 		
+			   			</div>
+			   		</div>
+			   	</div>
+		   		<div class="row">
+			   		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+				   		<label class="form-group-label text-base-color">{{'TITLE'|translate}} (EN)</label>
+				   		<div class="form-group">
+			   				{{data.titleEn}}			  				 		
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'EVALUATOR'|translate}}</label>
+				   		<div class="form-group">
+			   				{{data.evaluator}}			  				 		
+			   			</div>
+			   		</div>
+		   		</div>
+			   	<div class="row">
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'CLINICAL_CENTERS'|translate}}</label>
+				   		<div class="form-group listErrorsValidationSummary">
+				   			<ul>
+				   				<li ng-repeat="cc in data.clinicalCenters track by $index">
+				   					{{cc | translate}}
+				   				</li>
+				   			</ul>
+			   			</div>
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'PHASE'|translate}}</label>
+				   		<div class="form-group listErrorsValidationSummary">
+				   			<ul>
+				   				<li ng-repeat="phase in data.phase track by $index">
+				   					{{phase | translate}}
+				   				</li>
+				   			</ul>
+			   			</div>
+			   		</div>
+		   			<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+				   		<label class="form-group-label text-base-color">{{'ENVOLVED_ACTORS'|translate}}</label>
+				   		<div class="form-group listErrorsValidationSummary">
+				   			<ul>
+				   				<li ng-repeat="envActors in data.envolvedActors track by $index">
+				   					{{envActors | translate}}
+				   				</li>
+				   			</ul>
+			   			</div>
+		   			</div>
+			   	<div class="row">
+			   		
+			   		</div>
+			   		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			   			<fieldset>
+				   			<legend class="text-base-color">{{'IMP'|translate}}</legend>
+				   			<table class="table">
+				   				<thead>
+				   					<tr class="row">
+				   						<th class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{'D_1_1_IMP_NUMBER' | translate}}</th>
+				   						<th class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{'D_1_2_CATEGORY' | translate}}</th>
+				   						<th class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{'D_3_1_PRODUCT_NAME' | translate}}</th>
+				   					</tr>
+				   				</thead>
+				   				<tbody>
+				   					<tr ng-repeat="imp in data.imps track by $index" class="row">
+				   						<td class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{imp.impNumber | translate}}</td>
+				   						<td class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{imp.impCategory | translate}}</td>
+				   						<td class="col-xs-12 col-sm-12 col-md-4 col-lg-4">{{imp.impProductName | translate}}</td>
+				   					</tr>
+				   				</tbody>
+				   			</table>
+			   			</fieldset>
+			   		</div>
+			   	</div>
+			</div>
+			<br/>
+			<div class="panel-body-section" ng-if="actions">
+				<fieldset>
+      				<legend class="text-base-color" translate="{{'ACTION' | translate}}"></legend>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 buttonModalInformation"  ng-repeat="action in actions track by $index" ng-if="action.uiSref">
+							<a	
+								class="btn btn-primary"
+								ui-sref="{{action.uiSref}}"
+								ng-click="clickAction(action.object, idCte)" 
+								title="{{action.label | translate}}"
+								translate="{{ action.label | translate}}">
+							</a>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>

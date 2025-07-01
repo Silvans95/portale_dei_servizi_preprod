@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title" translate="{{'CHANGE_REPRESENTATIVE' |translate}}">
+    </h3>
+    <button style="margin-top:-20px;" type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" id="modal-body">
+	<div class="panel spha">
+	    <div class="panel-body">
+		   	<div 
+	              		ng-class="alertClass" 
+	              		ng-show="message">
+							<strong translate="{{message | translate}}"></strong> 
+		   	</div>
+		   	<form 
+ 				name="newRepresentative" 
+ 				class="tab-form-demo validation" 
+ 				xt-form strategy="customStrategy" 
+           		focus-error="true" 
+           		ng-submit="newRepresentative.$valid && change()" 
+              	novalidate>
+		   			<br/>
+		   			<div class="alert alert-info">
+		   				{{'LOAD_REPRESENTATIVE_DATA_INFO' | translate}}
+		   			</div>
+		   			<br/>
+		   			<div class="row">
+			   			<div class="col-xs-12 col-sm-12 col-md-4 col-md-4">
+							<label for="USERNAME_REPRESENTATIVE">Username</label>
+							<div class="form-group">
+								<input
+									class="form-control"
+									id="USERNAME_REPRESENTATIVE"
+									name="USERNAME_REPRESENTATIVE"
+									type="text"
+									ng-model="username"
+									ng-required="true"/>
+								<xt-validation-inline for="USERNAME_REPRESENTATIVE"></xt-validation-inline>
+							</div>	
+						</div>	   			
+		   			</div>
+		   			<div class="text-right">
+			   			<button 
+	     	 					type="submit"
+	     	 					class="btn btn-primary" 
+	     	 					translate="{{'VERIFY_USER' | translate}}">
+	   	 				</button>
+   	 				</div>
+		   	
+		   	</form>
+			   		
+		</div>
+	</div>
+</div>

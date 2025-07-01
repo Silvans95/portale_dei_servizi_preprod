@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div id="wrapper">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+        <div ui-view="menu" ng-class="{'sidebar': $root.vociMenu.length > 0}"></div>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9 faq">
+        <div class="main-content">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div ncy-breadcrumb="">
+                <ol class="breadcrumb">
+                  <li>
+                    <i class="fa fa-dashboard icon hide" aria-hidden="true"></i>
+                    <a href="./index.html" title="Dashboard" translate>DASHBOARD</a>
+                  </li>
+                </ol>
+              </div>
+              <div class="back-dashboard">
+                <a href="#/dashboard/home" title="Torna alla Dashboard">
+                  <i class="fa fa-arrow-circle-left icon"></i>
+                  <span>Torna alla Dashboard</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div ui-view="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

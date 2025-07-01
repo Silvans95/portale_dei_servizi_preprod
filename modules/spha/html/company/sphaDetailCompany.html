@@ -1,0 +1,185 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="companyCtrl">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4
+                        translate="{{ 'COMPANY_DETAIL' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="text-right" style="padding-right:15px;">
+                    <button type="button" class="btn btn-default" ng-click="companyCtrl.goBack()">
+                        {{'BACK' | translate}}
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="panel-body-section">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div ng-class="companyCtrl.alertClass" ng-show="companyCtrl.message">
+                        <strong translate="{{companyCtrl.message | translate}}"></strong>
+                    </div>
+                    <form ng-submit="companyCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <label for="COMPANIES" translate="{{'COMPANY'| translate}}">COMPANY</label>
+                                <custom-popover-spha custom-popover-text="{{'COMPANY' | translate}}"></custom-popover-spha>
+                                <div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm  )">
+                                    <div style="height:0px;">
+                                        <input style="opacity: 0;"
+                                               class="form-control"
+                                               id="COMPANIES"
+                                               name="COMPANIES"
+                                               ng-model="companyCtrl.company"
+                                               ng-required="true"/>
+                                    </div>
+                                    <ui-select id="select-company" ng-model="companyCtrl.company" ng-disabled="lockedMode" on-select="companyCtrl.submitSearch(filtersForm)">
+                                        <ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+                                            <span>{{$select.selected.label != null ? $select.selected.value + ' - ' +  $select.selected.label : $select.selected.value}}</span>
+                                        </ui-select-match>
+                                        <ui-select-choices 
+                                        refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+                                        repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+                                            <div>
+												<span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+											</div>
+                                            <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                                <button 
+                                                  class="btn btn-xs btn-success" 
+                                                  style="width: 100%; margin-top: 5px;" 
+                                                  ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+                                                    {{'SHOW_OTHER' | translate}}
+                                                </button> 
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <xt-validation-inline for="COMPANY"></xt-validation-inline>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    translate="{{'EDIT' | translate}}"
+                                    ng-click="companyCtrl.edit()" 
+                                    ng-disabled="!actions['EDIT']">
+                            </button>
+                            <button type="submit"
+                            		id="reset-button"
+                                    class="btn btn-primary text-uppercase"
+                                    translate="{{'RESET' | translate}}"
+                                    ng-click="companyCtrl.reset()">
+                            </button>
+                        </div>
+                        <br/>
+                        <br/>
+                    </form>
+                    <form ng-if="companyCtrl.companyObj" ng-submit="companyCtrl.save(rectificationForm)" xt-form role="form" name="rectificationForm">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="companyCode">{{'SIS' | translate}}</label>
+                                <custom-popover-spha custom-popover-text="{{'SIS' | translate}}"></custom-popover-spha>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="companyCode"
+                                        name="companyCode"
+                                        ng-model="companyCtrl.companyObj.companyCode.value"
+                                        ng-disabled="readOnly || !companyCtrl.companyObj.companyCode.editable"
+                                        ng-class="addClass( 'companyCode', rectificationForm )"/>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="companyName">{{'companyName'| translate}}</label>
+                                <custom-popover-spha custom-popover-text="{{'companyName' | translate}}"></custom-popover-spha>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="companyName"
+                                        name="companyName"
+                                        ng-model="companyCtrl.companyObj.companyName.value"
+                                        ng-disabled="readOnly || !companyCtrl.companyObj.companyName.editable"
+                                        ng-class="addClass( 'companyName', rectificationForm )"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="PMI">{{'pmi'| translate}}</label>
+                                <custom-popover-spha custom-popover-text="{{'pmi' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                                    <input
+                                            type="checkbox"
+                                            class="checkbox"
+                                            id="pmi"
+                                            name="pmi"
+                                            ng-model="companyCtrl.companyObj.pmi.value"
+                                            ng-disabled="readOnly || !companyCtrl.companyObj.pmi.editable"
+                                            ng-class="addClass( 'pmi', rectificationForm )"/>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="ap">{{'ap'| translate}}</label>
+                                <custom-popover-spha custom-popover-text="{{'ap' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                                    <input
+                                            type="checkbox"
+                                            class="checkbox"
+                                            id="ap"
+                                            name="ap"
+                                            ng-model="companyCtrl.companyObj.ap.value"
+                                            ng-disabled="readOnly || !companyCtrl.companyObj.ap.editable"
+                                            ng-class="addClass( 'ap', rectificationForm )"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    translate="{{'SUBMIT' | translate}}"
+                                    ng-click="companyCtrl.submit(rectificationForm)"
+                                    ng-disabled="!actions['SUBMIT']">
+                            </button>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    translate="{{'RESET' | translate}}"
+                                    ng-click="companyCtrl.resetForm(rectificationForm, true)"
+                                    ng-disabled="!actions['EDIT']">
+                            </button>
+                            <button type="button" class="btn btn-primary hidden" ng-disabled="!actions['EDIT']"  
+                                    ng-click="companyCtrl.deleteRectificationDetail(rectificationForm)">
+                                {{'CLEAR' | translate}}
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    translate="{{'SAVE' | translate}}"
+                                    ng-disabled="!actions['EDIT']">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <br/>
+            <div class="text-right">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="companyCtrl.goToTop()"
+                        translate="{{'GO_TO_TOP' | translate}}">
+                </button>
+                <button type="button"
+                        class="btn btn-default"
+                        id="back-button-bottom"
+                        ng-click="companyCtrl.goBack()">
+                    {{'BACK' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div> 

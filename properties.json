@@ -1,0 +1,96 @@
+{
+	"baseUrl": "https://testnew.coll.aifa.gov.it/services/",
+	"logoutUrl": "https://testnew.coll.aifa.gov.it/jam/UI/Logout",
+	"loginUrl": "https://testnew.coll.aifa.gov.it/jam/UI/Login?goto=",
+	"manuali-baseUrl": "https://testnew.coll.aifa.gov.it/portale/manuali/",
+	"gestioneProfilo": "https://testnew.coll.aifa.gov.it/gestione-abilitazioni/abilitazioni",
+	"modificaDatiPersonali": "https://testnew.coll.aifa.gov.it/registrazione/change",
+	"modificaPassword": "https://testnew.coll.aifa.gov.it/registrazione/change-password",
+	"environment": "",
+	"maxNumFfSearchResponse": 20000,
+	"maxNumOfAddressBookSearchResponse": 1500,
+	"notificheLegacyNas": "https://testnew.coll.aifa.gov.it/am-gw-int/nes-adapter/1.0.0/applicazioni/",
+	"abilitazioniBaseUrl" : "https://testnew.coll.aifa.gov.it/am-gw-int/gestione-profili/accessi/1.0.0",
+	"newAbilitazioniURL": "https://testnew.coll.aifa.gov.it/am-gw-int/gestione-profili/accessi/1.0.0/abilitazioni/ ",
+	"gestioneAbilitazioniURL": "https://testnew.coll.aifa.gov.it/am-gw-int/gestione-abilitazioni-ms/1.0.0/",
+    "headerMenuConfig": {
+		"menuLinks": [
+			  {
+				"icon": "search",
+				"href": "https://testnew.coll.aifa.gov.it/portale/#/dashboard/home",
+                "target": "_self",
+				"linkId": "dashboard",
+				"text": "Dashboard",
+				"text_en": "Dashboard"
+			  },
+			  {
+				"icon": "user",
+				"href": "https://testnew.coll.aifa.gov.it/gestione-abilitazioni/abilitazioni",
+				"target": "_self",
+				"linkId": "manageProfile",
+				"text": "Gestione abilitazioni",
+				"text_en": "Authorization management"
+			  },
+			  {
+				"icon": "key",
+				"href": "http://testnew.coll.aifa.gov.it/registrazione/change-password",
+				"target": "_self",
+				"linkId": "changePassword",
+				"text": "Modifica password",
+				"text_en": "Change password"
+			  },
+			  {
+				"icon": "pencil",
+				"href": "http://testnew.coll.aifa.gov.it/registrazione/change",
+				"target": "_self",
+				"linkId": "changeUserData",
+				"text": "Modifica dati di contatto",
+				"text_en": "Edit contact data"
+			  }
+			],
+		"secondaryMenuLinks": [
+		   {
+		 	   "icon": "sign-out",
+		 	   "href": "https://testnew.coll.aifa.gov.it/jam/UI/Logout",
+		 	   "linkId": "exit",
+		 	   "target": "_self",
+		 	   "text": "Esci",
+			   "text_en": "Logout"
+
+		   }
+		],
+		"horizontalMenuLinks": [
+		   {
+		   	   "icon": "",
+		   	   "target": "_blank",
+		   	   "linkId": "",
+		   	   "text": "Apri un ticket",
+			   "text_en": "Submit a ticket",
+		   	   "disabled": false
+			   
+
+		   },
+		   {
+		   	   "icon": "",
+			   "href": "http://localhost:8080/#/notifiche/",
+		   	   "target": "_blank",
+		   	   "linkId": "",
+		   	   "text": "Notifiche",
+			   "text_en": "Notifications",
+		   	   "disabled": false
+			   
+
+		   },
+		   {
+		   	   "icon": "book",
+		   	   "linkId": "userGuide",
+		   	   "text": "Guida al servizio",
+			   "text_en": "Service guidelines"
+
+		   } 
+
+		  ]
+		}
+
+    
+}

@@ -1,0 +1,31 @@
+.fet-wizard-item {
+	
+	
+	.panel-body {
+
+		min-height: 200px;
+	
+		fieldset {
+		
+			margin-top: 20px;
+			
+			legend {
+				font-size: 120%;
+				margin-bottom: 5px;
+			}
+			
+			> ul {
+			
+				> li {
+					margin-left: 15px;
+					word-break: break-all;
+					word-wrap: break-word;
+				}
+			
+			}
+		
+		}
+	
+	}
+	
+}

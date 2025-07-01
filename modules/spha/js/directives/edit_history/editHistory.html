@@ -1,0 +1,68 @@
+<div class="panel spha">
+    <div class="panel-body">
+	   	 <div class="panel-body-section">
+	   	 	<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		               <table 
+		               		ng-table="editHistoryTable" 
+		               		class="table table-striped table-bordered">           		
+						    <tr 
+						    	role="row"
+						    	ng-hide="isLoading" 
+						    	ng-repeat="row in $data">
+						  	    <td 
+						  	    	class="col-xs-12 col-sm-12 col-md-1 col-lg-1"  
+						  	    	title="'USER' | translate">
+						  	    		{{row.createdBy}}
+						  	    </td>
+						  	    <td 
+						  	    	class="col-xs-12 col-sm-12 col-md-2 col-lg-2" 
+						  	    	title="'EDIT' | translate"  >
+						  	    	<div style="margin-left: 15px;" ng-init="items = parseEditsLog(row.fields, row.groups, row.ctaLog)">
+						  	    		<ul ng-if="items.length==1">
+						  	    			<li>{{items[0]}}</li>
+						  	    		</ul>
+					  	    			<ul ng-if="items.length>1" ng-style="isCollapsed ? {'overflow-y': 'hidden', 'overflow-x': 'hidden', 'height': '40px'} : ''">
+					  	    				<li ng-repeat="item in items track by $index" ng-show="item.length>0">
+					  	    					<div ng-class="{'tableEditHistoryCollapseIn': isCollapsed && item.length > 150, 'tableEditHistoryCollapseOut': !isCollapsed && item.length > 150 }">
+						  	    					<span>{{item}}</span>
+					  	    					</div>
+					  	    				</li>
+					  	    			</ul>
+				  	    				<div style="cursor: pointer;" ng-click="isCollapsed = !isCollapsed" class="text-center" ng-show="items.length > 1">
+				  	    					<div>
+				  	    						<span>
+					  	    						{{ (isCollapsed ? 'SHOW_OTHER' : 'SHOW_LESS') | translate }}
+												</span>
+											</div>
+											<div>
+					  	    					<span 
+									        		class="glyphicon"
+											        ng-class="{
+											          'glyphicon-chevron-down': isCollapsed,
+											          'glyphicon-chevron-up': !isCollapsed
+											        }">
+												</span>
+											</div>
+										</div>
+									</div>
+						  	    </td>
+						  	    <td 
+						  	    	class="col-xs-12 col-sm-12 col-md-1 col-lg-1" 
+						  	    	title="'CREATE_DATE' | translate" >
+						  	    		{{row.createdDate | date : 'dd/MM/yyyy HH:mm'}}
+						  	    </td>
+						  	    <td 
+						  	    	class="col-xs-12 col-sm-12 col-md-1 col-lg-1" 
+						  	    	title="'LAST_MODIFIED_DATE' | translate"
+						  	    	sortable="'lastModifiedDate'" >
+						  	    		{{row.lastModifiedDate | date : 'dd/MM/yyyy HH:mm'}}
+						  	    </td>
+						    </tr>
+						</table>	               
+		            </div>
+		        </div>
+	   	 </div>
+   </div>
+</div>
+	   	

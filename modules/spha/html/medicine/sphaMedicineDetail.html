@@ -1,0 +1,1273 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="anagraphicHistoryData">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{ (readOnly ? 'MEDICINE_DETAIL' : 'MEDICINE_EDIT') | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="medicineCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+	<div class="panel-body">
+		<div 
+			ng-class="medicineCtrl.alertClass" 
+			ng-show="medicineCtrl.message">
+			<strong translate="{{medicineCtrl.message | translate}}"></strong> 
+		</div>
+
+		<div class="row">
+			<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2 text-center">
+				<label for="HISTORY"
+							translate="{{'HISTORY' | translate}}">
+				</label>
+				<ul class="nav nav-pills nav-stacked">
+					<li ng-repeat="item in anagraphicHistoryData"  ng-class="{'active' : $index==selectedIndex, 
+					                                                          'hasBeenRectified': item.rectificationDetailInfoType === 'ADD' || 
+					                                                                                item.rectificationDetailInfoType === 'ADD_AIC6'}" >
+						<a href="" ng-click="changeSelectedEntry($index, true, true)" ng-if="!(item.rectificationDetailInfoType === 'hidden')">
+							<span>{{item.key.date}}</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-6 col-sm-9 col-md-10 col-lg-10" ng-style=" index!=-1 && { 'border':'1px solid #DDD', 'padding':'20px' }">
+				<form ng-submit="medicineCtrl.saveFormRect(myForm)" ng-if="selectedIndex>=0" xt-form role="form" name="myForm" >
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+							<uib-accordion>
+							    <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionMedicineData" >
+									<div uib-accordion-heading >
+										{{'MEDICINE_DATA'| translate}}
+									   <custom-popover-spha custom-popover-text="{{'MEDICINE_DATA' | translate}}"></custom-popover-spha>
+										   <div class="pull-right">  
+												 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionMedicineData, 'glyphicon-chevron-right': !medicineCtrl.accordionMedicineData}"></i>
+										   </div>
+									</div>
+									<div class="row">
+                                        <div ng-if="selectedObject['aic9'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="aic9"
+													translate="{{'detail.aic9' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.aic9' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="aic9"
+													id="aic9"
+													type="text"
+													maxlength="9"
+													class="form-control"
+													ng-model="selectedObject['aic9'].value"
+													ng-pattern="selectedObject['aic9'].pattern"
+													ng-disabled="readOnly || !selectedObject['aic9'].editable"
+													ng-class="addClass( 'aic9', myForm )"
+													ng-required="selectedObject['aic9'].required ? true : false"/>
+													<xt-validation-inline for="aic9"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['medicineDescription'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="medicineDescription"
+													translate="{{'detail.medicineDescription' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.medicineDescription' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="medicineDescription"
+													id="medicineDescription"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['medicineDescription'].value"
+													ng-pattern="selectedObject['medicineDescription'].pattern"
+													ng-disabled="readOnly || !selectedObject['medicineDescription'].editable"
+													ng-class="addClass( 'medicineDescription', myForm )"
+													ng-required="selectedObject['medicineDescription'].required ? true : false"/>
+													<xt-validation-inline for="medicineDescription"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['aic6'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="aic6"
+													translate="{{'detail.aic6' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.aic6' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="aic6"
+													id="aic6"
+													type="text"
+													maxlength="9"
+													class="form-control"
+													ng-model="selectedObject['aic6'].value"
+													ng-pattern="selectedObject['aic6'].pattern"
+													ng-disabled="readOnly || !selectedObject['aic6'].editable"
+													ng-class="addClass( 'aic6', myForm )"
+													ng-required="selectedObject['aic6'].required ? true : false"/>
+													<xt-validation-inline for="aic6"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['medicineCode'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="medicineCode"
+													translate="{{'detail.medicineCode' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.medicineCode' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="medicineCode"
+													id="medicineCode"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['medicineCode'].value"
+													ng-pattern="selectedObject['medicineCode'].pattern"
+													ng-disabled="readOnly || !selectedObject['medicineCode'].editable"
+													ng-class="addClass( 'medicineCode', myForm )"
+													ng-required="selectedObject['medicineCode'].required ? true : false"/>
+													<xt-validation-inline for="medicineCode"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['boxDescription'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="boxDescription"
+													translate="{{'detail.boxDescription' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.boxDescription' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="boxDescription"
+													id="boxDescription"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['boxDescription'].value"
+													ng-pattern="selectedObject['boxDescription'].pattern"
+													ng-disabled="readOnly || !selectedObject['boxDescription'].editable"
+													ng-class="addClass( 'boxDescription', myForm )"
+													ng-required="selectedObject['boxDescription'].required ? true : false"/>
+													<xt-validation-inline for="boxDescription"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['medicineType'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="medicineType"
+													translate="{{'detail.medicineType' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.medicineType' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="medicineType"
+													id="medicineType"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['medicineType'].value"
+													ng-pattern="selectedObject['medicineType'].pattern"
+													ng-disabled="readOnly || !selectedObject['medicineType'].editable"
+													ng-class="addClass( 'medicineType', myForm )"
+													ng-required="selectedObject['medicineType'].required ? true : false"/>
+													<xt-validation-inline for="medicineType"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['companyCode'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="companyCode"
+													translate="{{'detail.companyCode' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.companyCode' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="companyCode"
+													id="companyCode"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['companyCode'].value"
+													ng-pattern="selectedObject['companyCode'].pattern"
+													ng-disabled="readOnly || !selectedObject['companyCode'].editable"
+													ng-class="addClass( 'companyCode', myForm )"
+													ng-required="selectedObject['companyCode'].required ? true : false"/>
+													<xt-validation-inline for="companyCode"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['companyName'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="companyName"
+													translate="{{'detail.companyName' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.companyName' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="companyName"
+													id="companyName"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['companyName'].value"
+													ng-pattern="selectedObject['companyName'].pattern"
+													ng-disabled="readOnly || !selectedObject['companyName'].editable"
+													ng-class="addClass( 'companyName', myForm )"
+													ng-required="selectedObject['companyName'].required ? true : false"/>
+													<xt-validation-inline for="companyName"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['activeSubstance'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="activeSubstance"
+													translate="{{'detail.activeSubstance' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.activeSubstance' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="activeSubstance"
+													id="activeSubstance"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['activeSubstance'].value"
+													ng-pattern="selectedObject['activeSubstance'].pattern"
+													ng-disabled="readOnly || !selectedObject['activeSubstance'].editable"
+													ng-class="addClass( 'activeSubstance', myForm )"
+													ng-required="selectedObject['activeSubstance'].required ? true : false"/>
+													<xt-validation-inline for="activeSubstance"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['atcCode'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="atcCode"
+													translate="{{'detail.atcCode' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.atcCode' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="atcCode"
+													id="atcCode"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['atcCode'].value"
+													ng-pattern="selectedObject['atcCode'].pattern"
+													ng-disabled="readOnly || !selectedObject['atcCode'].editable"
+													ng-class="addClass( 'atcCode', myForm )"
+													ng-required="selectedObject['atcCode'].required ? true : false"/>
+													<xt-validation-inline for="atcCode"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['atcDescription'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="atcDescription"
+													translate="{{'detail.atcDescription' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.atcDescription' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="atcDescription"
+													id="atcDescription"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['atcDescription'].value"
+													ng-pattern="selectedObject['atcDescription'].pattern"
+													ng-disabled="readOnly || !selectedObject['atcDescription'].editable"
+													ng-class="addClass( 'atcDescription', myForm )"
+													ng-required="selectedObject['atcDescription'].required ? true : false"/>
+													<xt-validation-inline for="atcDescription"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['pharmaceuticalForm'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="pharmaceuticalForm"
+													translate="{{'detail.pharmaceuticalForm' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.pharmaceuticalForm' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="pharmaceuticalForm"
+													id="pharmaceuticalForm"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['pharmaceuticalForm'].value"
+													ng-pattern="selectedObject['pharmaceuticalForm'].pattern"
+													ng-disabled="readOnly || !selectedObject['pharmaceuticalForm'].editable"
+													ng-class="addClass( 'pharmaceuticalForm', myForm )"
+													ng-required="selectedObject['pharmaceuticalForm'].required ? true : false"/>
+													<xt-validation-inline for="pharmaceuticalForm"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['administrationRoute'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="administrationRoute"
+													translate="{{'detail.administrationRoute' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.administrationRoute' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="administrationRoute"
+													id="administrationRoute"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['administrationRoute'].value"
+													ng-pattern="selectedObject['administrationRoute'].pattern"
+													ng-disabled="readOnly || !selectedObject['administrationRoute'].editable"
+													ng-class="addClass( 'administrationRoute', myForm )"
+													ng-required="selectedObject['administrationRoute'].required ? true : false"/>
+													<xt-validation-inline for="administrationRoute"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['dosage'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="dosage"
+													translate="{{'detail.dosage' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.dosage' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="dosage"
+													id="dosage"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['dosage'].value"
+													ng-pattern="selectedObject['dosage'].pattern"
+													ng-disabled="readOnly || !selectedObject['dosage'].editable"
+													ng-class="addClass( 'dosage', myForm )"
+													ng-required="selectedObject['dosage'].required ? true : false"/>
+													<xt-validation-inline for="dosage"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['agentSis'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="agentSis"
+													translate="{{'detail.agentSis' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.agentSis' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="agentSis"
+													id="agentSis"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['agentSis'].value"
+													ng-pattern="selectedObject['agentSis'].pattern"
+													ng-disabled="readOnly || !selectedObject['agentSis'].editable"
+													ng-class="addClass( 'agentSis', myForm )"
+													ng-required="selectedObject['agentSis'].required ? true : false"/>
+													<xt-validation-inline for="agentSis"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['agentName'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="agentName"
+													translate="{{'detail.agentName' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.agentName' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="agentName"
+													id="agentName"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['agentName'].value"
+													ng-pattern="selectedObject['agentName'].pattern"
+													ng-disabled="readOnly || !selectedObject['agentName'].editable"
+													ng-class="addClass( 'agentName', myForm )"
+													ng-required="selectedObject['agentName'].required ? true : false"/>
+													<xt-validation-inline for="agentName"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										
+										<div ng-if="selectedObject['therapeuticIndication'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="therapeuticIndication"
+													translate="{{'detail.therapeuticIndication' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.therapeuticIndication' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="therapeuticIndication"
+													id="therapeuticIndication"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['therapeuticIndication'].value"
+													ng-pattern="selectedObject['therapeuticIndication'].pattern"
+													ng-disabled="readOnly || !selectedObject['therapeuticIndication'].editable"
+													ng-class="addClass( 'therapeuticIndication', myForm )"
+													ng-required="selectedObject['therapeuticIndication'].required ? true : false"/>
+													<xt-validation-inline for="therapeuticIndication"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['equivalenceGroup'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="equivalenceGroup"
+													translate="{{'detail.equivalenceGroup' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.equivalenceGroup' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="equivalenceGroup"
+													id="equivalenceGroup"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['equivalenceGroup'].value"
+													ng-pattern="selectedObject['equivalenceGroup'].pattern"
+													ng-disabled="readOnly || !selectedObject['equivalenceGroup'].editable"
+													ng-class="addClass( 'equivalenceGroup', myForm )"
+													ng-required="selectedObject['equivalenceGroup'].required ? true : false"/>
+													<xt-validation-inline for="equivalenceGroup"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+								</div>
+						   </uib-accordion>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+                            <uib-accordion>
+                                <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionAmministrativeData" >
+								    <div uib-accordion-heading >
+										<div id="accordionAmministrativeData-detail">
+											<span>{{'AMMINISTRATIVE_DATA'| translate}}
+											</span>
+											<custom-popover-spha custom-popover-text="{{'AMMINISTRATIVE_DATA' | translate}}"></custom-popover-spha>
+											<div class="pull-right">  
+												 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionAmministrativeData, 'glyphicon-chevron-right': !medicineCtrl.accordionAmministrativeData}"></i>
+										   </div>
+										</div> 
+								    </div>
+								   
+								    <div class="row">
+								   		<div ng-if="selectedObject['administrativeState'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="administrativeState"
+													translate="{{'detail.administrativeState' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.administrativeState' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="administrativeState"
+													id="administrativeState"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['administrativeState'].value"
+													ng-pattern="selectedObject['administrativeState'].pattern"
+													ng-disabled="readOnly || !selectedObject['administrativeState'].editable"
+													ng-class="addClass( 'administrativeState', myForm )"
+													ng-required="selectedObject['administrativeState'].required ? true : false"/>
+													<xt-validation-inline for="administrativeState"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['authorizationType'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="authorizationType"
+													translate="{{'detail.authorizationType' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.authorizationType' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="authorizationType"
+													id="authorizationType"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['authorizationType'].value"
+													ng-pattern="selectedObject['authorizationType'].pattern"
+													ng-disabled="readOnly || !selectedObject['authorizationType'].editable"
+													ng-class="addClass( 'authorizationType', myForm )"
+													ng-required="selectedObject['authorizationType'].required ? true : false"/>
+													<xt-validation-inline for="authorizationType"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['procedureType'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<label 
+													for="procedureType"
+													translate="{{'detail.procedureType' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.procedureType' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="procedureType"
+													id="procedureType"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['procedureType'].value"
+													ng-pattern="selectedObject['procedureType'].pattern"
+													ng-disabled="readOnly || !selectedObject['procedureType'].editable"
+													ng-class="addClass( 'procedureType', myForm )"
+													ng-required="selectedObject['procedureType'].required ? true : false"/>
+													<xt-validation-inline for="procedureType"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['supplySystem'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+											<label 
+													for="supplySystem"
+													translate="{{'detail.supplySystem' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.supplySystem' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="supplySystem"
+													id="supplySystem"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['supplySystem'].value"
+													ng-pattern="selectedObject['supplySystem'].pattern"
+													ng-disabled="readOnly || !selectedObject['supplySystem'].editable"
+													ng-class="addClass( 'supplySystem', myForm )"
+													ng-required="selectedObject['supplySystem'].required ? true : false"/>
+													<xt-validation-inline for="supplySystem"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['authorizationDate'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<label 
+													for="authorizationDate"
+													translate="{{'detail.authorizationDate' | translate}}">
+													authorizationDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.authorizationDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="authorizationDate"
+													name="authorizationDate"
+													is-open="datesOptions.authorizationDate.opened"
+													ng-disabled="readOnly || !selectedObject['authorizationDate'].editable"
+													ng-model="selectedObject['authorizationDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['authorizationDate'].pattern"
+													ng-required="selectedObject['authorizationDate'].required ? true : false"
+                                                    ng-class="addClass( 'authorizationDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.authorizationDate.opened = !datesOptions.authorizationDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="authorizationDate"></xt-validation-inline>
+										</div>
+										<div ng-if="selectedObject['authorizationSuspensionDate'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+											<label 
+													for="authorizationSuspensionDate"
+													translate="{{'detail.authorizationSuspensionDate' | translate}}">
+													authorizationSuspensionDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.authorizationSuspensionDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="authorizationSuspensionDate"
+													name="authorizationSuspensionDate"
+													is-open="datesOptions.authorizationSuspensionDate.opened"
+													ng-disabled="readOnly || !selectedObject['authorizationSuspensionDate'].editable"
+													ng-model="selectedObject['authorizationSuspensionDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['authorizationSuspensionDate'].pattern"
+													ng-required="selectedObject['authorizationSuspensionDate'].required ? true : false"
+                                                    ng-class="addClass( 'authorizationSuspensionDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.authorizationSuspensionDate.opened = !datesOptions.authorizationSuspensionDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="authorizationSuspensionDate"></xt-validation-inline>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['withdrawalEffectiveness'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+											<label 
+													for="withdrawalEffectiveness"
+													translate="{{'detail.withdrawalEffectiveness' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.withdrawalEffectiveness' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="withdrawalEffectiveness"
+													id="withdrawalEffectiveness"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['withdrawalEffectiveness'].value"
+													ng-pattern="selectedObject['withdrawalEffectiveness'].pattern"
+													ng-disabled="readOnly || !selectedObject['withdrawalEffectiveness'].editable"
+													ng-class="addClass( 'withdrawalEffectiveness', myForm )"
+													ng-required="selectedObject['withdrawalEffectiveness'].required ? true : false"/>
+													<xt-validation-inline for="withdrawalEffectiveness"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['withdrawalEffectivenessDate'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+											<label 
+													for="withdrawalEffectivenessDate"
+													translate="{{'detail.withdrawalEffectivenessDate' | translate}}">
+													withdrawalEffectivenessDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.withdrawalEffectivenessDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="withdrawalEffectivenessDate"
+													name="withdrawalEffectivenessDate"
+													is-open="datesOptions.withdrawalEffectivenessDate.opened"
+													ng-disabled="readOnly || !selectedObject['withdrawalEffectivenessDate'].editable"
+													ng-model="selectedObject['withdrawalEffectivenessDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['withdrawalEffectivenessDate'].pattern"
+													ng-required="selectedObject['withdrawalEffectivenessDate'].required ? true : false"
+                                                    ng-class="addClass( 'withdrawalEffectivenessDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.withdrawalEffectivenessDate.opened = !datesOptions.withdrawalEffectivenessDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="withdrawalEffectivenessDate"></xt-validation-inline>
+										</div>
+										<div ng-if="selectedObject['stockDisposal'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+											<label 
+													for="stockDisposal"
+													translate="{{'detail.stockDisposal' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.stockDisposal' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="stockDisposal"
+													id="stockDisposal"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['stockDisposal'].value"
+													ng-pattern="selectedObject['stockDisposal'].pattern"
+													ng-disabled="readOnly || !selectedObject['stockDisposal'].editable"
+													ng-class="addClass( 'stockDisposal', myForm )"
+													ng-required="selectedObject['stockDisposal'].required ? true : false"/>
+													<xt-validation-inline for="stockDisposal"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['stockDisposalDate'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+											<label 
+													for="stockDisposalDate"
+													translate="{{'detail.stockDisposalDate' | translate}}">
+													stockDisposalDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.stockDisposalDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="stockDisposalDate"
+													name="stockDisposalDate"
+													is-open="datesOptions.stockDisposalDate.opened"
+													ng-disabled="readOnly || !selectedObject['stockDisposalDate'].editable"
+													ng-model="selectedObject['stockDisposalDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['stockDisposalDate'].pattern"
+													ng-required="selectedObject['stockDisposalDate'].required ? true : false"
+                                                    ng-class="addClass( 'stockDisposalDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.stockDisposalDate.opened = !datesOptions.stockDisposalDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="stockDisposalDate"></xt-validation-inline>
+										</div>
+									</div>
+							   </div>
+						   </uib-accordion>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+							<uib-accordion>
+							    <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionMarketingData" >
+									<div uib-accordion-heading >
+										<div id="accordionMarketingData-detail">
+											<span>{{'MARKETING_DATA'| translate}}
+											</span>
+											<custom-popover-spha custom-popover-text="{{'MARKETING_DATA' | translate}}"></custom-popover-spha>
+											<div class="pull-right">  
+												 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionMarketingData, 'glyphicon-chevron-right': !medicineCtrl.accordionMarketingData}"></i>
+										   </div>
+										</div> 	
+										   
+								   </div>
+									<div class="row">
+										<div ng-if="selectedObject['firstMarketing'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="firstMarketing"
+													translate="{{'detail.firstMarketing' | translate}}">
+													firstMarketing 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.firstMarketing' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="firstMarketing"
+													name="firstMarketing"
+													is-open="datesOptions.firstMarketing.opened"
+													ng-disabled="readOnly || !selectedObject['firstMarketing'].editable"
+													ng-model="selectedObject['firstMarketing'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['firstMarketing'].pattern"
+													ng-required="selectedObject['firstMarketing'].required ? true : false"
+                                                    ng-class="addClass( 'firstMarketing', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.firstMarketing.opened = !datesOptions.firstMarketing.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="firstMarketing"></xt-validation-inline>
+										</div>
+										<div ng-if="selectedObject['delayCorrectionDate'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="delayCorrectionDate"
+													translate="{{'detail.delayCorrectionDate' | translate}}">
+													delayCorrectionDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.delayCorrectionDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="delayCorrectionDate"
+													name="delayCorrectionDate"
+													is-open="datesOptions.delayCorrectionDate.opened"
+													ng-disabled="readOnly || !selectedObject['delayCorrectionDate'].editable"
+													ng-model="selectedObject['delayCorrectionDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['delayCorrectionDate'].pattern"
+													ng-required="selectedObject['delayCorrectionDate'].required ? true : false"
+                                                    ng-class="addClass( 'delayCorrectionDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.delayCorrectionDate.opened = !datesOptions.delayCorrectionDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="delayCorrectionDate"></xt-validation-inline>
+										</div>
+                                        <div ng-if="anagraphicHistoryData[selectedIndex].rectificationDetailInfoType === 'ADD' ||
+                                                        anagraphicHistoryData[selectedIndex].rectificationDetailInfoType === 'ADD_AIC6'" 
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <label 
+                                                    for="validMarketing"
+                                                    translate="{{'detail.validMarketing' | translate}}">
+                                                    validMarketing 
+                                            </label>
+                                            <custom-popover-spha custom-popover-text="{{'detail.validMarketing' | translate}}"></custom-popover-spha>
+                                            <div class="input-group">
+                                                <input 
+                                                    uib-datepicker-popup="{{dateFormat}}" 
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="validMarketing"
+                                                    name="validMarketing"
+                                                    is-open="datesOptions.validMarketing.opened"
+                                                    ng-disabled="readOnly || 
+                                                                    (!((anagraphicHistoryData[selectedIndex].rectificationDetailInfoType === 'ADD'
+                                                                     || anagraphicHistoryData[selectedIndex].rectificationDetailInfoType === 'ADD_AIC6')
+                                                                        && !selectedObject['validMarketing'].editable))"
+                                                    ng-model="selectedObject['validMarketing'].value"
+                                                    ng-model-options="{ timezone: 'UTC' }"
+                                                    ng-pattern="selectedObject['validMarketing'].pattern"
+                                                    ng-required="selectedObject['validMarketing'].required ? true : false"
+                                                    ng-class="addClass( 'validMarketing', myForm )"
+                                                    ng-change="medicineCtrl.onValidMarketingChange('validMarketing', selectedObject['validMarketing'].value, myForm)"
+                                                    msg-dateispresent="ERROR_DATE_IS_PRESENT"/>
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-default" 
+                                                            ng-click="datesOptions.validMarketing.opened = !datesOptions.validMarketing.opened">
+                                                        <i class="glyphicon glyphicon-calendar"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                            <xt-validation-inline for="validMarketing"></xt-validation-inline>
+                                        </div>
+									</div>
+									<br/>
+								   	<div class="row">
+										<div ng-if="selectedObject['temporaryTerminationDate'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="temporaryTerminationDate"
+													translate="{{'detail.temporaryTerminationDate' | translate}}">
+													temporaryTerminationDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.temporaryTerminationDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="temporaryTerminationDate"
+													name="temporaryTerminationDate"
+													is-open="datesOptions.temporaryTerminationDate.opened"
+													ng-disabled="readOnly || !selectedObject['temporaryTerminationDate'].editable"
+													ng-model="selectedObject['temporaryTerminationDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['temporaryTerminationDate'].pattern"
+													ng-required="selectedObject['temporaryTerminationDate'].required ? true : false"
+                                                    ng-class="addClass( 'temporaryTerminationDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.temporaryTerminationDate.opened = !datesOptions.temporaryTerminationDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="temporaryTerminationDate"></xt-validation-inline>
+										</div>
+										<div ng-if="selectedObject['terminationDate'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="terminationDate"
+													translate="{{'detail.terminationDate' | translate}}">
+													terminationDate 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.terminationDate' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="terminationDate"
+													name="terminationDate"
+													is-open="datesOptions.terminationDate.opened"
+													ng-disabled="readOnly || !selectedObject['terminationDate'].editable"
+													ng-model="selectedObject['terminationDate'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['terminationDate'].pattern"
+													ng-required="selectedObject['terminationDate'].required ? true : false"
+                                                    ng-class="addClass( 'terminationDate', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.terminationDate.opened = !datesOptions.terminationDate.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="terminationDate"></xt-validation-inline>
+										</div>
+										<div ng-if="selectedObject['sunsetClause'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="sunsetClause"
+													translate="{{'detail.sunsetClause' | translate}}">
+													sunsetClause 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.sunsetClause' | translate}}"></custom-popover-spha>
+											<div class="input-group">
+												<input 
+													uib-datepicker-popup="{{dateFormat}}" 
+													type="text"
+													class="form-control"
+													id="sunsetClause"
+													name="sunsetClause"
+													is-open="datesOptions.sunsetClause.opened"
+													ng-disabled="readOnly || !selectedObject['sunsetClause'].editable"
+													ng-model="selectedObject['sunsetClause'].value"
+													ng-model-options="{ timezone: 'UTC' }"
+													ng-pattern="selectedObject['sunsetClause'].pattern"
+													ng-required="selectedObject['sunsetClause'].required ? true : false"
+                                                    ng-class="addClass( 'sunsetClause', myForm )"/>
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="datesOptions.sunsetClause.opened = !datesOptions.sunsetClause.opened">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+											</div>
+											<xt-validation-inline for="sunsetClause"></xt-validation-inline>
+										</div>
+									</div>
+							   </div>
+						   </uib-accordion>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+                            <uib-accordion>
+							    <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionEconomicData" >
+									<div uib-accordion-heading >
+										<div id="accordionEconomicData-detail">
+											<span>{{'ECONOMIC_DATA'| translate}}
+											</span>
+											<custom-popover-spha custom-popover-text="{{'ECONOMIC_DATA' | translate}}"></custom-popover-spha>
+											<div class="pull-right">  
+												 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionEconomicData, 'glyphicon-chevron-right': !medicineCtrl.accordionEconomicData}"></i>
+										   </div>
+										</div> 
+										   
+								   </div>
+								   
+								   	<div class="row">
+										<div ng-if="selectedObject['reimbursementClass'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="reimbursementClass"
+													translate="{{'detail.reimbursementClass' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.reimbursementClass' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="reimbursementClass"
+													id="reimbursementClass"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['reimbursementClass'].value"
+													ng-pattern="selectedObject['reimbursementClass'].pattern"
+													ng-disabled="readOnly || !selectedObject['reimbursementClass'].editable"
+													ng-class="addClass( 'reimbursementClass', myForm )"
+													ng-required="selectedObject['reimbursementClass'].required ? true : false"/>
+													<xt-validation-inline for="reimbursementClass"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['retailPrice'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="retailPrice"
+													translate="{{'detail.retailPrice' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.retailPrice' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="retailPrice"
+													id="retailPrice"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['retailPrice'].value"
+													ng-pattern="selectedObject['retailPrice'].pattern"
+													ng-disabled="readOnly || !selectedObject['retailPrice'].editable"
+													ng-class="addClass( 'retailPrice', myForm )"
+													ng-required="selectedObject['retailPrice'].required ? true : false"/>
+													<xt-validation-inline for="retailPrice"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['exFactoryPrice'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="exFactoryPrice"
+													translate="{{'detail.exFactoryPrice' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.exFactoryPrice' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="exFactoryPrice"
+													id="exFactoryPrice"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['exFactoryPrice'].value"
+													ng-pattern="selectedObject['exFactoryPrice'].pattern"
+													ng-disabled="readOnly || !selectedObject['exFactoryPrice'].editable"
+													ng-class="addClass( 'exFactoryPrice', myForm )"
+													ng-required="selectedObject['exFactoryPrice'].required ? true : false"/>
+													<xt-validation-inline for="exFactoryPrice"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['ssnDiscount'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="ssnDiscount"
+													translate="{{'detail.ssnDiscount' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.ssnDiscount' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="ssnDiscount"
+													id="ssnDiscount"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['ssnDiscount'].value"
+													ng-pattern="selectedObject['ssnDiscount'].pattern"
+													ng-disabled="readOnly || !selectedObject['ssnDiscount'].editable"
+													ng-class="addClass( 'ssnDiscount', myForm )"
+													ng-required="selectedObject['ssnDiscount'].required ? true : false"/>
+													<xt-validation-inline for="ssnDiscount"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['selectiveDiscount'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="selectiveDiscount"
+													translate="{{'detail.selectiveDiscount' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.selectiveDiscount' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="selectiveDiscount"
+													id="selectiveDiscount"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['selectiveDiscount'].value"
+													ng-pattern="selectedObject['selectiveDiscount'].pattern"
+													ng-disabled="readOnly || !selectedObject['selectiveDiscount'].editable"
+													ng-class="addClass( 'selectiveDiscount', myForm )"
+													ng-required="selectedObject['selectiveDiscount'].required ? true : false"/>
+													<xt-validation-inline for="selectiveDiscount"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['lawDiscount'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="lawDiscount"
+													translate="{{'detail.lawDiscount' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.lawDiscount' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="lawDiscount"
+													id="lawDiscount"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['lawDiscount'].value"
+													ng-pattern="selectedObject['lawDiscount'].pattern"
+													ng-disabled="readOnly || !selectedObject['lawDiscount'].editable"
+													ng-class="addClass( 'lawDiscount', myForm )"
+													ng-required="selectedObject['lawDiscount'].required ? true : false"/>
+													<xt-validation-inline for="lawDiscount"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+							    </div>
+						   </uib-accordion>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+                            <uib-accordion>
+							    <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionMoreInfo" >
+									<div uib-accordion-heading >
+										<div id="accordionMoreInfo-detail">
+											<span>{{'MORE_INFO'| translate}}
+											</span>
+											 <custom-popover-spha custom-popover-text="{{'MORE_INFO' | translate}}"></custom-popover-spha>
+											 <div class="pull-right">  
+												 <i class="glyphicon" ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionMoreInfo, 'glyphicon-chevron-right': !medicineCtrl.accordionMoreInfo}"></i>
+										   </div>
+										</div> 
+								   </div>
+								   
+								   	<div class="row">
+								   		<div ng-if="selectedObject['pht'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+											<label 
+													for="pht"
+													translate="{{'detail.pht' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.pht' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="pht"
+													id="pht"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['pht'].value"
+													ng-pattern="selectedObject['pht'].pattern"
+													ng-disabled="readOnly || !selectedObject['pht'].editable"
+													ng-class="addClass( 'pht', myForm )"
+													ng-required="selectedObject['pht'].required ? true : false"/>
+													<xt-validation-inline for="pht"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['therapeuticPlan'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+											<label 
+													for="therapeuticPlan"
+													translate="{{'detail.therapeuticPlan' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.therapeuticPlan' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="therapeuticPlan"
+													id="therapeuticPlan"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['therapeuticPlan'].value"
+													ng-pattern="selectedObject['therapeuticPlan'].pattern"
+													ng-disabled="readOnly || !selectedObject['therapeuticPlan'].editable"
+													ng-class="addClass( 'therapeuticPlan', myForm )"
+													ng-required="selectedObject['therapeuticPlan'].required ? true : false"/>
+													<xt-validation-inline for="therapeuticPlan"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['hospitalTreatment'].toShow"
+                                             class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+											<label 
+													for="hospitalTreatment"
+													translate="{{'detail.hospitalTreatment' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.hospitalTreatment' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="hospitalTreatment"
+													id="hospitalTreatment"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['hospitalTreatment'].value"
+													ng-pattern="selectedObject['hospitalTreatment'].pattern"
+													ng-disabled="readOnly || !selectedObject['hospitalTreatment'].editable"
+													ng-class="addClass( 'hospitalTreatment', myForm )"
+													ng-required="selectedObject['hospitalTreatment'].required ? true : false"/>
+													<xt-validation-inline for="hospitalTreatment"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div ng-if="selectedObject['definedDailyDose'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="definedDailyDose"
+													translate="{{'detail.definedDailyDose' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.definedDailyDose' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="definedDailyDose"
+													id="definedDailyDose"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['definedDailyDose'].value"
+													ng-pattern="selectedObject['definedDailyDose'].pattern"
+													ng-disabled="readOnly || !selectedObject['definedDailyDose'].editable"
+													ng-class="addClass( 'definedDailyDose', myForm )"
+													ng-required="selectedObject['definedDailyDose'].required ? true : false"/>
+													<xt-validation-inline for="definedDailyDose"></xt-validation-inline>		
+											</div>
+										</div>
+										<div ng-if="selectedObject['therapyDays'].toShow"
+                                             class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+											<label 
+													for="therapyDays"
+													translate="{{'detail.therapyDays' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.therapyDays' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<input
+													name="therapyDays"
+													id="therapyDays"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['therapyDays'].value"
+													ng-pattern="selectedObject['therapyDays'].pattern"
+													ng-disabled="readOnly || !selectedObject['therapyDays'].editable"
+													ng-class="addClass( 'therapyDays', myForm )"
+													ng-required="selectedObject['therapyDays'].required ? true : false"/>
+													<xt-validation-inline for="therapyDays"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+									<div ng-if="selectedObject['aifaNotes'].toShow"
+                                         class="row">
+										<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<label 
+													for="aifaNotes"
+													translate="{{'detail.aifaNotes' | translate}}"> 
+											</label>
+											<custom-popover-spha custom-popover-text="{{'detail.aifaNotes' | translate}}"></custom-popover-spha>
+											<div class="form-group">
+												<textarea
+													name="aifaNotes"
+													id="aifaNotes"
+													type="text"
+													class="form-control"
+													ng-model="selectedObject['aifaNotes'].value"
+													ng-pattern="selectedObject['aifaNotes'].pattern"
+													ng-disabled="readOnly || !selectedObject['aifaNotes'].editable"
+													ng-class="addClass( 'aifaNotes', myForm )"
+													ng-required="selectedObject['aifaNotes'].required ? true : false">
+												</textarea>
+												<xt-validation-inline for="aifaNotes"></xt-validation-inline>		
+											</div>
+										</div>
+									</div>
+							    </div>
+						   </uib-accordion>
+						</div>
+					</div>
+                    <br/>
+                    <div class = "text-right" ng-if="!readOnly && actions['EDIT'] && !(anagraphicHistoryData[selectedIndex].rectificationDetailInfoType === 'hidden')">
+                        <button type="button" class="btn btn-primary" ng-disabled="!actions['EDIT'] || !enableAdd" ng-click="medicineCtrl.addRectifiedObject()">
+                            {{'ADD' | translate}}
+                        </button>
+                        <button type="button" class="btn btn-primary" ng-disabled="!actions['EDIT']"  ng-click="medicineCtrl.resetForm(myForm, true, true)">
+                            {{'RESET' | translate}}
+                        </button>
+                        <button type="button" class="btn btn-primary hidden" ng-disabled="!actions['EDIT']"  ng-click="medicineCtrl.deleteRectificationDetail(myForm)">
+                            {{'CLEAR' | translate}}
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="save-rectification-button" ng-disabled="!actions['EDIT'] || !myForm.$valid">
+                            {{'SAVE' | translate}}
+                        </button>
+                    </div>
+                    <br/>
+				</form>
+				
+				<div class = "text-right">
+					<button type="button"
+			                       class="btn btn-default"
+			                       ng-click="medicineCtrl.goToTop()"
+		                       translate="{{'GO_TO_TOP' | translate}}">
+		        	</button>
+					<button type="button" class="btn btn-default" id="back-button-bottom-detail" ng-click="medicineCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+			
+		</div>
+
+	</div>
+</div> 
+

@@ -1,0 +1,199 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="companyCtrl.companyTable">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'COMPANY_SEARCH' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="text-right">
+				<button type="button" class="btn btn-default" ng-click="companyCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="companyCtrl.alertClass" ng-show="companyCtrl.message">
+						<strong translate="{{companyCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="companyCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+								<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="COMPANIES"
+											name="COMPANIES"
+											ng-model="companyCtrl.companies"
+											ng-required="true"/>		
+									</div>
+									<ui-select multiple ng-model="companyCtrl.companies" on-select="companyCtrl.submitSearch(filtersForm)">
+										<ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}"> 
+											<span>{{$item.label != null ? $item.value + ' - ' +  $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices 
+										refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+                                             <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                                 <button 
+                                                   class="btn btn-xs btn-success" 
+                                                   style="width: 100%; margin-top: 5px;" 
+                                                   ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+                                                     {{'SHOW_OTHER' | translate}}
+                                                 </button> 
+                                             </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+							</div>
+						</div>
+						<!-- 
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="END_PROCEDURE"
+										translate="{{'END_PROCEDURE' | translate}}">
+										END_PROCEDURE 
+								</label>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'END_PROCEDURE' | translate}}"
+										type="text"
+										class="form-control"
+										id="END_PROCEDURE"
+										name="END_PROCEDURE"
+										ng-class="addClass( 'END_PROCEDURE' )"
+										ng-model="companyCtrl.validProcedureTo"
+										ng-model-options="{ timezone: 'UTC' }"
+										ng-readonly="true"/>
+								</div>
+								<xt-validation-inline for="END_PROCEDURE"></xt-validation-inline>
+							</div>
+						</div>
+						-->
+						<br/>
+						<div class="text-right">
+							<button type="button"
+									class="btn btn-default"
+									ng-click = "companyCtrl.reset()"
+									translate="{{'RESET' | translate}}">
+							</button>
+						</div>
+						<br/>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					<table
+							ng-table="companyCtrl.companyTable"
+							class="table table-bordered">
+						<tr role="row"
+							ng-hide="companyCtrl.isLoading"
+							ng-init="companyCtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+							<!-- Abilitare se si prevede la debugMode
+							<td
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+									data-title="'ID' | translate"
+									ng-if="debugMode"
+									sortable="'id'">
+								<div class="text-center">
+									{{row.id}}
+								</div>
+							</td>-->
+							<td
+								class="col-xs-12 col-sm-6 col-md-2 col-lg-2"
+									data-title="'COMPANY_CODE' | translate"
+									sortable="'companyCode'">
+								<div class="text-center">
+									<a title="{{'COMPANY_CODE' | translate}}" href="" >
+										{{row.companyCode}}
+									</a>
+								</div>
+							</td>
+							<td
+								class="col-xs-12 col-sm-6 col-md-2 col-lg-2"
+									data-title="'COMPANY_NAME' | translate"
+									sortable="'companyName'">
+								<div class="text-center">
+									<a title="{{'COMPANY_NAME' | translate}}" href="" >
+										{{row.companyName}}
+									</a>
+								</div>
+							</td>
+														<td
+								class="col-xs-12 col-sm-6 col-md-2 col-lg-2"
+									data-title="'PMI' | translate"
+									sortable="'pmi'">
+								<div class="text-center">
+									<a title="{{'PMI' | translate}}" href="" >
+										{{row.pmi}}
+									</a>
+								</div>
+							</td>
+							<td
+								class="col-xs-12 col-sm-6 col-md-2 col-lg-2"
+									data-title="'AP' | translate"
+									sortable="'ap'">
+								<div class="text-center">
+									<a title="{{'AP' | translate}}" href="" >
+										{{row.ap}}
+									</a>
+								</div>
+							</td>
+							 <td
+                                    class="col-xs-12 col-sm-3 col-md-1 col-lg-1"
+                                    class="datesTable"   data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+                            </td>					
+						</tr>
+						<tr ng-show="companyCtrl.isLoading">
+							<td colspan="8">
+								<div id="loadingSpinnerRow"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br>
+            <div class="text-right">
+               <button type="button"
+                       class="btn btn-primary"
+                       ng-click="companyCtrl.export()"
+                       translate="{{'EXPORT' | translate}}">
+            	</button>
+            </div>
+			<br/>
+			<br/>
+			<div class = "text-right">
+			     <button type="button"
+                       class="btn btn-default"
+                       ng-click="companyCtrl.goToTop()"
+                       translate="{{'GO_TO_TOP' | translate}}">
+        		</button>
+				<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="companyCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

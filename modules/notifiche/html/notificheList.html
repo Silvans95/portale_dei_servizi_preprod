@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="modules/notifiche/css/notifiche.css">
+
+<div class="panel notifiche">
+  <div class="panel-header">
+    <div class="accordion legend">
+      <h5 class="title">
+        <a role="button" data-toggle="collapse" data-target="#legenda" aria-expanded="false"
+           aria-controls="collapseExample"
+           class="block collapsed cursor">
+          <span class="pull-right" translate>DETTAGLIO_LEGENDA</span>
+          <span translate>LEGENDA</span>
+        </a>
+      </h5>
+      <ul class="list inline icon">
+        <li>
+          <i class="fa fa-exclamation notificaNormal icon"></i>
+          <span translate>NORMALE</span>
+        </li>
+        <li>
+          <i class="fa fa-exclamation notificaAlert icon"></i>
+          <span translate>IMPORTANTE</span>
+        </li>
+        <li>
+          <i class="fa fa-exclamation notificaWarning icon"></i>
+          <span translate>CRITICO</span>
+        </li>
+      </ul>
+      <div id="legenda" class="collapse" aria-expanded="false">
+        <div class="content divider">
+          <span class="bold">Dettaglio</span></div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="field">
+              <i class="fa fa-exclamation notificaNormal icon"></i>
+              <label translate>NOTIFICA_BASSA_PRIORITA</label>
+              <p translate>GRADO_NORMALE_DESC</p>
+            </div>
+            <div class="field">
+              <i class="fa fa-exclamation notificaAlert icon"></i>
+              <label translate>NOTIFICA_MEDIA_PRIORITA</label>
+              <p translate>GRADO_IMPORTANTE_DESC</p>
+            </div>
+            <div class="field">
+              <i class="fa fa-exclamation notificaWarning icon"></i>
+              <label translate>NOTIFICA_ALTA_PRIORITA</label>
+              <p translate>GRADO_CRITICO_DESC</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="panel notifiche list" ng-repeat="notifica in listaNotifiche">
+  <div class="text-uppercase pb10">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+        <h4 ng-if="!notifica.letta" class="bold">
+          <!--<i class="fa fa-circle notificaNonLetta icon pr10" ng-if="!notifica.letta" title="{{ 'NOTIFICA_NON_LETTA' | translate}}"></i>-->
+          <i class="fa fa-exclamation notificaNormal icon pr10" ng-if="notifica.livello==1" title="{{ 'NORMALE' | translate}}"></i>
+          <i class="fa fa-exclamation notificaAlert icon pr10" ng-if="notifica.livello==2" title="{{ 'IMPORTANTE' | translate}}"></i>
+          <i class="fa fa-exclamation notificaWarning icon pr10" ng-if="notifica.livello==3" title="{{ 'CRITICO' | translate}}"></i>
+          <span class="text">{{notifica.titolo}}</span>
+        </h4>
+        <h4 ng-if="notifica.letta">
+          <!--<i class="fa fa-circle notificaNonLetta icon pr10" ng-if="!notifica.letta" title="{{ 'NOTIFICA_NON_LETTA' | translate}}"></i>-->
+          <i class="fa fa-exclamation notificaNormal icon pr10" ng-if="notifica.livello==1" title="{{ 'NORMALE' | translate}}"></i>
+          <i class="fa fa-exclamation notificaAlert icon pr10" ng-if="notifica.livello==2" title="{{ 'IMPORTANTE' | translate}}"></i>
+          <i class="fa fa-exclamation notificaWarning icon pr10" ng-if="notifica.livello==3" title="{{ 'CRITICO' | translate}}"></i>
+          <span class="text">{{notifica.titolo}}</span>
+        </h4>
+
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+        <div class="text-right"><i class="fa fa-calendar mr6"></i>{{ convertiInData(notifica.dataInizioValidita) | date:'dd/MM/yyyy HH:mm:ss' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p ng-if="!notifica.letta" ng-bind-html="notifica.notificaBodyAbstract" class="bold acapo"></p>
+    <p ng-if="notifica.letta" ng-bind-html="notifica.notificaBodyAbstract" class="acapo"></p>
+  </div>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <i ng-if="notifica.letta" class="fa fa-envelope-open-o text-left" title="Notifica letta" style="font-size: 18px;"></i>
+        <a ui-sref="notifiche.read({idNotifica:notifica.idMessaggio})" class="btn default text-uppercase  text-right" style="float: right;" translate>LEGGI_PIU</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel notifiche list" ng-if="listaNotifiche.length == 0 && listaNotifiche.$resolved">
+  <span translate>NESSUNA_NOTIFICA_PRESENTE</span>
+</div>

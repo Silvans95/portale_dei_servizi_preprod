@@ -1,0 +1,78 @@
+<div class="table-responsive {{table.class ? table.class : 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}}">
+    <div ng-if="!table.isPivot">
+        <table ng-table-dynamic="dynamicTable with table.header" class="table table-bordered">
+            <tbody>
+                <tr ng-show="!isLoading" ng-repeat="row in $data">
+                    <td ng-repeat="col in table.header"  ng-class="{'text-right': col.isCurrency || col.isDecimal, 'text-uppercase': col.field == 'classe'}">
+                        <span ng-if="!col.isCurrency && !col.isDecimal"  >
+                       		 {{row[col.field].toString()  | translate}}
+                        </span>
+                        <span ng-if="col.isCurrency && (row[col.field].toString()  | currency:'')!=''"   >
+							  {{row[col.field].toString()  | currency:''}}
+                         </span>
+ 						 <span ng-if="col.isCurrency && (row[col.field].toString()  | currency:'')==''"   >
+							 {{row[col.field].toString()  | translate}}
+						 </span>
+ 						 <span ng-if="col.isDecimal">
+							 {{row[col.field]  | number: 2}}
+						 </span>
+                    </td>
+                </tr>
+                <tr ng-show="isLoading">
+                    <td colspan="{{$columns.length}}">
+                        <div id="loadingSpinnerRow{{tableName+index}}">
+                            <div class="text-center" id="loading-bar-spinner{{tableName+index}}"><img src="modules/spha/images/loading.gif" alt=""></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot ng-if="table.footer && table.footer.header">
+                <tr ng-repeat="row in footer.items">
+                    <td ng-if="table.footer.colspan && table.footer.colspan.spanValue"
+                            style="background-color: #147bbd;color:white"
+                            colspan="{{table.footer.colspan.size ? table.footer.colspan.size : table.header.length - table.footer.header.length}}">
+                        <span>{{table.footer.colspan.spanValue | translate}}</span>
+                    </td>
+                    <td ng-repeat="footerCol in table.footer.header" ng-class="{'text-right': footerCol.isCurrency}">
+						<span ng-if="!col.isCurrency && (row[footerCol.field].toString()  | currency:'')==''"  >
+                       		 {{row[footerCol.field].toString()  | translate}}
+                        </span> 
+                        <span ng-if="col.isCurrency || (row[footerCol.field].toString()  | currency:'')!=''"   >
+							  {{row[footerCol.field].toString()  | currency:''}}
+                        </span>
+ 						<span ng-if="col.isCurrency && (row[footerCol.field].toString()  | currency:'')==''"   >
+							   {{row[footerCol.field].toString()  | translate}}
+                        </span>
+ 						
+					</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    
+    <div ng-if="table.isPivot" >
+        <table ng-table="dynamicTable" class="table table-striped">
+            <colgroup span="{{table.header.length}}"></colgroup>
+            <thead>
+                <tr>
+                    <th colspan="1" ng-repeat="columnName in table.header">
+                        {{ columnName | translate}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-show="!isLoading" scope="col" ng-repeat="(key, value) in table.items[0]">
+                    <th>{{ key | translate }}</th>
+                    <td ng-repeat="row in table.items" ng-class="{'text-right': table.valueIsCurrency }">{{row[key]}}</td>
+                </tr>
+                <tr ng-show="isLoading">
+                    <td colspan="{{table.header.length}}">
+                        <div>
+                            <div class="text-center"><img src="modules/spha/images/loading.gif" alt=""></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

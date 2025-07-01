@@ -1,0 +1,103 @@
+{
+
+	"LOADING": "Caricamento",
+	"HERE": "qui",
+	
+	"TIME.SECONDS": "secondi",
+
+	"MENU.ROOT": "Firma elettronica trasversale",
+	"MENU.STANDALONE": "Firma standalone",
+	"MENU.SESSION": "Firma documenti",
+	
+	"WELCOME.MESSAGE.LINE1": "Benvenuti nell'area dedicata alla Firma elettronica trasversale.",
+	"WELCOME.MESSAGE.LINE2": "Per iniziare a firmare espandere il menu a sinistra e selezionare la voce Esegui Firma.",
+
+	"SIGN.INITIALZING.MSG": "Inizializzazione...",
+
+	"SIGN.STATUS.TITLE": "Stato firma",
+
+	"SIGN.METHOD.ARSS.LABEL": "Firma remota",
+	"SIGN.METHOD.ASOL.LABEL": "Firma locale",
+	"SIGN.METHOD.ASOL.LABEL_ONLINE": "Firma locale (applet Java)",
+	"SIGN.METHOD.ARSS.LABEL_ONLINE": "Firma remota",
+
+	"SIGN.CHANNEL.SIST.LABEL": "Firma nel sistema online",
+	"SIGN.CHANNEL.EXSYST.LABEL": "Firma extra sistema (sul proprio PC)",
+	
+	"SIGN.TYPOLOGY.OLOG.LABEL": "Firma olografa",
+	"SIGN.TYPOLOGY.DIGT.LABEL": "Firma digitale (PADES/CADES)",
+
+	"SIGN.TYPE.CADES.LABEL": "CADES",
+	"SIGN.TYPE.PADES.LABEL": "PADES",
+	
+	"SIGN.LOAD_FILE_PANEL.TITLE": "1. Caricamento file",
+	"SIGN.LOAD_FILE_PANEL.SUBMIT": "Carica File",
+	"SIGN.LOAD_FILE_PANEL.FILES.TITLE": "File caricati",
+	"SIGN.LOAD_FILE_PANEL.ADD_FILE": "Aggiungi",
+	"SIGN.LOAD_FILE_PANEL.NEXT": "Avanti",
+
+	"SIGN.SET_SIGN_CHANNEL_PANEL.TITLE": "2. Seleziona canale di firma",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SELECT_METHOD.LABEL": "Canale di firma",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SUBMIT": "Seleziona",
+	"SIGN.SET_SIGN_CHANNEL_PANEL.SELECTED_CHANNEL.LABEL": "Canale di firma",
+
+	"SIGN.SET_EXSYST_FILE_PANEL.TITLE": "3. Firma extra sistema (sul proprio PC)",
+	"SIGN.SET_EXSYST_FILE_PANEL.MSG_ALERT": "Attenzione! Si ricorda che: \n- nel caso di firma Olografa nel pdf dovrà essere incluso il documento di identità \n- nel caso di firma di più documenti: \n- tutti i documenti dovranno essere firmati con la stessa tipologia di firma \n- è necessario controllare la corrispondenza tra il 'Documento originale' e il 'Documento caricato'",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.TYPE_SIGNATURE": "Selezionare la tipologia di firma",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ORIGINAL_DOCUMENT": "Documento originale",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD": "Download",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.UPLOAD": "Upload",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED": "Documento caricato",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED.TITLE": "Cancella File",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.RESULT": "Salvato",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE": "Fatto",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD_ZIP": "Scarica tutti i file",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ERROR.UPLOAD": "Errore durante il caricamento del file: Il file caricato è in un formato non valido",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.ERROR.SELECT_TYPOLOGY": "Seleziona una tipologia di firma",
+	"SIGN.SET_EXSYST_FILE_PANEL.TABLE.WARNING.CLICK_TYPOLOGY": "Attenzione! Selezionando una tipologia diversa, i file caricati verranno cancellati",
+
+	"SIGN.SET_EXSYST_FILE_PANEL.SUBMIT": "Seleziona",
+	"SIGN.SET_EXSYST_FILE_PANEL.SELECTED_CHANNEL.LABEL": "Canale di firma",
+
+	"SIGN.SET_SIGN_METHOD_PANEL.TITLE": "Selezione tipologia firma",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECT_METHOD.LABEL": "Metodo di firma",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECT_TYPE.LABEL": "Tipo di firma",
+	"SIGN.SET_SIGN_METHOD_PANEL.SUBMIT": "Seleziona",
+	"SIGN.SET_SIGN_METHOD_PANEL.LOADING_ASOL.MSG": "Inizializzazione motore di firma in corso...",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECTED_METHOD.LABEL": "Metodo di firma",
+	"SIGN.SET_SIGN_METHOD_PANEL.SELECTED_TYPE.LABEL": "Tipo di firma",
+	"SIGN.SIGNED_PANEL.TIMEOUT.BUTTON.LABEL": "L'operazione terminerà tra ",
+
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.TITLE": "Firma",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SUBMIT": "Firma",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.USERNAME.LABEL": "Username",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.PASSWORD.LABEL": "Password",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.OTP.LABEL": "OTP",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNING.LABEL": "Firma in corso ...",
+	"SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNED.LABEL": "Firma completata",
+
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.TITLE": "Firma",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SUBMIT": "Firma",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.PIN.LABEL": "Pin",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.CERTIFICATE.LABEL": "Certificato Firma",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.PREPARING_FILES.LABEL": "Preparazione dei file in corso ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNING.LABEL": "Firma in corso ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.FINALIZING.LABEL": "Completamento del processo di firma ...",
+	"SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNED.LABEL": "Firma completata",
+
+	"SIGN.SIGNED_EXSYST_PANEL.TITLE": "4. Firma completata",
+	"SIGN.SIGNED_EXSYST_PANEL.DONE.MSG": "Documenti Salvati Correttamente",
+	"SIGN.SIGNED_EXSYST_PANEL.ERROR.MSG": "Errore nel processo di firma",
+	"SIGN.SIGNED_EXSYST_PANEL.FAILURE.MSG": "Risultato Verifica firme",
+	"SIGN.SIGNED_EXSYST_PANEL.REDIRECT.BUTTON.LABEL": "Torna al sito",
+	"SIGN.SIGNED_EXSYST_PANEL.LOADING" : "Verifica firma in corso...",
+
+
+	"SIGN.SIGNED_PANEL.TITLE": "Firma completata",
+	"SIGN.SIGNED_PANEL.DONE.MSG": "Processo di firma completato",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES.TITLE": "File firmati",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.TITLE": "Tutti i file",
+	"SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.DOWNLOAD.LABEL": "Scarica",
+	"SIGN.SIGNED_PANEL.REDIRECT.BUTTON.LABEL": "Torna al sito"
+
+}

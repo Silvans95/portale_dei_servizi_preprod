@@ -1,0 +1,56 @@
+<div class="row">
+
+    <div class="col-sm-8">
+        <div
+                ngf-drop
+                ngf-select
+                ng-model="draggedFile"
+                class="drop-box"
+                ngf-drag-over-class="'dragover'"
+                ngf-multiple="true"
+                ngf-allow-dir="true"
+                ngf-accept="acceptedFiles"
+                ngf-pattern="acceptedFiles">
+            {{'UPLOAD_FILES_MESSAGE_DRAG_DROP' | translate}}
+        </div>
+        <div ngf-no-file-drop>
+            {{'UPLOAD_FILES_MESSAGE_DRAG_DROP_ERROR' | translate}}
+        </div>
+        <div class="text-right button-select-file">
+            <div
+                    class="btn btn-success"
+                    ngf-select="upload($files)"
+                    ngf-accept="acceptedFiles"
+                    ngf-pattern="acceptedFiles"
+                    ngf-multiple="true">
+                <i class="fa fa-folder-open-o"></i>
+                {{'UPLOAD_FILES_BUTTON' | translate}}
+                <span class="progress" ng-show="f.progress >= 0">
+						 <div
+                                 style="width:{{f.progress}}%"
+                                 ng-bind="f.progress + '%'">
+						 </div>
+				 	  </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="file-upload" style="max-height: 150px;    overflow-x: hidden;    overflow-y: scroll;">
+            <label>Files:</label>
+            <div class="row" ng-repeat="f in files">
+                <div class="col-md-12" ng-hide="f.state == 'DELETED'">
+					<span class="col-md-9 truncate-text">
+	       	 			{{f.name ? f.name : (f.filename ? f.filename : '')}} {{f.$error}} {{f.$errorParam}}
+					</span>
+                    <a  style="margin-left: 5px" target="_blank" rel="noopener noreferrer" ng-href="{{f.link ? f.link : link}}"><span
+                            class=" view-file glyphicon glyphicon-search"></span> </a>
+                        <span style="margin-left: 5px"  class="remove-file glyphicon glyphicon-trash"
+                                ng-click="removeFile(f)"></span>
+                    <a style="margin-left: 5px"  ng-if="f.download" target="_blank" rel="noopener noreferrer" ng-href="{{f.download}}"><span
+                            class=" view-file glyphicon glyphicon-download-alt"></span> </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

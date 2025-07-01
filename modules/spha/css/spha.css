@@ -1,0 +1,860 @@
+/* SPHA
+----------------------------------------------- */
+
+body .modal .modal-header button > span {
+    color: #585555;
+}
+
+.btn{
+	color:inherit;
+	text-transform: none;
+	margin-right:0px;
+}
+
+.input-group-btn{
+	font-size: 16px;
+}
+body main .panel.spha .k-textbox {
+  height: 2.134em;
+}
+
+body main #wrapper .whd table .dropdown .dropdown-menu a {
+  padding: 8px 20px;
+}
+
+body main #wrapper .spha .scrollable .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #147bbd;
+  background-color: rgba(20, 123, 189, 0.75);
+}
+
+.list-header {
+	background-color: #c8d2d9;
+}
+
+.page-links dd {
+    padding: .5rem .75rem;
+	margin-left: revert;
+	color: #007bff;
+	border-radius: .25rem;
+}
+
+body main .panel .panel-body{
+	padding: 15px;
+}
+
+/* Tab content */
+
+.tab-pane{
+	padding-bottom:25px;
+	padding-top:25px;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+}
+
+
+/**
+	Fix css per validazione aumentati margini inferiori delle riga
+	e azzerati quelli di classi form-group e radio 
+*/
+.validation .row {
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-bottom: 15px;
+}
+
+.validation .form-group{
+	margin-bottom:0px;
+}
+
+.validation .radio{
+	margin-bottom:0px;
+}
+
+/* end */
+
+/*textarea*/
+textarea {
+    resize: none;
+}
+
+/* css for validation */
+.validation.ng-submitted .ng-invalid {
+    border-color: #FA787E;
+}
+
+.validation .ng-valid.ng-dirty.ng-touched{
+  border-color: #78FA89;
+}
+
+.validation .ng-valid.ng-dirty.ng-not-empty{
+  border-color: #78FA89;
+}
+.validation .ng-invalid.ng-dirty.ng-touched{
+  border-color: #FA787E;
+}
+.validation .ng-invalid.ng-dirty.ng-not-empty{
+  border-color: #FA787E;
+}
+
+.has-errors{
+	 padding-bottom: 1px;
+	 border: solid 1px #FA787E;
+}
+
+.btn.green {
+  border-color: #3ec15b;
+  background-color: #3ec15b;
+}
+.btn.green:hover {
+  border-color: #3ec15b;
+  background-color: #3ec15b;
+}
+
+/*campo modificato*/
+.hasBeenModified{
+	padding-bottom: 10px;
+	border: solid 1px #0080ff;
+}
+
+/*campo modificato*/
+.hasBeenRectified{
+	padding-bottom: 10px;
+	border: solid 1px #9d1e25;
+}
+
+/*campo file modificato*/
+.fileHasBeenModified{
+	border: solid 2px #0080ff;
+}
+
+/* css validation*/
+.button{
+	border: 1px none transparent;
+	padding: 0px 0px;
+	width: 100%;
+	z-index: 10000;	
+}
+
+.button:hover,
+.button:after{
+	cursor:pointer;
+	background: transparent;
+	color: black;	
+}
+
+.button .form-control{
+	cursor:pointer;		
+}
+	
+.selectedField,
+.selectedField:hover,
+.selectedField:visited,
+.selectedField:active,
+.selectedField:focus{
+   	border: 2px solid #FA787E;
+   	background: transparent;
+}
+	
+
+/* file-upload directive  */
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 100%;
+    height: 150px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+.button-select-file{
+    margin-left: 10px;
+}
+
+.file-upload{
+    border: 1px solid #DDD;
+    padding: 5px;
+    margin-left:10px;
+    margin-top: 20px;
+}
+
+.remove-file:hover{
+	color: black;
+}
+.remove-file{
+	cursor: pointer;
+	color: black;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: green;
+    width: 0;
+}
+
+	
+/* css rules for documents list */
+.document .content {
+	position: relative;
+	background:none;
+	text-align: center;
+	align:center;
+	padding:10px;		
+}
+
+.document .content .documentLink .immagineDocumento{
+	width: 20px;
+}
+
+.content .nomeDocumento {
+	display:block;	
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.content .versioneDocumento {
+	display:block;	
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.content > a > span{
+	display:block;
+}
+
+.document .content .commands {
+	height:25px;
+}
+
+.document .content .buttons{
+	display:inline-block;
+	width:30px;
+	height:23px;
+	background-color: #e7e7e7;
+	border:none;
+	padding:4px 4px 4px 4px;
+	border-radius: 10px 10px 10px 10px;
+	color: #000000;
+	margin-top:10px;
+	vertical-align: bottom;
+	cursor:pointer;
+}
+
+.document .content .buttons > span,
+.document .content .buttons > i {
+	vertical-align: top;
+}
+
+/* css for ui-select  */
+
+.ui-select-bootstrap>.ui-select-match>.btn {
+    text-align: left!important;
+    overflow: hidden;
+}
+
+
+.dropdown .btn.form-control {
+	min-height: 34px;
+}
+
+.ui-select-bootstrap .ui-select-choices-row > a{
+    white-space: normal;
+}
+
+.ui-select-match-item > span:nth-child(2) > span{
+    white-space: normal;	
+}
+
+.ui-select-container.ui-select-multiple.ui-select-bootstrap.dropdown{
+	 border-color: #ddd;
+}
+
+.ui-select-multiple.ui-select-bootstrap > div .ui-select-search {
+    position: absolute;
+}
+
+.ui-select-multiple.ui-select-bootstrap:hover > div .ui-select-search:enabled {
+    position: inherit;
+}
+
+.ui-select-multiple.ui-select-bootstrap{
+	min-height: 34px;
+}
+
+/* class for title of subsections */
+.legend{
+	font-size: 18px;
+	
+}
+	
+/* file inside table*/
+.filesToSign .document .content .documentLink .immagineDocumento{
+    display:none;
+ }
+ 
+.filesToSign .content .nomeDocumento{
+    display:none;
+    
+ }
+.filesToSign .content .versioneDocumento{
+    display:none;
+ }
+ 
+ .filesToSign .document .content .buttons{
+ 	margin-top:0px;
+ }
+  .filesToSignName .document .content .documentLink .immagineDocumento{
+  	display:none;	
+ }
+ 
+ .filesToSignName .content .versioneDocumento{
+    display:none;
+ }
+ 
+ .filesToSignName .document .content .commands{
+    display:none;
+ }
+
+/* style for forum*/
+.tableThread thead {
+	display: none;
+}
+.tableThread .answerHeader{
+	height:30px;
+	border: 1px solid gray;
+	background-color: #337ab7;
+	color: white;		
+}
+.userHeader{
+	font-size:17px;
+	margin-left:1px;
+}
+.numberHeader{
+	display: inline-block;
+	font-size:17px;
+	float:right;	
+}
+.dateMessageThread{
+	margin-top:5px;
+	float:right;
+	color: white;
+	background-color:#66CC66;
+	padding-left:5px;
+	padding-right:5px;
+	border-radius: 5px;
+}
+
+.principalThreadContent{
+	min-height:100px;
+    border: 1px solid #ddd;
+    padding: 10px 8px 10px;	
+}
+
+.principalThreadContent .principalThreadHeader{
+	height:30px;
+	border: 1px solid gray;
+	background-color: #ff8040;
+	color: white;
+    padding-top: 8px;		
+}
+
+.bodyMessageThread{
+	padding-left: 30px;
+	min-height: 100px;
+}
+
+/*label fix css*/
+label{
+	display: initial;
+}
+
+/* remove group button*/
+
+.buttonRemoveGroup{
+	margin-top:-7px;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+* E.1.2 MedDRA section
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+table.E_1_2 td {
+	padding: 5px 15px;
+}
+
+
+/* validation summary style*/
+
+.listErrorsValidationSummary ul{
+	margin-left: 20px;
+	list-style-type: circle;
+}
+
+.errorSummaryText{
+	color:red;
+}
+
+.groupSummaryText{
+	color:blue;
+}
+
+.moreInfoSummaryText{
+	color:#8a6d3b;
+}
+
+
+/* cta table style for title and status and phase*/
+.tableDataTitleCollapseIn{
+    min-width: 338px;
+    max-width: 338px;
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableDataTitleCollapseOut{
+	 min-width: 338px;
+	 max-width: 338px;
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+.tableDataStatusCollapseIn{
+    min-width: 150px;
+    max-width: 150px;
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableDataStatusCollapseOut{
+	 min-width: 150px;
+	 max-width: 150px;
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+.tableDataPhasesCollapseIn{
+    min-width: 120px;
+    max-width: 120px;
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableDataPhasesCollapseOut{
+	 min-width: 120px;
+	 max-width: 120px;
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+.tableEditHistoryCollapseIn{
+    min-width: 338px;
+    max-width: 338px;
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableEditHistoryCollapseOut{
+	 min-width: 338px;
+	 max-width: 338px;
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+
+.tableDataListCollapseIn{
+    min-width: 50px;
+    max-width: 50px;
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableDataListCollapseOut{
+	 min-width: 50px;
+	 max-width: 50px;
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+
+
+/** Mantis 3979 - Filtri e liste / Aggiunta Parametro a Lista dei risultati per semaforo Scadenza */
+/** table rows */
+
+.table-row-green td, .table-row-green a  {
+	color: green;
+}
+.table-row-green a:hover  {
+	color: #777;
+}
+.table-row-green  div.btn-group , .table-row-green  div.btn-group > a {
+	color: black;
+}
+.table-row-green  div.btn-group:hover , .table-row-green  div.btn-group > a:hover {
+	color: white;
+}
+
+.table-row-red td, .table-row-red a  {
+	color: red;
+}
+.table-row-red a:hover  {
+	color: #777;
+}
+.table-row-red  div.btn-group , .table-row-red  div.btn-group > a {
+	color: black;
+}
+.table-row-red  div.btn-group:hover , .table-row-red  div.btn-group > a:hover {
+	color: white;
+}
+
+.table-row-yellow td, .table-row-yellow a  {
+	color: #f06c00;
+}
+.table-row-yellow a:hover  {
+	color: #777;
+}
+.table-row-yellow  div.btn-group , .table-row-yellow  div.btn-group > a {
+	color: black;
+}
+.table-row-yellow  div.btn-group:hover , .table-row-yellow  div.btn-group > a:hover {
+	color: white;
+}
+
+/* column style css */
+.datesTable{
+	min-width: 150px;
+	max-width: 150px;
+}
+/*
+button with text ellipsed
+.eudraCtTable{
+	min-width: 135px;
+}
+
+.actionColumTable{
+	min-width: 200px;
+}
+
+.firstActionOnListActions{
+  	white-space: nowrap; 
+    width: 150px; 
+    overflow: hidden;
+    text-overflow: ellipsis;	
+}
+*/
+
+.procedureCodeTable{
+	min-width: 90px;
+	max-width: 90px;
+}
+
+.approvedTable{
+	min-width: 30px;
+	max-width: 30px;
+}
+
+.versionTable{
+	min-width: 50px;
+	max-width: 50px;
+}
+
+.yearTable{
+	min-width:50px;
+	max-width:50px;
+}
+
+.fieldDateTable{
+	min-width:110px;
+	max-width:110px;
+}
+
+.fieldBooleanTable{
+	min-width:20px;
+	max-width:20px;
+}
+
+.fieldVHPTable{
+	min-width:80px;
+	max-width:80px;
+}
+
+.fieldVHPTableGreen{
+	min-width:80px;
+	max-width:80px;
+	color: green;
+}
+
+.fieldVHPTableBlack{
+	min-width:80px;
+	max-width:80px;
+	color:black;
+}
+
+.fieldATIMPTable{
+	min-width:80px;
+	max-width:80px;
+}
+
+.fieldContactPointTable{
+	min-width:160px;
+	max-width:160px;
+}
+
+.fieldCoordinatorCommitteeTable{
+	min-width:200px;
+	max-width:200px;
+}
+
+.fieldCoordinatorCommitteeCodeTable{
+	min-width:50px;
+	max-width:50px;
+}
+
+.actionColumTable{
+	min-width: 334px;
+}
+
+.titleTableProcedimenti{
+	min-width: 250px;
+}
+
+.firstActionOnListActions{
+	min-width:281px;	
+}
+
+
+.statusEnded {
+	color: gray;
+	font-weight: bold;
+}
+
+/* Forum */
+.tableDataForumRecipientsCollapseIn{
+   	overflow:hidden;
+   	text-overflow: ellipsis;
+   	white-space: nowrap;
+   	padding:0px;
+}
+.tableDataForumRecipientsCollapseOut{
+   	 overflow:inherit;
+   	 text-overflow: inherit;
+   	 white-space: inherit;
+   	 padding:0px;
+}
+
+/*css modal information*/
+
+.buttonModalInformation{
+	margin-bottom:5px;
+}
+.buttonModalInformation > a {
+	min-width:334px;
+}
+
+
+
+/* responsive modal*/
+.modal-iframe{
+	width: 100%;
+	height:85vh;
+}
+
+@media (min-width: 768px) {
+  body .modal-dialog {
+    width: 80%;
+  }
+}
+
+.modal-900px {
+	width: 900px !important;
+}
+
+.classic-fieldset {
+    padding: .35em .625em .75em;
+    margin: 0 2px;
+    border: 1px solid silver;
+}
+
+legend.classic-legend {
+    width: auto;
+    border-bottom: unset;
+}
+
+.responsive-fieldset {
+	display:table-cell; width: 100%
+}
+
+.form-group-label {
+	font-weight: bold;
+    font-style: oblique;
+    
+}
+
+.text-base-color{
+	color: #337ab7;
+}
+.table-button-directive-space{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.ce-table{
+	border-radius: 4px;
+	border-top-color: rgb(204, 204, 204);
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-right-color: rgb(204, 204, 204);
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-bottom-color: rgb(204, 204, 204);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-left-color: rgb(204, 204, 204);
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-image-source: initial;
+	border-image-slice: initial;
+	border-image-width: initial;
+	border-image-outset: initial;
+	border-image-repeat: initial;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	column-count: 2;
+	min-height: 100px!important;
+}
+
+.page-link-custom{
+	padding: .5rem .75rem;
+	margin-left: -1px;
+	line-height: 1.25;
+	color: #007bff;
+	background-color: #fff;
+	border: 1px solid #dee2e6;
+	border-radius: .25rem;
+}
+.page-link-custom:hover {
+	z-index: 2;
+	color: #0056b3;
+	text-decoration: none;
+	background-color: #e9ecef;
+	border-color: #dee2e6
+}
+.page-link-custom:focus {
+	z-index: 3;
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25)
+}
+.page-link-custom.disabled {
+	color: #6c757d;
+	pointer-events: none;
+	cursor: auto;
+	background-color: #fff;
+	border-color: #dee2e6
+}
+.page-link-custom.active{
+	z-index: 1;
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+}
+.truncate-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+.relative{
+	position: relative;
+}
+
+.closedProcedure{
+	background-color: red;
+}
+
+.nextProcedure{
+	background-color: yellow;
+}
+
+.activeProcedure{
+	background-color: green;
+}
+.inline-flex{
+	/*display: inline-flex !important;*/
+	display: flex;
+	flex-flow: row wrap;
+	align-content: space-between;
+	justify-content: start;
+}
+.ml-2{
+	margin-left: .5rem !important;
+}
+
+.missing-element {
+	text-decoration: underline solid;
+    color: red;
+}
+.linkDisabled {
+	cursor: not-allowed;
+	pointer-events: none;
+	color: grey;
+}
+
+.linkSuspended {
+	cursor: not-allowed;
+	pointer-events: none;
+	color: red;
+}
+
+.btn-primary {
+	color: #fff;
+}
+
+input.form-inline {
+  height: auto;
+  padding: 9px 0 5px 10px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: .28571429rem;
+  color: #555;
+  background-color: #fff;
+}
+
+input.form-inline.has-errors{
+	padding-bottom: 1px;
+	border: solid 1px #FA787E;
+}
+
+
+/* Footer Table  */
+.tableNoBorder{
+   	border:none;
+}
+.tableFooter{
+   	 background-color: #147bbd;
+   	 color:white;
+}

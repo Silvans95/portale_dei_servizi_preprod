@@ -1,0 +1,196 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="accordionMedicineData">
+                <div uib-accordion-heading>
+                    <div id="accordionMedicineData"
+                         ng-class="{'missing-element' : (filtersForm.COMPANIES.$invalid), '': !(filtersForm.COMPANIES.$invalid)}"> 
+                        <span uib-tooltip="{{'REQUIRED_FIELDS' | translate}}"
+                              tooltip-placement="right"
+                              ng-if="filtersForm.COMPANIES.$invalid">  
+                            {{'MEDICINE_DATA' | translate}} 
+                        </span>
+                        <span ng-if="!filtersForm.COMPANIES.$invalid"> 
+                            {{'MEDICINE_DATA' | translate}} 
+                        </span>
+                        <custom-popover-spha
+                                custom-popover-text="{{'MEDICINE_DATA' | translate}}"></custom-popover-spha>
+                        <div class="pull-right">
+                            <i class="glyphicon"
+                               ng-class="{'glyphicon-chevron-down': accordionMedicineData, 'glyphicon-chevron-right': !accordionMedicineData}"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+                        <custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+                        <div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm  )">
+                            <div style="height:0px;">
+                                <input style="opacity: 0;"
+                                       class="form-control"
+                                       id="COMPANIES"
+                                       name="COMPANIES"
+                                       ng-model="data.companies"
+                                       ng-required="lockedMode"/>
+                            </div>
+                            <ui-select multiple id="select-company" 
+                                       ng-model="data.companies"
+                                       ng-disabled="lockedMode"
+                                       on-remove="removeCompanies($item, $model)"
+                                       on-select="addCompanies($item, $model)">
+                                <ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+                                    <span>{{$item.label != null ? $item.value + ' - ' +  $item.label : $item.value}}</span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        refresh="getCompaniesPossibleValues(0, $select.search )"
+                                        refresh-delay="500"
+                                        repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+                                    <div>
+                                        <span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+                                    </div>
+                                    <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                        <button
+                                                class="btn btn-xs btn-success"
+                                                style="width: 100%; margin-top: 5px;"
+                                                ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+                                            {{'SHOW_OTHER' | translate}}
+                                        </button>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <xt-validation-inline for="COMPANIES"></xt-validation-inline>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label translate="{{'MEDICINE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'MEDICINE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'MEDICINE'| translate}}"
+                                   type="text"
+                                   ng-model="data.medicineDescription"
+                                   id="medicineDescription"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label translate="{{'ACTIVE_PRINCIPLE'| translate}}"></label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'ACTIVE_PRINCIPLE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'ACTIVE_PRINCIPLE'| translate}}"
+                                   type="text"
+                                   ng-model="data.activeIngredient"
+                                   id="activeIngredient"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <label translate="{{'AIC9'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'AIC9' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'AIC9'| translate}}"
+                                   type="text"
+                                   ng-model="data.aic"
+                                   id="aic"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <label translate="{{'BOX_DESCRIPTION'| translate}}"></label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'BOX_DESCRIPTION' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <input placeholder="{{'BOX_DESCRIPTION'| translate}}"
+                                   type="text"
+                                   ng-model="data.boxDescription"
+                                   id="boxDescription"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label translate="{{'REIMBURSEMENT_CLASS'| translate}}"></label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'REIMBURSEMENT_CLASS' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <div style="height:0px;">
+                                <input style="opacity: 0;"
+                                       class="form-control"
+                                       id="REIMBURSEMENT_CLASS"
+                                       name="REIMBURSEMENT_CLASS"
+                                       ng-model="data.reimbursementClass"
+                                />
+                            </div>
+                            <ui-select multiple id="select-reimbursement-class"
+                                       ng-model="data.reimbursementClass">
+                                <ui-select-match allow-clear="true" placeholder="{{'REIMBURSEMENT_CLASS'| translate}}">
+                                    <span>{{$item.label != null ? $item.label : $item.value}}</span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        refresh="getPossibleValues( 0, 'reimbursementClass', $select.search )"
+                                        refresh-delay="500"
+                                        repeat="option.value as option in filters.reimbursementClass.elements | filter: $select.search track by $index">
+                                    <div>
+                                        <span>{{option.label != null ? option.label : option.value}}</span>
+                                    </div>
+                                    <div ng-if="$index == $select.items.length-1 && $index < filters.reimbursementClass.total-1">
+                                        <button
+                                                class="btn btn-xs btn-success"
+                                                style="width: 100%; margin-top: 5px;"
+                                                ng-mouseover="getPossibleValues( filters.reimbursementClass.page + 1, 'reimbursementClass', $select.search )">
+                                            {{'SHOW_OTHER' | translate}}
+                                        </button>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <label translate="{{'ATC'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'ATC' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <div style="height:0px;">
+                                <input style="opacity: 0;"
+                                       class="form-control"
+                                       id="ATC"
+                                       name="ATC"
+                                       ng-model="data.atc"
+                                />
+                            </div>
+                            <ui-select multiple ng-model="data.atc">
+                                <ui-select-match allow-clear="true" placeholder="{{'ATC'| translate}}">
+                                    <span>{{$item.label != null ? $item.label : $item.value}}</span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        refresh="getPossibleValues( 0, 'atc', $select.search )"
+                                        refresh-delay="500"
+                                        repeat="option.value as option in filters.atc.elements | filter: $select.search track by $index">
+                                    <div>
+                                        <span>{{option.label != null ? option.label : option.value}}</span>
+                                    </div>
+
+                                    <div ng-if="$index == $select.items.length-1 && $index < filters.atc.total-1">
+                                        <button
+                                                class="btn btn-xs btn-success"
+                                                style="width: 100%; margin-top: 5px;"
+                                                ng-mouseover="getPossibleValues( filters.atc.page + 1, 'atc', $select.search )">
+                                            {{'SHOW_OTHER' | translate}}
+                                        </button>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

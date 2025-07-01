@@ -1,0 +1,33 @@
+						<div class="row">
+                            <label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+								<div class="form-group" ng-class="addClass( 'REGION' )">
+									<div style="height:0px;">
+										<input style="opacity: 0;"
+											class="form-control"
+											id="REGION"
+											name="REGION"
+											ng-model="region"/>		
+									</div>
+									<ui-select multiple ng-model="region">
+										<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+											<span>{{$item.label}}</span>
+										</ui-select-match>
+										<ui-select-choices repeat="option in filters.region | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="REGION"></xt-validation-inline>
+						</div>
+						<br/>
+						<div class="text-right">
+							<button type="submit"
+									class="btn orange text-uppercase"
+									translate="{{'SEARCH' | translate}}"
+									ng-disabled="form.$invalid">
+							</button>
+						</div>
+						<br/>
+

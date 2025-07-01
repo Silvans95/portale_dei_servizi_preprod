@@ -1,0 +1,24 @@
+  <div class="navbar navbar-default navbar-fixed-top mb0" style="background: #f1f0f1;  border-bottom: transparent; box-shadow: none;">
+      <as-header id="headerId" 
+        a-app-id="{{appId}}"
+        a-disable-profile-organizations = "true"
+        a-disable-organizations="true"
+        a-services-config="{{servicesConfig}}"
+      ></as-header>
+
+
+      <div id="lang-selector-container" 
+      
+      style="margin-bottom:15px; width: 100px; margin-left: auto; margin-right: 15px; letter-spacing: 0.44px; font-size: 14px; display: flex;">
+      <ap-lang-selector id="lang-selector" a-default-lang="{{defaultLang}}" (ePayload)="changeLanguage($event)"  >
+      <div slot="lang-list">                   
+        <div class="lang-item" id="IT" title="ITA">
+          <img src="./images/ita.svg" width="22px" height="16px" margin-right="5px;" />
+        </div>
+        <div class="lang-item" id="EN" title="ENG">
+          <img src="./images/eng.svg" width="22px" height="16px" margin-right="5px;"/>
+        </div>
+      </div>
+    </ap-lang-selector>
+    </div>
+  </div>

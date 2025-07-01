@@ -1,0 +1,7 @@
+{
+	"urlSphaProcedimentiApi": "api/",
+	"baseUrlProfile": "https://testnew.coll.aifa.gov.it/spha-profili/",
+	"baseUrlProcedure": "https://testnew.coll.aifa.gov.it/spha-procedimenti/",
+	"baseUrlAnagraphic": "https://testnew.coll.aifa.gov.it/spha-anagrafiche-flussi/"
+	
+}

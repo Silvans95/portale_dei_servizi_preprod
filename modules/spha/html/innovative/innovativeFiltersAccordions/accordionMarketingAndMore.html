@@ -1,0 +1,208 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="innovativeCtrl.accordionMarketingAndMore">
+                <div uib-accordion-heading>
+                    {{'MARKETING_AND_EFFECTIVENESS' | translate}}
+                    <custom-popover-spha
+                            custom-popover-text="{{'MARKETING_AND_EFFECTIVENESS' | translate}}"></custom-popover-spha>
+                    <div class="pull-right">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-chevron-down': innovativeCtrl.accordionMarketingAndMore, 'glyphicon-chevron-right': !innovativeCtrl.accordionMarketingAndMore}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_FROM"
+                                translate="{{'FIRST_MARKETING_FROM' | translate}}">
+                            FIRST_MARKETING_FROM
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_FROM' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_FROM' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_FROM"
+                                    name="FIRST_MARKETING_FROM"
+                                    is-open="datesOptions.FIRST_MARKETING_FROM.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_FROM', filtersForm )"
+                                    ng-model="innovativeCtrl.firstMarketingFrom"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_FROM')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_FROM"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_TO"
+                                translate="{{'FIRST_MARKETING_TO' | translate}}">
+                            VALID_MARKETING_TO
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_TO' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_TO' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_TO"
+                                    name="FIRST_MARKETING_TO"
+                                    is-open="datesOptions.FIRST_MARKETING_TO.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_TO, filtersForm' )"
+                                    ng-model="innovativeCtrl.firstMarketingTo"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_TO')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_TO"></xt-validation-inline>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'INNOVATIVE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'INNOVATIVE' | translate}}"></custom-popover-spha>
+                        <div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="INNOVATIVE"
+                                    name="INNOVATIVE"
+                                    value="{{innovativeCtrl.innovative | translate}}"
+                                    ng-readonly="true"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="EFFECTIVE_DATE"
+                                translate="{{'EFFECTIVE_DATE_LABEL' | translate}}">
+                            EFFECTIVE_DATE_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'EFFECTIVE_DATE' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'EFFECTIVE_DATE' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="EFFECTIVE_DATE"
+                                    name="EFFECTIVE_DATE"
+                                    is-open="datesOptions.EFFECTIVE_DATE.opened"
+                                    ng-class="addClass( 'EFFECTIVE_DATE, filtersForm' )"
+                                    ng-model="innovativeCtrl.effectiveDate"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('EFFECTIVE_DATE')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="EFFECTIVE_DATE"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="EXPIRATION_DATE"
+                                translate="{{'EXPIRATION_DATE_LABEL' | translate}}">
+                            EXPIRATION_DATE_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'EXPIRATION_DATE' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'EXPIRATION_DATE' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="EXPIRATION_DATE"
+                                    name="EXPIRATION_DATE"
+                                    is-open="datesOptions.EXPIRATION_DATE.opened"
+                                    ng-class="addClass( 'EXPIRATION_DATE, filtersForm' )"
+                                    ng-model="innovativeCtrl.expirationDate"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('EXPIRATION_DATE')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="EXPIRATION_DATE"></xt-validation-inline>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'INNOVATIVE_LEVEL'| translate}}"></label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'INNOVATIVE_LEVEL' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="innovativeCtrl.innovationLevel">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.innovationLevel | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'FUNDACCESS'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'FUNDACCESS' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="innovativeCtrl.fundAccess">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.fundAccess | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'FUNDTYPE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'FUNDTYPE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="innovativeCtrl.fundType">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.fundType | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

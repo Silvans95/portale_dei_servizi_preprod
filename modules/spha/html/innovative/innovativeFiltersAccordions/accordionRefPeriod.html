@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="innovativeCtrl.accordionRefPeriod">
+                <div uib-accordion-heading>
+                    <div ng-class="{'missing-element' : (filtersForm.VALID_MARKETING_FROM.$invalid || filtersForm.VALID_MARKETING_TO.$invalid), '': !(filtersForm.VALID_MARKETING_FROM.$invalid || filtersForm.VALID_MARKETING_TO.$invalid)}"> 
+										   		<span uib-tooltip="{{'REQUIRED_FIELDS' | translate}}"
+                                                      tooltip-placement="right"
+                                                      ng-if="(filtersForm.VALID_MARKETING_FROM.$invalid || filtersForm.VALID_MARKETING_TO.$invalid)">  
+									   			{{'REFERENCE_PERIOD' | translate}} 
+									   			</span>
+                        <span ng-if="!(filtersForm.VALID_MARKETING_FROM.$invalid || filtersForm.VALID_MARKETING_TO.$invalid)"> 
+									   			{{'REFERENCE_PERIOD' | translate}} 
+									   			</span>
+                        <custom-popover-spha
+                                custom-popover-text="{{'REFERENCE_PERIOD' | translate}}"></custom-popover-spha>
+                        <div class="pull-right">
+                            <i class="glyphicon"
+                               ng-class="{'glyphicon-chevron-down': innovativeCtrl.accordionRefPeriod, 'glyphicon-chevron-right': !innovativeCtrl.accordionRefPeriod}"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="VALID_MARKETING_FROM"
+                                translate="{{'VALID_MARKETING_FROM' | translate}}">
+                            VALID_MARKETING_FROM
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'VALID_MARKETING_FROM_LABEL' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'VALID_MARKETING_FROM' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="VALID_MARKETING_FROM"
+                                    name="VALID_MARKETING_FROM"
+                                    is-open="datesOptions.VALID_MARKETING_FROM.opened"
+                                    ng-class="addClass( 'VALID_MARKETING_FROM', filtersForm )"
+                                    ng-model="innovativeCtrl.validMarketingFrom"
+                                    ng-model-options="{ timezone: 'UTC' }"
+                                    datepicker-options="datesOptions.VALID_MARKETING_FROM.datepickerOptions"
+                                    ng-change="validateDate(filtersForm,innovativeCtrl.validMarketingFrom,'VALID_MARKETING_FROM')"
+                                    msg-daterange="ERROR_DATE_RANGE"
+                                    ng-required="true"/>
+                            <span class="input-group-btn">
+													<button type="button" class="btn btn-default"
+                                                            ng-click="openDatePopup('VALID_MARKETING_FROM')">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+                        </div>
+                        <xt-validation-inline for="VALID_MARKETING_FROM"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="VALID_MARKETING_TO"
+                                translate="{{'VALID_MARKETING_TO' | translate}}">
+                            VALID_MARKETING_TO
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'VALID_MARKETING_TO_LABEL' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'VALID_MARKETING_TO' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="VALID_MARKETING_TO"
+                                    name="VALID_MARKETING_TO"
+                                    is-open="datesOptions.VALID_MARKETING_TO.opened"
+                                    ng-class="addClass( 'VALID_MARKETING_TO', filtersForm )"
+                                    ng-model="innovativeCtrl.validMarketingTo"
+                                    ng-model-options="{ timezone: 'UTC' }"
+                                    datepicker-options="datesOptions.VALID_MARKETING_TO.datepickerOptions"
+                                    ng-change="validateDate(filtersForm, innovativeCtrl.validMarketingTo, 'VALID_MARKETING_TO')"
+                                    msg-daterange="ERROR_DATE_RANGE"
+                                    ng-required="true"/>
+                            <span class="input-group-btn">
+													<button type="button" class="btn btn-default"
+                                                            ng-click="openDatePopup('VALID_MARKETING_TO')">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</span>
+                        </div>
+                        <xt-validation-inline for="VALID_MARKETING_TO"></xt-validation-inline>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

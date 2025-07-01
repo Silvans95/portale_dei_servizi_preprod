@@ -1,0 +1,280 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="medicineCtrl.anagraphicTable">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 ng-if="!(medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL)">
+                    {{'MEDICINE_SEARCH' | translate }}
+            	</h4>
+                <h4 ng-if="medicineCtrl.isRectificationAic6ADD">
+                    {{'MEDICINE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'ADD_AIC6' | translate}}
+            	</h4>
+                <h4 ng-if="medicineCtrl.isRectificationAic6DEL">
+                    {{'MEDICINE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'DEL_AIC6' | translate}}
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="medicineCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="medicineCtrl.alertClass" ng-show="medicineCtrl.message">
+						<strong translate="{{medicineCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="medicineCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div ng-include="'modules/spha/html/medicine/medicineFiltersAccordions/accordionRefPeriod.html'"></div>
+                        <div ng-if="!(medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL)">
+                            <div ng-include="'modules/spha/html/medicine/medicineFiltersAccordions/accordionMedicineData.html'"></div>
+                            <div ng-include="'modules/spha/html/medicine/medicineFiltersAccordions/accordionMarketingAndMore.html'"></div>
+                        </div>
+                        <div ng-if="medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL">
+                            <div ng-include="'modules/spha/html/medicine/medicineFiltersAccordions/accordionRectificationFilters.html'"></div>
+                        </div>
+						<br/>
+						<div class="text-right">
+							<button type="button" 
+                                    class="btn btn-primary" 
+                                    ng-if="actions['EDIT'] && !(medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL)"
+                                    ng-click="medicineCtrl.aic6Rectification('ADD_AIC6')"
+                                    ng-disabled="medicineCtrl.isLoading">
+								{{'NEW' | translate}}
+							</button>
+	                        <button  type="button"
+										class="btn btn-primary"
+										ng-click = "medicineCtrl.reset()"
+										id="reset-button"
+										translate="{{'RESET' | translate}}"
+                                        ng-disabled="medicineCtrl.isLoading">
+							</button>
+							<button type="submit"
+									class="btn btn-primary"
+									id="search-button"
+									translate="{{'SEARCH' | translate}}"
+									ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !medicineCtrl.showData || medicineCtrl.isLoading">
+							</button>
+						</div>
+						<br/>
+					</form>
+                    <div ng-if="medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL">
+                        <div ng-include="'modules/spha/html/medicine/medicineFiltersAccordions/accordionAic6RectificationSaveForm.html'"></div>
+                    </div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body-section" ng-if="medicineCtrl.showData && actions['VIEW']">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					<table ng-table="medicineCtrl.anagraphicTable" class="table table-bordered">
+						<tr role="row" id="rows" ng-hide="medicineCtrl.isLoading" ng-init="medicineCtrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+							<!-- Abilitare se si prevede la debugMode
+							<td
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+									data-title="'ID' | translate"
+									ng-if="debugMode"
+									sortable="'id'">
+								<div class="text-center">
+									{{row.id}}
+								</div>
+							</td>-->
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('aic6') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'AIC6' | translate"
+									sortable="'aic6'">
+								<div class="text-center">
+									<a title="{{'AIC' | translate}}" href="" >
+										{{row.aic6}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('medicineDescription') !== -1)"
+									class="col-xs-12 col-sm-12 col-md-3 col-lg-3"
+									data-title="'MEDICINE' | translate"
+									ng-init = "medicineCtrl.isCollapsed[$index] = true"
+									ng-class="{'tableDataTitleCollapseIn': medicineCtrl.isCollapsed[$index] && row.medicineDescription.length > 150,
+									           'tableDataTitleCollapseOut': !medicineCtrl.isCollapsed[$index] && row.medicineDescription.length > 150 }"
+									sortable="'medicineDescription'">
+								{{row.medicineDescription}}
+								<div class="text-center">
+										<span
+											ng-click="medicineCtrl.isCollapsed[$index] = !medicineCtrl.isCollapsed[$index]"
+											ng-if="row.medicineDescription.length > 150"
+											style="cursor: pointer;"
+											class="glyphicon"
+											title="{{ (medicineCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+											ng-class="{
+												'glyphicon-chevron-down': medicineCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !medicineCtrl.isCollapsed[$index]
+											}">
+										</span>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('aic9') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'AIC9' | translate"
+									sortable="'aic9'">
+								<div class="text-center">
+                                    <img ng-if="actions && actions.RECTIFICATION_VIEW_DETAIL && row.rectificationDetailInfo.type"
+                                         ng-src="modules/spha/icons/{{medicineCtrl.rectificationDetailInfoTypeIconsUrl[row.rectificationDetailInfo.type]}}"
+                                         width="25" height="25"
+                                         alt="{{row.rectificationDetailInfo.type}}">
+									<a title="{{'AIC9' | translate}}">
+										{{row.aic9}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('boxDescription') !== -1)"
+									class="col-xs-12 col-sm-12 col-md-2 col-lg-2"
+									data-title="'BOX_DESCRIPTION' | translate"
+									ng-init = "medicineCtrl.isCollapsed[$index] = true"
+									ng-class="{'tableDataTitleCollapseIn': medicineCtrl.isCollapsed[$index] && row.boxDescription.length > 150, 
+									           'tableDataTitleCollapseOut': !medicineCtrl.isCollapsed[$index] && row.boxDescription.length > 150 }"
+									sortable="'boxDescription'">
+								{{row.boxDescription}}
+								<div class="text-center">
+										<span
+											ng-click="medicineCtrl.isCollapsed[$index] = !medicineCtrl.isCollapsed[$index]"
+											ng-if="row.boxDescription.length > 150"
+											style="cursor: pointer;"
+											class="glyphicon"
+											title="{{ (medicineCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+											ng-class="{
+												'glyphicon-chevron-down': medicineCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !medicineCtrl.isCollapsed[$index]
+											}">
+										</span>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('firstMarketing') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'FIRST_MARKETING' | translate"
+									sortable="'firstMarketing'">
+								<div class="text-center">
+									<a title="{{'FIRST_MARKETING' | translate}}">
+										{{row.firstMarketing | date : "dd/MM/yyyy" }}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('reimbursementClass') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'REIMBURSEMENT_CLASS' | translate"
+									sortable="'reimbursementClass'">
+								<div class="text-center">
+									<a title="{{'REIMBURSEMENT_CLASS' | translate}}">
+										{{row.reimbursementClass}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('retailPrice') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'RETAIL_PRICE' | translate"
+									sortable="'retailPrice'">
+								<div class="text-center">
+									<a title="{{'RETAIL_PRICE' | translate}}">
+										{{row.retailPrice | number: 2}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('exFactoryPrice') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'EX_FACTORY_PRICE' | translate"
+									sortable="'exFactoryPrice'">
+								<div class="text-center">
+									<a title="{{'EX_FACTORY_PRICE' | translate}}">
+										{{row.exFactoryPrice | number: 2 }}
+									</a>
+								</div>
+							</td>
+                            <td ng-if="(!medicineCtrl.fieldsToNotShow
+                                        || !(medicineCtrl.fieldsToNotShow && medicineCtrl.fieldsToNotShow.indexOf('actions') !== -1))
+                                        && !(medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL)"
+								class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+						</tr>
+						<tr ng-show="medicineCtrl.isLoading">
+							<td colspan="{{$columns.length}}">
+								<div id="loadingSpinnerRow"></div>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br/>
+			<div class ="text-right" ng-if="!(medicineCtrl.isRectificationAic6ADD || medicineCtrl.isRectificationAic6DEL)">
+				<button type="button" class="btn btn-primary" ng-if="actions['SUBMIT']" ng-disabled="medicineCtrl.isLoading" ng-click="medicineCtrl.submitRectification()">
+					{{'SUBMIT' | translate}}
+				</button>
+                <input type="file" style="display:none;" accept=".xlsx" id="file_content" onchange="angular.element(this).scope().fileChanged();this.value=null; return false;"/>
+				<button type="button" class="btn btn-primary" ng-disabled="!actions['IMPORT'] || medicineCtrl.isLoading" ng-click="medicineCtrl.upload()">
+					{{'IMPORT' | translate}}
+				</button>
+				<div class="btn-group">
+		   			 <a 
+	  					href=""
+	  					class="btn btn-primary"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || medicineCtrl.isLoading"
+						title="{{'EXPORT'| translate}}">
+                         {{'EXPORT'| translate}}
+					</a>
+					<button 
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || medicineCtrl.isLoading"
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						title=""
+						data-toggle="dropdown" 
+						aria-haspopup="true" 
+						aria-expanded="false">
+								<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+					</button>
+				    <ul class="dropdown-menu">
+			   			<li  ng-repeat="exportType in exportTypes">
+			   				<a 
+			   					class="text-center"
+					    		href=""
+					    		ng-click="medicineCtrl.switchExportType(filtersForm,exportType.value)"
+					    		title="{{exportType.label | translate}}">
+					    		{{exportType.label | translate}}
+					    		<img ng-src="{{ exportType.value == 1 ? 'modules/spha/images/file/pdf.png' : 'modules/spha/images/file/excel.png' }}" 
+                                     width="25" height="25" alt="export">
+					    	</a>
+					    	
+			   			</li>
+					</ul>
+				</div>
+			</div>
+			<br/>
+			<div class = "text-right">
+				<button type="button"
+                       class="btn btn-default"
+                       id="top-button"
+                       ng-click="medicineCtrl.goToTop()">
+                    {{'GO_TO_TOP' | translate}}
+            	</button>
+				<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="medicineCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

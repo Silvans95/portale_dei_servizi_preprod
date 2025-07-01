@@ -1,0 +1,154 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default"
+                 is-open="transparencyCtrl.accordionMarketingAndMore">
+                <div uib-accordion-heading>
+                    {{'MARKETING_AND_EFFECTIVENESS' | translate}}
+                    <custom-popover-spha
+                            custom-popover-text="{{'MARKETING_AND_EFFECTIVENESS' | translate}}"></custom-popover-spha>
+                    <div class="pull-right">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-chevron-down': transparencyCtrl.accordionMarketingAndMore, 'glyphicon-chevron-right': !transparencyCtrl.accordionMarketingAndMore}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_FROM"
+                                translate="{{'FIRST_MARKETING_FROM' | translate}}">
+                            FIRST_MARKETING_FROM
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_FROM' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_FROM' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_FROM"
+                                    name="FIRST_MARKETING_FROM"
+                                    is-open="datesOptions.FIRST_MARKETING_FROM.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_FROM', filtersForm )"
+                                    ng-model="transparencyCtrl.firstMarketingFrom"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_FROM')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_FROM"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_TO"
+                                translate="{{'FIRST_MARKETING_TO' | translate}}">
+                            VALID_MARKETING_TO
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_TO' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_TO' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_TO"
+                                    name="FIRST_MARKETING_TO"
+                                    is-open="datesOptions.FIRST_MARKETING_TO.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_TO, filtersForm' )"
+                                    ng-model="transparencyCtrl.firstMarketingTo"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_TO')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_TO"></xt-validation-inline>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'TRANSPARENCY'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'TRANSPARENCY' | translate}}"></custom-popover-spha>
+                        <div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="TRANSPARENCY"
+                                    name="TRANSPARENCY"
+                                    value="{{transparencyCtrl.transparency | translate}}"
+                                    ng-readonly="true"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="DATE_IN_TRANSPARENCY_LIST_LABEL"
+                                translate="{{'DATE_IN_TRANSPARENCY_LIST_LABEL' | translate}}">
+                            DATE_IN_TRANSPARENCY_LIST_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'DATE_IN_TRANSPARENCY_LIST' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'DATE_IN_TRANSPARENCY_LIST' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="DATE_IN_TRANSPARENCY_LIST"
+                                    name="DATE_IN_TRANSPARENCY_LIST"
+                                    is-open="datesOptions.DATE_IN_TRANSPARENCY_LIST.opened"
+                                    ng-class="addClass( 'DATE_IN_TRANSPARENCY_LIST, filtersForm' )"
+                                    ng-model="transparencyCtrl.dateInTransparency"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('DATE_IN_TRANSPARENCY_LIST,')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="DATE_IN_TRANSPARENCY_LIST,"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="DATE_OUT_TRANSPARENCY_LIST_LABEL"
+                                translate="{{'DATE_OUT_TRANSPARENCY_LIST_LABEL' | translate}}">
+                            DATE_OUT_TRANSPARENCY_LIST_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'DATE_OUT_TRANSPARENCY_LIST' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'DATE_OUT_TRANSPARENCY_LIST' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="DATE_OUT_TRANSPARENCY_LIST"
+                                    name="DATE_OUT_TRANSPARENCY_LIST"
+                                    is-open="datesOptions.DATE_OUT_TRANSPARENCY_LIST.opened"
+                                    ng-class="addClass( 'DATE_OUT_TRANSPARENCY_LIST, filtersForm' )"
+                                    ng-model="transparencyCtrl.dateOutTransparency"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('DATE_OUT_TRANSPARENCY_LIST')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="DATE_OUT_TRANSPARENCY_LIST"></xt-validation-inline>
+                    </div>
+
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

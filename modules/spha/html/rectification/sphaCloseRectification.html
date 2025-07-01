@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="closeRectificationCtrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row" ng-if="closeRectificationCtrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 ng-if="closeRectificationCtrl.showRequiredFields"
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!closeRectificationCtrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'CLOSE_RECTIFICATION' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="closeRectificationCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+<div  ng-show="closeRectificationCtrl.isLoading" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body"  ng-if="!closeRectificationCtrl.isLoading">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="closeRectificationCtrl.alertClass" ng-show="closeRectificationCtrl.message">
+						<strong translate="{{closeRectificationCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="closeRectificationCtrl.closeRectification(closeForm)" xt-form role="form" name="closeForm" >
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+								<label translate="{{'DESCRIPTION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'DESCRIPTION' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'DESCRIPTION'| translate}}"
+											type="text"
+											ng-model="closeRectificationCtrl.description"
+											id="description"
+											maxlength="100"
+											disabled
+											class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+								<label translate="{{'MODE'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'MODE' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'MODE', closeForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="MODE"
+											name="MODE"
+											ng-model="closeRectificationCtrl.mode"
+											ng-required="true"/>		
+									</div>
+									<ui-select 
+										ng-disabled="viewMode"
+										ng-change="closeRectificationCtrl.setViewNote($select.selected.label)"
+										ng-model="closeRectificationCtrl.mode">
+										<ui-select-match allow-clear="true">
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices 
+										repeat="mode in filters.mode | filter: $select.search track by $index">
+											<div>
+												<span translate="{{mode.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="MODE"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" ng-if="closeRectificationCtrl.showRequiredFields || viewMode">
+								<label 
+										for="NOTE"
+										translate="{{'NOTE' | translate}}">
+										NOTE 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'NOTE' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'NOTE', closeForm  )">
+									<textarea
+										ng-disabled="viewMode"
+										class="form-control"
+										style="height: 200px;overflow-y: auto;"
+										rows ="3"
+										id="NOTE"
+										name="NOTE"
+										required
+										ng-model="closeRectificationCtrl.note">
+									</textarea>	
+							 	</div>
+							 	<xt-validation-inline for="NOTE"></xt-validation-inline>
+						 	</div>
+						 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-if="closeRectificationCtrl.showRequiredFields || viewMode">
+						 		<label 
+										for="ATTACHMENT_REQUIRED"
+										translate="{{'ATTACHMENT_REQUIRED' | translate}}">
+										ATTACHMENT_REQUIRED 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'ATTACHMENT_REQUIRED' | translate}}"></custom-popover-spha>
+						 		<br>
+						 		<div class="form-group" ng-class="addClass( 'ATTACHMENT_REQUIRED', closeForm  )">
+							 		<input type="file" style="display:none;" id="file_content" onchange="angular.element(this).scope().fileChanged()" required>
+							 		
+								 	<a ng-title="{{ !viewMode ? 'CLOSE_ATTACHMENT' : 'DOWNLOAD_ATTACHMENT' | translate}}" href=""
+								 	ng-click="!viewMode ? closeRectificationCtrl.uploadAttachment() : closeRectificationCtrl.showProtocolledFile(idProtocol) ">
+								 	<img ng-src="{{ 'modules/spha/images/file/pdf.png' }}" width="25" height="25"></a>
+								 	
+								 	
+								 	<a	ng-if="viewMode"  href="" 
+									    	class="buttons table-button-directive-space" 
+									    	ng-click="showProtcolNumber()">
+									        <span class="fa fa-info-circle" title="{{'SHOW_PROTOCOL_NUMBER_LABEL' | translate}}"></span>
+									</a>
+							 	</div>
+							 	<xt-validation-inline for="ATTACHMENT_REQUIRED"></xt-validation-inline>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="panel-body-section">
+			<br>
+			<div class = "text-right" ng-if="!viewMode">
+				<button type="submit"
+							class="btn btn-primary"
+							ng-click="closeRectificationCtrl.reset(closeForm)"
+							translate="{{'RESET' | translate}}">
+				</button>
+				<button type="submit"
+							class="btn btn-primary"
+							ng-click="closeRectificationCtrl.closeRectification(closeForm)"
+							ng-disabled="!closeRectificationCtrl.isSaveAvailable || closeForm.$invalid"
+							translate="{{'SAVE' | translate}}">
+				</button>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="closeRectificationCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" ng-click="closeRectificationCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

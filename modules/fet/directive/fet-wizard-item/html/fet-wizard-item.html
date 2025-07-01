@@ -1,0 +1,47 @@
+<form method="POST" action="#" onsubmit="return false;" ng-submit="submit()">
+	<div class="fet-wizard-item {{cssClasses}}" ng-hide="status.status == FET.PanelStatus.HIDDEN">
+		<div class="panel panel-primary">
+			<div class="panel-heading" ng-bind="title">
+			</div>
+			<div class="panel-body">
+				<div class="alert alert-danger" ng-show="status.errorMessage" ng-bind="(status.errorMessage | translate)">
+				</div>
+				<div class="row">
+					<div class="col-lg-12" ng-transclude="before">
+					</div>
+				</div>
+				<div class="row" ng-show="status.status == FET.PanelStatus.ENABLED">
+					<div class="col-lg-12" ng-transclude="enabled">
+					</div>
+				</div>
+				<div class="row" ng-show="status.status == FET.PanelStatus.DISABLED">
+					<div class="col-lg-12" ng-transclude="disabled">
+					</div>
+				</div>
+				<div class="row" ng-show="status.status == FET.PanelStatus.LOADING">
+					<div class="col-lg-12" ng-transclude="loading">
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer" ng-show="commandsVisible">
+				<div class="row" ng-show="internalCommandsVisible">
+					<div class="col-lg-{{controlsCellSize}}" ng-show="button1Enabled">
+						<button type="button" class="btn btn-default btn-block" ng-click="button1OnClick()">
+				 			  <span ng-bind="button1"></span>
+						</button>
+					</div>
+					<div class="col-lg-{{controlsCellSize}}" ng-show="submitButtonEnabled">
+						<button type="submit" class="btn btn-success btn-block">
+				 			  <!-- <i class="fa fa-pencil"></i> -->
+				 			  <span ng-bind="submitButton"></span>
+						</button>
+					</div>
+				</div>
+				<div class="row" ng-show="status.status == FET.PanelStatus.ENABLED">
+					<div class="col-lg-12" ng-transclude="commands">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

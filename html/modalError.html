@@ -1,0 +1,70 @@
+
+<div class="modal-header bg-red">
+	<button type="button" data-dismiss="modal" aria-label="Close" class="close" ng-click="closeModal()">
+		<span aria-hidden="true" class="txt-white">X</span>
+	</button>
+    <h4 class="modal-title txt-white text-uppercase">Error</h4>
+</div>
+<div class="modal-body">
+	<h1>Error {{error.status}}: {{error.statusText}}</h1>
+	
+	<div ng-if="error.data.message" class="row">
+		<label class="col-sm-3">Error message: </label>
+		<div class="col-sm-9">{{error.data.message}}</div>
+	</div>
+	
+	<div class="row">
+		<label class="col-sm-3">Date: </label>
+		<div class="col-sm-9">{{date | date:'dd/MM/yyyy HH:mm:ss'}}</div>
+	</div>
+	
+	<div class="row">
+		<label class="col-sm-3">URL:</label>
+		<div class="col-sm-9"><a ng-href="{{error.config.url}}" target="_blank">{{error.config.url}}</a></div>
+	</div>
+	<div class="row">
+		<label class="col-sm-3">Method:</label>
+		<div class="col-sm-9">{{error.config.method}}</div>
+	</div>
+	<div class="row" ng-if="error.config.params">
+		<label class="col-sm-3">GET Params:</label>
+		<div class="col-sm-9">
+			<div ng-repeat="(key, param) in error.config.params" class="row">
+				<label class="col-sm-4">{{key}}</label> {{param}}
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if= "error.config.data">
+		<label class="col-sm-3">POST Params:</label>
+		<div class="col-sm-9">
+			<div ng-repeat="(key, param) in error.config.data" class="row">
+				<label class="col-sm-4">{{key}}</label> {{param}}
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<a ng-show="!viewDetail" ng-click="viewDetail=true" href="">Show details</a>
+	<a ng-show="viewDetail" ng-click="viewDetail=false"  href="">Hide details</a>
+	
+	<div ng-init="viewDetail=false" ng-if="viewDetail" class="row">
+		<label class="col-sm-12 mt20">
+			<div>Response:</div>
+		</label>
+		<div class="col-sm-12 mt20">
+			<a ng-show="!showAsHTML" ng-click="showAsHTML=true" href="">Show as HTML</a>
+			<a ng-show="showAsHTML" ng-click="showAsHTML=false"  href="">Show as code</a>
+		</div>
+		<div class="col-sm-12 mt20">
+			<pre ng-if="error.data.detail && !showAsHTML" style="word-wrap: break-word;">{{error.data.detail}}</pre>
+			<pre ng-if="!error.data.detail && !showAsHTML"  style="word-wrap: break-word;">{{error.data}}</pre>
+			<div style="overflow-x:auto" ng-if="showAsHTML" ng-bind-html="errorHTML" ></div>
+		</div>
+		
+	</div>
+</div>
+
+<div class="modal-footer">
+	<button type="button" data-dismiss="modal" aria-label="Close" class="btn bg-red" ng-click="closeModal()" >
+	    Chiudi
+	</button>
+</div>

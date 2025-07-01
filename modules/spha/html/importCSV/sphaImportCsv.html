@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="importCsvCtrl">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4 translate="{{'IMPORTCSV' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                <button type="button" class="btn btn-default" ng-click="importCsvCtrl.goBack()">
+                    {{'BACK' | translate}}
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-body-section">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div ng-class="importCsvCtrl.alertClass" ng-show="importCsvCtrl.message">
+                        <strong translate="{{importCsvCtrl.message | translate}}"></strong>
+                    </div>
+                    <form xt-form role="form" name="csvUploadForm">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+
+                                <label translate="{{'DBTYPE'| translate}}"></label>
+                                <div class="form-group" ng-class="addClass( 'tableType', csvUploadForm  )">
+                                    <div style="height:0px;">
+										<input style="opacity: 0;"
+											   class="form-control"
+											   id="tableType"
+											   name="tableType"
+											   ng-model="importCsvCtrl.tableType"
+											   ng-required="true"/>
+									</div>
+                                    <ui-select ng-model="importCsvCtrl.tableType">
+                                        <ui-select-match allow-clear="true">
+                                            <span translate="{{$select.selected.label | translate}}"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="option.value as option in dbType | filter: $select.search track by $index">
+                                            <div>
+                                                <span translate="{{option.label | translate}}"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <xt-validation-inline for="tableType"></xt-validation-inline>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <label translate="{{'FILE_NAME'| translate}}">
+                                </label>
+                                <div class="form-inline" >
+                                    <input ng-class="addClass( 'fileName', csvUploadForm  )"
+                                           placeholder="{{'FILE_NAME'| translate}}"
+                                           type="text"
+                                           ng-model="importCsvCtrl.fileName"
+                                           id="fileName"
+                                           name="fileName"
+                                           class="form-control" 
+                                           style="width:80%"
+                                           ng-required="true"/>
+                                    <input type="file" style="display:none;" accept=".csv" id="file_content"
+                                           onchange="angular.element(this).scope().fileChanged()">
+                                    <a class="buttons" ng-click="importCsvCtrl.upload()" style="padding: 1%;">
+                                        <span class="fa fa-plus-circle" title="{{'UPLOAD_FILE' | translate}}"></span>
+                                    </a>
+
+                                    <a ng-if="importCsvCtrl.csvFile && !csvUploadForm.$invalid" class="buttons" ng-click="importCsvCtrl.validateCsv()" style="padding: 1%;">
+                                        <span class="fa fa-upload" title="{{'START_UPLOAD' | translate}}"></span>
+                                    </a>
+                                </div>
+                                <xt-validation-inline for="fileName"></xt-validation-inline>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div ng-if="importCsvCtrl.isLoading">
+                                <div class="text-center" id="loading-bar-spinner"><img
+                                        src="modules/spha/images/loading.gif"></div>
+                            </div>
+                            <div ng-if="!importCsvCtrl.isLoading && importCsvCtrl.logImport" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label
+                                        for="LOG_IMPORT"
+                                        translate="{{'LOG_IMPORT' | translate}}">
+                                    LOG_IMPORT
+                                </label>
+                                <custom-popover-spha
+                                        custom-popover-text="{{'LOG_IMPORT' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                            <textarea
+                                    class="form-control"
+                                    style="height: 300px;overflow-y: auto;"
+                                    rows="3"
+                                    id="LOG_IMPORT"
+                                    name="LOG_IMPORT"
+                                    ng-required="false"
+                                    ng-model="importCsvCtrl.logImport">
+                            </textarea>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-click="importCsvCtrl.reset()"
+                                        translate="{{'RESET' | translate}}">
+                                </button>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        ng-disabled="!importCsvCtrl.importSuccess || importCsvCtrl.isLoading || csvUploadForm.$invalid"
+                                        ng-click="importCsvCtrl.save()"
+                                        translate="{{'SAVE' | translate}}">
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </br>
+            </br>
+
+            <div class="text-right">
+                <button type="button" class="btn btn-default" ng-click="importCsvCtrl.goBack()">
+                    {{'BACK' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

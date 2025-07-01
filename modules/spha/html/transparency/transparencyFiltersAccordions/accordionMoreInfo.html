@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="transparencyCtrl.accordionMoreInfo">
+                <div uib-accordion-heading>
+                    {{'MORE_INFO' | translate}}
+                    <custom-popover-spha custom-popover-text="{{'MORE_INFO' | translate}}"></custom-popover-spha>
+                    <div class="pull-right">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-chevron-down': transparencyCtrl.accordionMoreInfo, 'glyphicon-chevron-right': !transparencyCtrl.accordionMoreInfo}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'ORPHAN'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'ORPHAN' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="transparencyCtrl.orphan">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.orphan | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'INNOVATIVE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'INNOVATIVE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="transparencyCtrl.innovative">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.innovative | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'PATENTED'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'PATENTED' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="transparencyCtrl.patented">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.patented | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

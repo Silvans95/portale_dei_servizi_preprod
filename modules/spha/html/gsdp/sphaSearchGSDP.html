@@ -1,0 +1,232 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<link rel="stylesheet" href="modules/spha/css/sphaSearchGSDP.css">
+
+
+<div class="panel spha">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4 translate="{{'GSDP_SEARCH' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="gsdpCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-body-section">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div ng-class="gsdpCtrl.alertClass" id="error-message" ng-show="gsdpCtrl.message">
+                        <strong translate="{{gsdpCtrl.message | translate}}"></strong>
+                    </div>
+                    <form xt-form role="form" name="filtersForm" ng-submit="gsdpCtrl.submitSearch(filtersForm)">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                            <span class="requireClass" style="color:red;">*</span>
+                            <label translate="{{'GSDBDF'| translate}}">GSDBDF</label>
+                            <custom-popover-spha custom-popover-text="{{'GSDBDF' | translate}}"></custom-popover-spha>
+                            <div class="form-group" ng-class="addClass( 'GSDBDF', filtersForm  )">
+                                <div style="height:0px;">
+                                    <input style="opacity: 0;"
+                                           class="form-control"
+                                           id="GSDBDF"
+                                           name="GSDBDF"
+                                           ng-model="gsdpCtrl.gsdbdf"
+                                           ng-required="true"
+                                           ng-disabled="true"
+                                    />
+                                </div>
+                                <ui-select id="select-gsdbdf" ng-model="gsdpCtrl.gsdbdf" ng-disabled="true">
+                                    <ui-select-match allow-clear="true">
+                                        <span translate="{{$select.selected.label}}"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            refresh = "getGsdbdfPossibleValues(0, $select.search, filtersForm )" 
+                                            refresh-delay ="500"
+                                            repeat="option.value as option in filters.gsdbdf.elements | filter: $select.search track by $index">
+                                        <div>
+                                            <span>{{option.label != null ? option.label : option.value}}</span>
+                                        </div>
+                                        <div ng-if="$index == $select.items.length-1 && $index < filters.gsdbdf.total-1">
+                                            <button 
+                                              class="btn btn-xs btn-success" 
+                                              style="width: 100%; margin-top: 5px;" 
+                                              ng-mouseover="getGsdbdfPossibleValues( filters.gsdbdf.page + 1, $select.search, filtersForm)">
+                                                {{'SHOW_OTHER' | translate}}
+                                            </button> 
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <xt-validation-inline for="GSDBDF"></xt-validation-inline>
+                        </div>
+                        <!-- <br/>
+                        <div class="text-right">
+							<button type="button"
+		                            class="btn btn-primary text-uppercase"
+		                            ng-click="reset()"
+		                            id="reset-button"
+		                            translate="{{'RESET' | translate}}">
+		                    </button>
+                            <button type="submit" class="btn btn-primary text-uppercase"
+                            		id="search-button"
+                                    translate="{{'SEARCH' | translate}}"
+                                    ng-disabled="gsdpCtrl.gsdbdf == null || !actions['VIEW'] || !gsdpCtrl.showData">
+                            </button>
+                        </div>
+                        <br/> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body-section" ng-if="gsdpCtrl.showData">
+            <div class="row">
+	            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12">
+	                <h4 style="margin-left: 15px">{{'COMPANY_LIST' | translate}}</h4>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="form-group ce-table col-md-11" droppable="true">
+                        <div id="company-gsdbdf" ng-repeat="company in gsdpCtrl.companies track by $index" class="truncate">
+
+                            <span ng-class="company.isBelongToInstance ? 'companyList-Text-disabled' : 'companyList-Text'"
+                                  class="companyList"
+                                  id="check_{{company.companySis}}_{{$index}}"
+                                  name="companies[]"
+                                  code="{{company.companySis}}"
+                                  start-container=companyList
+                                  drag="{{!company.isBelongToInstance}}"
+                            > {{company.companySis + ' - ' + company.companyDescription }}</span>
+                        </div>
+                    </div>
+<!--                     <div class="col-md-1 text-right" style="vertical-align:middle"> -->
+
+<!--                         <a class="buttons button-group-add" ng-hide="gsdpCtrl.companies.length==0"> -->
+<!--                                         <span class="glyphicon glyphicon-plus" title="{{ADD_NEW_GSDP | translate}}" -->
+<!--                                               ng-click="addGroup()"> -->
+<!--                                         </span> -->
+<!--                         </a> -->
+<!--                     </div> -->
+                    <div class="text-right">
+
+
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="row form-group">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 scrollable-div form-group">
+                    <div ng-repeat="gsdp in gsdpCtrl.currentGSDPInstance.groups | startFrom: currentPage*pageSize | limitTo:pageSize track by $index ">
+                        <div ng-class="addClassToBox(gsdp.groupBoxState)">
+                            <div class="row">
+                                <div class="col-md-6 text-left">
+                                    <label for="gsdp_description_{{gsdp.id}}">{{ (currentPage*pageSize) + ($index+1) }}.
+                                        {{'GSDP_NAME' |
+                                        translate}}</label>
+                                    <input type="text" style="min-width: 200px" ng-model="gsdp.groupDescription"
+                                           name="gsdp_{{gsdp.id}}"
+                                           id="gsdp_description_{{gsdp.id}}"/>
+                                </div>
+<!--                                 <div class="col-md-6 text-right" ng-disabled="!actions['EDIT']" > -->
+<!--                                     <a class="buttons button-group-edit" -->
+<!--                                        ng-click="editGroup(((currentPage*pageSize) +$index) )"> -->
+<!--                                         <span class="glyphicon glyphicon-pencil" title="{{EDIT | translate}}"></span> -->
+<!--                                     </a> -->
+<!--                                     <a class="buttons button-group-delete" ng-disabled="!actions['EDIT']"> -->
+<!--                                         <span class="glyphicon glyphicon-trash" title="{{DELETE | translate}}" -->
+<!--                                               ng-click="deleteGroup( ((currentPage*pageSize) +$index) )"> -->
+<!--                                         </span> -->
+<!--                                     </a> -->
+<!--                                 </div> -->
+                            </div>
+                            <div class="form-group ce-table"
+                                 droppable="{{gsdpCtrl.selectedBoxIndex == ((currentPage*pageSize) +$index) }}">
+                                <div ng-repeat="company in gsdp.companies" class="truncate">
+                                   <span ng-class="(gsdp.groupBoxState ==  gsdpCtrl.ENUM_GROUP_BOX_STATE['new'] ||
+                                    gsdp.groupBoxState ==  gsdpCtrl.ENUM_GROUP_BOX_STATE['edit'] ) ?
+                                    'companyList-Text' : 'companyList-Text-disabled'"
+                                         id="group_company_{{company.companySis}}"
+                                         name="group_company[]"
+                                         class="groupList"
+                                         code="{{company.companySis}}"
+                                         start-container=group_list_{{ ((currentPage*pageSize) +$index) }}
+                                         drag="{{(gsdp.groupBoxState ==  gsdpCtrl.ENUM_GROUP_BOX_STATE['new'] ||
+                                    gsdp.groupBoxState ==  gsdpCtrl.ENUM_GROUP_BOX_STATE['edit'] ) ? 'true' : 'false'}}">
+                                       {{company.companySis + ' - ' + company.companyDescription }}
+                                   </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div ng-show="gsdpCtrl.currentGSDPInstance.groups.length">
+                    <div class="col-md-6">
+                        <ul class="pager" style="text-align: left!important;">
+                            <li>
+                                <button ng-disabled="currentPage == 0"
+                                        ng-class="currentPage == 0 ? 'page-link-custom disabled' : 'page-link-custom'"
+                                        ng-click="currentPage=currentPage-1">
+                                    <<
+                                </button>
+                                {{currentPage+1}}/{{numberOfPages()}}
+                            </li>
+                            <li>
+
+                                <button id="next-button"
+                                        ng-class="currentPage >= gsdpCtrl.currentGSDPInstance.groups.length/pageSize - 1 ?
+                                     'page-link-custom disabled' : 'page-link-custom'"
+                                        ng-disabled="currentPage >= gsdpCtrl.currentGSDPInstance.groups.length/pageSize - 1"
+                                        ng-click="currentPage=currentPage+1">>>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="pager" style="text-align: right!important;">
+                            <li ng-repeat="(key,value) in pagesSizeAllowed">
+                                <button id="page-button-{{value}}" ng-class="value === pageSize ? 'page-link-custom active' : 'page-link-custom'" ng-click="selectPageSize(key)">{{value}}</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+<!--                 <div class="text-right"> -->
+<!--                     <button type="button" ng-click="submit()" ng-disabled="gsdpCtrl.currentGSDPInstance === null || !actions['EDIT']" -->
+<!--                             translate="{{'SUBMIT' | translate}}" -->
+<!--                             class="btn btn-primary"> -->
+<!--                     </button> -->
+                
+<!--                     <button type="button" ng-click="save()" ng-disabled="gsdpCtrl.currentGSDPInstance === null || !actions['EDIT']" -->
+<!--                             translate="{{'SAVE' | translate}}" -->
+<!--                             class="btn btn-primary"> -->
+<!--                     </button> -->
+                    
+<!--                 </div> -->
+            <hr>
+                <div class="text-right">
+                	<button type="button"
+                       class="btn btn-default"
+                       ng-click="gsdpCtrl.goToTop()"
+                       translate="{{'GO_TO_TOP' | translate}}">
+        			</button>
+                    <button type="button" class="btn btn-default"  id="back-button-bottom" ng-click="gsdpCtrl.goBack()">
+                        {{'BACK' | translate}}
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>

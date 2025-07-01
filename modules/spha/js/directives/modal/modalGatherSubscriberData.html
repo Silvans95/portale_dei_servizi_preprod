@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title" >
+    	Sottoscrittore
+    </h3>
+    <button style="margin-top:-20px;" type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" id="modal-body">
+	<form 	name="submitForm" 
+			class="tab-form-demo" 
+			xt-form strategy="invalid" 
+       		ng-submit="submitForm.$valid && submit()" 
+           	novalidate>
+		
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="form-group" style="display: flex; flex-wrap: wrap; align-items: center; row-gap: 10px; column-gap: 5px;">
+						<span translate="{{ 'SUBJECT' | translate}}"></span>
+						<input ng-style="$ctrl.getWidth($ctrl.soggetto)" class="form-inline"
+							id="SUBJECT" name="SUBJECT" ng-model="$ctrl.soggetto"
+							ng-required="true"
+							ng-class="addClass( 'SUBJECT', submitForm )" />
+						<span translate="{{ 'AS' | translate}}"></span>
+						<input ng-style="$ctrl.getWidth($ctrl.qualificaSoggetto)"
+							class="form-inline" id="AS" name="AS" ng-model="$ctrl.qualificaSoggetto"
+							ng-required="true"
+							ng-class="addClass( 'AS', submitForm )" />
+						<span translate="{{ 'PT_SUBJECT' | translate}}"></span>
+						<span class="bold">{{$ctrl.companyName}},</span>
+						<span translate="{{ 'SITE_SUBJECT' | translate}}"></span>
+						<input ng-style="$ctrl.getWidth($ctrl.sedeAzienda)"
+							class="form-inline" id="SITE_COMPANY" name="SITE_COMPANY" ng-model="$ctrl.sedeAzienda"
+							ng-required="true"
+							ng-class="addClass( 'SITE_COMPANY', submitForm )" />
+						<span translate="{{ 'POWER_SUBJECT' | translate}}"></span>
+						<input ng-style="$ctrl.getWidth($ctrl.potereSoggetto)"
+						class="form-inline" id="POWER_SUBJECT" name="POWER_SUBJECT" ng-model="$ctrl.potereSoggetto"
+						ng-required="true"
+						ng-class="addClass( 'POWER_SUBJECT', submitForm )" />
+						<span translate="{{ 'RESPONSABILITY' | translate}}"></span>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<div class="text-right">
+				<button type="submit" ng-disabled="!submitForm.$valid" class="btn btn-primary" translate="{{'SUBMIT' | translate}}"></button>
+				<button type="button"
+					  data-dismiss="modal" 
+					  ng-click="cancel()" 
+					  class="btn btn-default" 
+					  translate="{{'CANCEL' | translate}}">
+			 </button>
+			</div>
+   	</form>
+</div>

@@ -1,0 +1,19 @@
+{
+	"COMPANY_SEARCH": "Ricerca azienda",
+	"COMPANY_DETAIL" : "Ricerca azienda",
+	"COMPANY_EDIT" : "Modifica azienda",
+	"COMPANIES": "Azienda farmaceutica",
+	"COMPANIES_TOOLTIP": "Azienda farmaceutica (Codice SIS e/o descrizione)",
+	"COMPANY": "Azienda farmaceutica",
+	"COMPANY_CODE": "Codice SIS",
+	"COMPANY_NAME": "Titolare SIS",
+	"PMI": "PMI",
+	"AP": "AP",
+	"END_PROCEDURE": "Data fine procedimento",
+	"SIS": "SIS",
+	"PUBLIC": "Azienda pubblica",
+    "companyCode": "Codice SIS ditta",
+	"companyName": "Ragione sociale",
+	"pmi": "PMI",
+	"ap": "AP"
+}

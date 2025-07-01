@@ -1,0 +1,14 @@
+{
+    "CE_SEARCH": "Ricerca CE (Conto Economico)",
+    "CE_URL": "CE",
+    "MEDICINES_COST_AIC":"Spesa per medicinali con AIC",
+	"MEDICINES_COST_NOT_AIC":"Spesa per medicinali senza AIC",
+	"REGIONAL_PRODUCTION_BLOOD_PRODUCTS_COST":"Spesa per emoderivati di produzione regionale",
+    "REGION": "Regione",
+    "REGION_CODE": "Codice Regione",
+    "REGION_TOOLTIP": "Regione (Codice e/o descrizione)",
+    "TIME_FROM": "Data da",
+	"TIME_FROM_TT": "Data da",
+	"TIME_TO": "Data a",
+	"TIME_TO_TT": "Data a"
+}

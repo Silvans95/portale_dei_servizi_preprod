@@ -1,0 +1,160 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<!-- <div class="panel spha" ng-cloak ng-if="FFICtrl.NSISTable"> -->
+<div class="panel spha" ng-cloak ng>
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'FFI_SEARCH' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="FFICtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+	  </div>
+	  <div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="scope.alertClass" ng-show="scope.message">
+						<strong translate="{{scope.message | translate}}"></strong>
+					</div>
+					<form ng-submit="FFICtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+								<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="REGION" name="REGION"
+											ng-model="FFICtrl.region" />
+									</div>
+									<ui-select id="select-region" multiple ng-model="FFICtrl.region">
+										<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+											<span>{{$item.label}}</span>
+										</ui-select-match>
+										<ui-select-choices
+											repeat="option in filters.region | filter: $select.search track by $index">
+											<div>
+												<span>{{option.object + ' - ' + option.label}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="REGION"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="YEAR" translate="{{'YEAR'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'YEAR' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'YEAR', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="YEAR" name="YEAR"
+											ng-model="FFICtrl.yearSelected"  ng-required="true" />
+									</div>
+
+									<ui-select  id="select-region" onkeypress="return false;" multiple ng-model="FFICtrl.yearSelected">
+										<ui-select-match allow-clear="true" placeholder="{{'YEAR'| translate}}">
+											<span>{{$item}}</span>
+										</ui-select-match>
+										<ui-select-choices repeat="option in FFICtrl.year | filter: $select.search track by $index">
+											<div>
+												<span>{{option}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="YEAR"></xt-validation-inline>
+							</div>
+						</div>
+
+
+						<div class="text-right">
+							<button type="button" class="btn btn-primary text-uppercase" ng-click="FFICtrl.reset()"
+								id="reset-button" translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit" class="btn btn-primary text-uppercase" id="search-button" translate="{{'SEARCH' | translate}}"
+								ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !FFICtrl.showData" >
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body-section" ng-if="FFICtrl.showData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					
+					<table ng-table="FFICtrl.FFITable" class="table table-bordered">
+						<tr id="rows" role="row" ng-hide="FFICtrl.isLoading" ng-init="FFICtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+							<td ng-if="!FFICtrl.fieldsToNotShow
+                                        || !(FFICtrl.fieldsToNotShow && FFICtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1" data-title="'REGION_CODE' | translate"
+								sortable="'region'">
+								<div class="text-center">
+									<a title="{{'REGION_CODE' | translate}}" href="" style="text-transform: capitalize;">
+										{{row.region}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!FFICtrl.fieldsToNotShow
+                                        || !(FFICtrl.fieldsToNotShow && FFICtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1" data-title="'REGION' | translate"
+								sortable="'region'">
+								<div class="text-center">
+									<a title="{{'REGION' | translate}}" href="" style="text-transform: capitalize;">
+										{{row.regionCodeLabel}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!FFICtrl.fieldsToNotShow
+                                        || !(FFICtrl.fieldsToNotShow && FFICtrl.fieldsToNotShow.indexOf('finalBalanceAccessFund') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'FINAL_BALANCE_ACCESS_FUND' | translate"
+								sortable="'finalBalanceAccessFund'">
+								<div class="text-center">
+									<a title="{{'FINAL_BALANCE_ACCESS_FUND' | translate}}" href="">
+										{{row.finalBalanceAccessFund | number: 2}}
+									</a>
+								</div>
+							</td>
+						</tr>
+						<tr ng-show="FFICtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+					</table>
+				</div>
+			</div>
+			<br/>
+			<div class = "text-right">
+				<button type="submit"
+						class="btn btn-primary"
+						translate="{{'EXPORT' | translate}}"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT']" 
+						ng-click="FFICtrl.exportReport(filtersForm)">
+				</button>
+			</div>
+			<br/>
+			<div class = "text-right">
+				<button type="button" class="btn btn-default" ng-click="FFICtrl.goToTop()"
+					translate="{{'GO_TO_TOP' | translate}}">
+				</button>
+				<button type="button" class="btn btn-default"  id="back-button-bottom" ng-click="FFICtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

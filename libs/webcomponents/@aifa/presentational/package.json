@@ -1,0 +1,25 @@
+{
+	"name": "@aifa/presentational",
+	"version": "1.0.0",
+	"description": "Libreria di Web Components di presentazione",
+	"author": "ADT <AlmavivA Digitaltec>",
+	"license": "MIT",
+	"scripts": {
+		"update:patch": "npm --no-git-tag-version version patch",
+		"update:minor": "npm --no-git-tag-version version minor",
+		"update:major": "npm --no-git-tag-version version major"
+	},
+	"keywords": [
+		"Web",
+		"Components",
+		"angular",
+		"elements"
+	],
+	"dependencies": {
+		"@aifa/commons": "~1.0.0"
+	},
+	"main": "presentational.js",
+	"files": [
+		"presentational.js"
+	]
+}

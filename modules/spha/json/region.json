@@ -1,0 +1,25 @@
+[
+	{"id_region_name":0, "language_code":"IT", "label":"Totale Nazionale", "object":"000","id_country" : 100000000430},
+	{"id_region_name":1, "language_code":"IT", "label":"Piemonte", "object":"010","id_country" : 100000000430},
+	{"id_region_name":2, "language_code":"IT", "label":"Valle d'Aosta", "object":"020","id_country" : 100000000430},
+	{"id_region_name":3, "language_code":"IT", "label":"Lombardia", "object":"030","id_country" : 100000000430},
+	{"id_region_name":21, "language_code":"IT", "label":"Prov.Auton. Bolzano", "object":"041","id_country" : 100000000430},
+	{"id_region_name":4, "language_code":"IT", "label":"Prov.Auton. Trento", "object":"042","id_country" : 100000000430},
+	{"id_region_name":5, "language_code":"IT", "label":"Veneto", "object":"050","id_country" : 100000000430},
+	{"id_region_name":6, "language_code":"IT", "label":"Friuli Venezia Giulia", "object":"060","id_country" : 100000000430},
+	{"id_region_name":7, "language_code":"IT", "label":"Liguria", "object":"070","id_country" : 100000000430},
+	{"id_region_name":8, "language_code":"IT", "label":"Emilia Romagna", "object":"080","id_country" : 100000000430},
+	{"id_region_name":9, "language_code":"IT", "label":"Toscana", "object":"090","id_country" : 100000000430},
+	{"id_region_name":10, "language_code":"IT", "label":"Umbria", "object":"100","id_country" : 100000000430},
+	{"id_region_name":11, "language_code":"IT", "label":"Marche", "object":"110","id_country" : 100000000430},
+	{"id_region_name":12, "language_code":"IT", "label":"Lazio", "object":"120","id_country" : 100000000430},
+	{"id_region_name":13, "language_code":"IT", "label":"Abruzzo", "object":"130","id_country" : 100000000430},
+	{"id_region_name":14, "language_code":"IT", "label":"Molise", "object":"140","id_country" : 100000000430},
+	{"id_region_name":15, "language_code":"IT", "label":"Campania", "object":"150","id_country" : 100000000430},
+	{"id_region_name":16, "language_code":"IT", "label":"Puglia", "object":"160","id_country" : 100000000430},
+	{"id_region_name":17, "language_code":"IT", "label":"Basilicata", "object":"170","id_country" : 100000000430},
+	{"id_region_name":18, "language_code":"IT", "label":"Calabria", "object":"180","id_country" : 100000000430},
+	{"id_region_name":19, "language_code":"IT", "label":"Sicilia", "object":"190","id_country" : 100000000430},
+	{"id_region_name":20, "language_code":"IT", "label":"Sardegna", "object":"200","id_country" : 100000000430}
+
+]

@@ -1,0 +1,10 @@
+{
+    "REGION":"Regione",
+    "REGION_CODE": "Codice Regione",
+    "REGION_TOOLTIP": "Regione (Codice e/o descrizione)",
+    "FFI_SEARCH": "Search Innovative Medicine Fund (FFI)",
+    "INNOVATION_FUND":"Innovation Found�",
+    "FINAL_BALANCE_ACCESS_FUND":"Final access to the fund of the 500 mln",
+    "REPROPORTIONED_ACCESS_FUND":"Proportionate access to the fund of 500 mln",
+    "YEAR":"Year"
+}

@@ -1,0 +1,434 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="ctrl.procedureReportTable">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-switch="ctrl.procedureType">
+                <h4 ng-switch-when="PB5"
+                    translate="{{ 'PAYMENT_PB5_REPORT' | translate }}">
+                </h4>
+                <h4 ng-switch-when="PB183"
+                    translate="{{ 'PAYMENT_PB183_REPORT' | translate }}">
+                </h4>
+                <h4 ng-switch-when="SHELF"
+                    translate="{{ 'PAYMENT_SHELF_REPORT' | translate }}">
+                </h4>
+            </div>
+        	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default"  id="back-button-top" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="ctrl.submitSearch()" xt-form  name="filtersForm" novalidate>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+								<label translate="{{'TYPE_PROCEDIMENTI'| translate}}"></label>
+								<div class="form-group" >
+									<ui-select ng-model="ctrl.typeProcedimenti" 
+											ng-change="ctrl.onTypeChange()"
+											ng-disabled="!ownerTypesProcedimenti || ownerTypesProcedimenti.length<2">
+										<ui-select-match>
+											<span translate="{{$select.selected| translate}}"></span>
+										</ui-select-match>
+										<ui-select-choices repeat="item as item in ownerTypesProcedimenti">
+											<div>
+												<span translate="{{item| translate}}"></span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		                        <label for="PROCEDURES" translate="{{'PROCEDURES'| translate}}">PROCEDURES</label>
+		                        <custom-popover-spha custom-popover-text="{{'PROCEDURES' | translate}}"></custom-popover-spha>
+		                        <div class="form-group" >
+		                            <div style="height:0px;">
+		                                <input style="opacity: 0;"
+		                                       class="form-control"
+		                                       id="PROCEDURES"
+		                                       name="PROCEDURES"
+		                                       ng-model="ctrl.procedure"/>
+		                            </div>
+		                            <ui-select id="select-procedure" ng-model="ctrl.procedure">
+		                                <ui-select-match allow-clear="true" placeholder="{{'PROCEDURES'| translate}}">
+		                                    <span>{{$select.selected.description != null ? $select.selected.description : $select.selected.id}}
+		                                    </span>
+		                                </ui-select-match>
+		                                <ui-select-choices
+		                                        refresh="getProceduresPossibleValues(0, $select.search )"
+		                                        refresh-delay="500"
+		                                        repeat="option.id as option in filters.procedures.elements | filter: $select.search track by $index">
+		                                    <div>
+		                                        <span>{{option.description != null ? option.description : option.id}}</span>
+		                                    </div>
+		                                    <div ng-if="$index == $select.items.length-1 && $index < filters.procedures.total-1">
+		                                        <button
+		                                                class="btn btn-xs btn-success"
+		                                                style="width: 100%; margin-top: 5px;"
+		                                                ng-mouseover="getProceduresPossibleValues( filters.procedures.page + 1, $select.search)">
+		                                            {{'SHOW_OTHER' | translate}}
+		                                        </button>
+		                                    </div>
+		                                </ui-select-choices>
+		                            </ui-select>
+		                        </div>
+		                    </div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label
+										for="PAYMENT_FROM"
+										translate="{{'PAYMENT_FROM' | translate}}">
+									PAYMENT_FROM
+								</label>
+								<custom-popover-spha
+										custom-popover-text="{{'PAYMENT_FROM_LABEL' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input
+											uib-datepicker-popup="dd/MM/yyyy"
+											placeholder="{{'PAYMENT_FROM' | translate}}"
+											type="text"
+											class="form-control"
+											id="PAYMENT_FROM"
+											name="PAYMENT_FROM"
+											is-open="datesOptions.PAYMENT_FROM.opened"
+											ng-class="addClass( 'PAYMENT_FROM', filtersForm )"
+											ng-model="ctrl.paymentFrom"
+											ng-model-options="{ timezone: 'UTC' }"
+											datepicker-options="datesOptions.PAYMENT_FROM.datepickerOptions"
+											msg-daterange="ERROR_DATE_RANGE"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default"
+												ng-click="openDatePopup('PAYMENT_FROM')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="PAYMENT_FROM"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label
+										for="PAYMENT_TO"
+										translate="{{'PAYMENT_TO' | translate}}">
+									PAYMENT_TO
+								</label>
+								<custom-popover-spha
+										custom-popover-text="{{'PAYMENT_TO_LABEL' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input
+											uib-datepicker-popup="dd/MM/yyyy"
+											placeholder="{{'PAYMENT_TO' | translate}}"
+											type="text"
+											class="form-control"
+											id="PAYMENT_TO"
+											name="PAYMENT_TO"
+											is-open="datesOptions.PAYMENT_TO.opened"
+											ng-class="addClass( 'PAYMENT_TO', filtersForm )"
+											ng-model="ctrl.paymentTo"
+											ng-model-options="{ timezone: 'UTC' }"
+											datepicker-options="datesOptions.PAYMENT_TO.datepickerOptions"
+											msg-daterange="ERROR_DATE_RANGE"
+									/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default"
+												ng-click="openDatePopup('PAYMENT_TO')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="PAYMENT_TO"></xt-validation-inline>
+							</div>
+						</div>
+						<br>
+						<div class="row" >
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+		                        <label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+		                        <custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+		                        <div class="form-group"  ng-class="addClass( 'COMPANIES', filtersForm )">
+		                            <div style="height:0px;">
+		                                <input style="opacity: 0;"
+		                                       class="form-control"
+		                                       id="COMPANIES"
+		                                       name="COMPANIES"
+		                                       ng-model="ctrl.companies"/>
+		                            </div>
+		                            <ui-select multiple id="select-company" ng-model="ctrl.companies">
+		                                <ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+		                                    <span>{{$item.label != null ? $item.value + ' - ' +  $item.label : $item.value}}</span>
+		                                </ui-select-match>
+		                                <ui-select-choices
+		                                        refresh="getCompaniesPossibleValues(0, $select.search )"
+		                                        refresh-delay="500"
+		                                        repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+		                                    <div>
+		                                        <span>{{option.label != null ? option.value + ' - ' + option.label : option.value}}</span>
+		                                    </div>
+		                                    <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+		                                        <button
+		                                                class="btn btn-xs btn-success"
+		                                                style="width: 100%; margin-top: 5px;"
+		                                                ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+		                                            {{'SHOW_OTHER' | translate}}
+		                                        </button>
+		                                    </div>
+		                                </ui-select-choices>
+		                            </ui-select>
+		                        </div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
+									<label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+									<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+									<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+										<div style="height:0px;">
+											<input style="opacity: 0;" class="form-control" id="REGION" name="REGION"
+												ng-model="ctrl.region" />
+										</div>
+										<ui-select id="select-region" multiple ng-model="ctrl.region">
+											<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+												<span>{{$item.label}}</span>
+											</ui-select-match>
+											<ui-select-choices
+												repeat="option in filters.region | filter: $select.search track by $index">
+												<div>
+													<span>{{option.object + ' - ' + option.label}}</span>
+												</div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<xt-validation-inline for="REGION"></xt-validation-inline>
+								</div>
+						</div>
+						<br/>
+						<div class="text-right">
+							<button type="button"
+									class="btn btn-primary text-uppercase"
+									id="reset-button"
+									ng-click = "ctrl.reset()"
+									translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit"
+									class="btn btn-primary"
+									id="search-button"
+									
+									translate="{{'SEARCH' | translate}}">
+							</button>
+						</div>
+						<br/>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div class="panel-body-section">
+        	<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-responsive">
+					<table	id ="anagraphic-procedure-table"
+							ng-table="ctrl.procedureReportTable"
+							class="table table-bordered">
+							
+						<tr role="row"
+							ng-hide="ctrl.isLoading"
+							ng-init="ctrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data " id="rows">
+							<td
+									id="PROCEDURE"
+									class="col-xs-12 col-sm-12 col-md-2 col-lg-2 titleTableProcedimenti"
+									data-title="'PROCEDURE' | translate"
+									ng-init = "ctrl.isCollapsed[$index] = true"
+									ng-class="{'tableDataTitleCollapseIn': ctrl.isCollapsed[$index] && row.description.length > 150, 'tableDataTitleCollapseOut': !ctrl.isCollapsed[$index] && row.description.length > 150 }"
+									sortable="'description'">
+								{{ row.description }}
+								<div class="text-center">
+				  	    					<span
+													ng-click="ctrl.isCollapsed[$index] = !ctrl.isCollapsed[$index]"
+													ng-if="row.description.length > 150"
+													style="cursor: pointer;"
+													class="glyphicon"
+													title="{{ (ctrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+													ng-class="{
+										          'glyphicon-chevron-down': ctrl.isCollapsed[$index],
+										          'glyphicon-chevron-up': !ctrl.isCollapsed[$index]
+										        }">
+											</span>
+								</div>
+							</td>
+							<td
+									
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "									
+									sortable="'startDate'"
+									data-title="'START_DATE' | translate">
+								<div class="text-center">
+									<a title="{{'START_DATE' | translate}}" href="" >
+									
+										{{ row.startDate | date : "dd/MM/yyyy" }}
+									</a>
+								</div>
+							</td>
+							<td
+									
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "									
+									sortable="'endDate'"
+									data-title="'END_DATE' | translate">
+								<div class="text-center">
+									<a title="{{'END_DATE' | translate}}" href="" >
+									
+										{{ row.endDate | date : "dd/MM/yyyy" }}
+									</a>
+								</div>
+							</td>
+							<td
+									
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "									
+									sortable="'codiceSis'"
+									data-title="'COMPANY_CODE' | translate">
+								<div class="text-center">
+									<a title="{{'COMPANY_CODE' | translate}}" href="" >
+									
+										{{ row.codiceSis  }}
+									</a>
+								</div>
+							</td>
+							<td		
+									sortable="'nomeTitolare'"
+									class="col-xs-12 col-sm-12 col-md-2 col-lg-2"		
+									data-title="'COMPANY_NAME' | translate">
+								<div class="text-center">
+									<a title="{{'COMPANY_NAME' | translate}}" href="" >
+										{{ row.nomeTitolare }}
+									</a>
+								</div>
+							</td>
+							
+							<td		
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "									
+									sortable="'regionCode'"
+									data-title="'ISTAT_REGION_CODE' | translate">
+								<div class="text-center">
+									<a title="{{'ISTAT_REGION_CODE' | translate}}" href="" >
+									
+										{{ row.regionCode | translate }}
+									</a>
+								</div>
+							</td>
+							<td		
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "									
+									sortable="'regionDescription'"
+									data-title="'REGION' | translate">
+								<div class="text-center">
+									<a title="{{'REGION' | translate}}" href="" >
+									
+										{{ row.regionDescription }}
+									</a>
+								</div>
+							</td>
+
+							<td 
+							sortable="'paymentDate'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'PAYMENT_DATE' | translate">
+								<div class="text-center">
+									<a title="{{ 'PAYMENT_DATE' | translate}}" href="" >
+										{{ row.paymentDate | date : "dd/MM/yyyy" }}
+									</a>
+								</div>
+							</td>
+							<td 
+							sortable="'paymentType'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'PAYMENT_TYPE' | translate">
+								<div class="text-center">
+									<a title="{{ 'PAYMENT_TYPE' | translate}}" href="" >
+										{{ row.paymentType }}
+									</a>
+								</div>
+							</td>
+							<td 
+							sortable="'paymentDetails'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'CRO' | translate">
+								<div class="text-center">
+									<a title="{{ 'CRO' | translate}}" href="" >
+										{{ row.paymentDetails }}
+									</a>
+								</div>
+							</td>
+							
+							<td 
+							sortable="'paidAmount'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'PAID_AMOUNT_TT' | translate">
+								<div class="text-center">
+									<a title="{{ 'PAID_AMOUNT_TT' | translate}}" href="" >
+										{{ row.paidAmount  }}
+									</a>
+								</div>
+							</td>
+							<td 
+							sortable="'feeNumber'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'FEE_NUMBER' | translate">
+								<div class="text-center">
+									<a title="{{ 'FEE_NUMBER' | translate}}" href="" >
+										{{ row.feeNumber }}
+									</a>
+								</div>
+							</td>
+							<td 
+							sortable="'feeAmount'"
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1 "	
+									data-title="'FEE_AMOUNT' | translate">
+								<div class="text-center">
+									<a title="{{ 'FEE_AMOUNT' | translate}}" href="" >
+										{{ row.feeAmount }}
+									</a>
+								</div>
+							</td>							
+						</tr>
+						
+						<tr ng-show="ctrl.isLoading">
+							<td colspan="8">
+								<div id="loadingSpinnerRow"></div>
+							</td>
+						</tr>
+						
+					</table>
+			</div>		
+		</div>
+		<div class = "text-right">
+			<button type="button"
+					   id="top-button"
+                       class="btn btn-primary"
+                       ng-disabled="filtersForm.$invalid  || ctrl.isLoading"
+                       ng-click="ctrl.exportReport(filtersForm)"
+                       translate="{{'EXPORT' | translate}}">
+        	</button>
+		</div>
+		<br/>
+		<br/>
+		<div class = "text-right">
+			<button type="button"
+					   id="top-button"
+                       class="btn btn-default"
+                       ng-click="ctrl.goToTop()"
+                       translate="{{'GO_TO_TOP' | translate}}">
+        	</button>
+			<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="ctrl.goBack()">
+				{{'BACK' | translate}}
+               </button>
+		</div>
+
+		</div>
+	</div>
+</div>

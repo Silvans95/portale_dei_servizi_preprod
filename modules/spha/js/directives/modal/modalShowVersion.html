@@ -1,0 +1,23 @@
+<div class="modal-header">
+   <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 translate="{{'DOCUMENT_VERSIONS' | translate}}"></h4>
+</div> 
+<div class="modal-body" id="modal-body">
+	<div class="row">
+		<div 
+			class="col-xs-6 col-sm-4 col-md-2 col-lg-2" 
+			ng-repeat="file in fileVersions">
+				<ng-versionable-file 
+					file="file" 
+					files="fileVersions"
+					show-version="false" 
+					remove-disable="true" 
+					remove-external-disable="true"
+					url="url">
+				</ng-versionable-file>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,207 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak>
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h4>
+					{{ (ctrl.queryType + '_' + ctrl.procedureType) | translate }}
+				</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<form xt-form ng-submit="ctrl.submitSearch()" name="filtersForm" novalidate>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+								<custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}">
+								</custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="COMPANIES"
+											name="COMPANIES" ng-model="ctrl.companies" />
+									</div>
+									<ui-select multiple id="select-company" ng-model="ctrl.companies"
+										ng-disabled="lockedMode">
+										<ui-select-match allow-clear="true"
+											placeholder="{{'COMPANIES'| translate}}">
+											<span>{{$item.label != null ? $item.value + ' - ' + $item.label : $item.value}}</span>
+										</ui-select-match>
+										<ui-select-choices
+											refresh="getCompaniesPossibleValues(0, $select.search, filtersForm )"
+											refresh-delay="500"
+											repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.value + ' - ' + option.label : option.value}}</span>
+											</div>
+											<div
+												ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+												<button class="btn btn-xs btn-success"
+													style="width: 100%; margin-top: 5px;"
+													ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search, filtersForm )">
+													{{'SHOW_OTHER' | translate}}
+												</button>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+
+
+							</div>
+
+
+						</div>
+
+						<div class="text-right">
+							<button type="button" class="btn btn-primary text-uppercase" id="reset-button"
+								ng-click="ctrl.reset()" translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit" class="btn btn-primary text-uppercase"
+								translate="{{'SEARCH' | translate}}" id="save-button">
+							</button>
+						</div>
+						<br />
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h4 class="text-center">
+						{{ ctrl.queryType == 'VERSARE' ? 'SELECT_REGION' : '' | translate }}
+					</h4>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					<table ng-table="ctrl.amountTable" class="table table-bordered">
+						
+						<tr role="row" id="rows"  ng-init="ctrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2" data-title="'COMPANY_CODE' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_COMPANY') != -1" sortable="'codiceSis'">
+								<div class="text-center">
+									<a title="{{'COMPANY_CODE' | translate}}">
+										{{row.codiceSis}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2" data-title="'COMPANY_NAME' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_COMPANY') != -1" sortable="'nomeTitolare'">
+								<div class="text-center">
+									<a title="{{'COMPANY_NAME' | translate}}">
+										{{row.nomeTitolare}}
+									</a>
+								</div>
+							</td>
+
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2" data-title="'ACCEPTANCE_MODULE' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB5') != -1">
+								<div class="text-center">
+									<a title="{{'ACCEPTANCE_MODULE' | translate}}">
+										<a class="table-button-directive-space" ng-if="row.status" ng-click="ctrl.showAcceptanceFile(row.procedureInstanceId)">
+											<span class="fa fa-file-pdf-o" title="Download"></span>
+										</a>
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2" data-title=" 'OPTION' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB5') != -1">
+								<div class="text-center">
+									<a title="{{'OPTION' | translate}}">
+										{{row.status ? row.status : ''}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								data-title=" actions.indexOf('PAYMENT_VIEW_PB5') != -1 || actions.indexOf('PAYMENT_VIEW_SHELF') != -1 ? 'TOT_VALUE' : 'TO_PAID_AMOUNT' | translate"
+								sortable="'totalAmount'">
+								<div class="text-right">
+									<a title="{{'TO_PAID_AMOUNT' | translate}}">
+										{{row.totalAmount | number : 2}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2" data-title="'PAID_AMOUNT' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB183') != -1" sortable="'paidAmount'">
+								<div class="text-right">
+									<a title="{{'PAID_AMOUNT' | translate}}">
+										{{row.paidAmount | number : 2}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2" data-title="'DIFFERENCE_E' | translate"
+							sortable="'difference'"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB183') != -1" >
+								<div class="text-right">
+									<a title="{{'DIFFERENCE_E' | translate}}">
+										{{ row.difference | number : 2 }}
+									</a>
+								</div>
+							</td>
+
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								data-title="'VIEW_REGION_DETAIL' | translate">
+								<div class="text-center">
+									<a title="{{'VIEW_REGION_DETAIL' | translate}}">
+										<ng-payment-operations operations="row.operations" />
+									</a>
+								</div>
+							</td>
+
+						</tr>
+						<tr ng-show="ctrl.isLoading">
+		                    <td colspan="{{$data.length}}">
+		                        <div id="loadingSpinnerRow"></div>
+		                    </td>
+		                </tr>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+		<div class = "text-right">
+			<button type="submit"
+					class="btn btn-primary"
+					translate="{{'EXPORT' | translate}}"
+					ng-click="ctrl.exportReport(filtersForm)"
+					ng-disabled="filtersForm.$invalid" >
+			</button>
+		</div>
+		<br/>
+		<div class="text-right">
+			<button type="button" class="btn btn-default" id="top-button" ng-click="ctrl.goToTop()">
+				{{'GO_TO_TOP' | translate}}
+			</button>
+			<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="ctrl.goBack()">
+				{{'BACK' | translate}}
+			</button>
+		</div>
+	</div>
+</div>

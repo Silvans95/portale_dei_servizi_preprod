@@ -1,0 +1,147 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="ctrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row" ng-if="ctrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!ctrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'SUBMIT_PROCEDURE' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+  	<div  ng-show="ctrl.isLoading" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!ctrl.isLoading">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="ctrl.closeProcedureInstance(submitForm)" xt-form role="form" name="submitForm" > 
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div  onloadstart="">
+								      <object id="teste1" data="{{pdfContent}}" type="{{type}}" style="width:100%; height:600px" />
+								    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+								<div class="row">
+									<div class="col-sm-6">
+										<div 
+											ngf-drop 
+											ngf-select 
+											ng-model="ctrl.draggedFile" 
+											ng-change="change()"
+											class="drop-box" 
+										    ngf-multiple="true" 
+										    ngf-allow-dir="true"
+										    ngf-accept="acceptedFiles"
+										    ngf-pattern="acceptedFiles">
+										    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP' | translate}}
+									    </div>
+									    <div ngf-no-file-drop>
+									    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP_ERROR' | translate}}
+									    </div>
+										<div class="text-right button-select-file">
+									 		<div 
+									 			class="btn btn-success" 
+									 			ngf-select="upload($files)" 
+									 			ngf-accept="acceptedFiles"
+									 			ngf-pattern="acceptedFiles" 
+									 			ngf-multiple="true">
+									 			  <i class="fa fa-folder-open-o"></i>
+									 				{{'UPLOAD_FILES_BUTTON' | translate}}
+								 				  <span class="progress" ng-show="f.progress >= 0">
+														 <div 
+														 	style="width:{{f.progress}}%" 
+														 	ng-bind="f.progress + '%'">
+														 </div>
+												 	  </span>	
+									 		</div>
+									 	</div>
+									</div>
+									<div class="col-sm-6">
+										 <div class="file-upload">
+										    <label>Files:</label>
+										    <div class="row" ng-repeat="f in ctrl.files">
+									       	 	<div class="col-sm-12">
+									       	 		{{f.name}} {{f.$error}} {{f.$errorParam}}
+										        	<a 
+										        		class=" fa fa-trash" 
+										        		ng-click="removeFile(f)">
+										        	</a>
+									       	 	</div>
+									 	    </div>
+									 	    <div class="row" ng-repeat="file in ctrl.procedureInstanceFiles">
+									       	 	<div class="col-sm-12">
+													{{ file.description }}
+													<a class="fa fa-trash" ng-click="ctrl.remove(file)" title="{{'DELETE_PROCEDURE_FILE' | translate}}">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br> 
+		<br>
+		<div class="panel-body-section">
+			<div class = "text-right">
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="ctrl.submit()"
+							ng-disabled="submitForm.$invalid"
+							translate="{{'SUBMIT' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="ctrl.reset()"
+							translate="{{'RESET' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-disabled="submitForm.$invalid"
+							ng-click="ctrl.save()"
+							translate="{{'SAVE' | translate}}">
+				</button>
+				
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="ctrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	
+</div>

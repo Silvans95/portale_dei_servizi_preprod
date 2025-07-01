@@ -1,0 +1,46 @@
+<div class="panel notifiche">
+  <div class="panel-header text-uppercase pb10">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h4 class="bold">{{dettaglioNotifica.titolo}}</h4>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="text-right"><i class="fa fa-calendar mr6"></i>{{ convertiInData(dettaglioNotifica.dataInizioValidita) | date:'dd/MM/yyyy HH:mm:ss' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <p ng-bind-html="dettaglioNotifica.notificaBody"></p>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer text-right text-uppercase">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="block" translate>FINE_VALIDITA</div>
+        <i class="fa fa-calendar mr6 ml20"></i>{{ convertiInData(dettaglioNotifica.dataFineValidita) | date:'dd/MM/yyyy HH:mm:ss' }}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="border bottom dashed mt25 mb25"></div>
+  <div class="panel-body-section">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="text-right">
+			<span class="link mr25">
+	            <i class="fa fa-arrow-circle-o-left"></i>
+	            <a ui-sref="notifiche.list" href="#" title="{{ 'TORNA_ELENCO_NOTIFICHE' | translate}}">
+	              <span class="bold" translate>TORNA_ELENCO_NOTIFICHE</span>
+				</a>
+			</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

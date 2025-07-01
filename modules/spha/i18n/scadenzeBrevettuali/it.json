@@ -1,0 +1,15 @@
+{
+	"PATENT_EXPIRY_SEARCH": "Ricerca scadenze brevettuali",
+	"ATC":"ATC",
+	"ACTIVE_INGREDIENT": "Principio attivo",
+	"PATENTED": "Coperto da brevetto",
+	"EXPIRATION_DATA":"Data scadenza brevetto",
+	"EXPIRATION_DATA_CCP":"Data scadenza CCP",
+	"CCP": "Codice principio attivo",
+	"CCD": "Descrizione codice principio",
+	"PATENT_TITLE": "Titolo brevetto",
+	"PATENT_NUMBER": "Numero brevetto",
+	"CCP_NUMBER": "Numero CCP",
+	"CCP_NUMBER_DESCRIPTION": "Numero del Certificato Complementare di Protezione (CCP)",
+	"CCP_EXPIRE_DESCRIPTION": "Data scadenza del Certificato Complementare di Protezione (CCP)"
+}

@@ -1,0 +1,464 @@
+<link rel="stylesheet" type="text/css" href="modules/fet/directive/fet-wizard-item/css/fet-wizard-item.css">
+<link rel="stylesheet" href="modules/fet/css/fet.css">
+<div class="row" ng-cloak>
+
+	<!-- INITIALIZATION -->
+	<div class="col-lg-12" ng-show="panels.initialization.status == FET.PanelStatus.ENABLED">
+		<span ng-hide="panels.initialization.errorMessage" ng-bind="'SIGN.INITIALZING.MSG' | translate"></span>
+		<span ng-show="panels.initialization.errorMessage" ng-bind="panels.initialization.errorMessage"></span>
+	</div>
+
+	<!-- FILE PANEL -->
+
+	<fet-wizard-item title="{{'SIGN.LOAD_FILE_PANEL.TITLE' | translate}}" css-classes="col-md-3" status="panels.files"
+		onsubmit="sendFile()">
+		<before>
+			<fieldset ng-show="files.length > 0">
+				<legend ng-bind="'SIGN.LOAD_FILE_PANEL.FILES.TITLE' | translate"></legend>
+				<ul>
+					<li ng-repeat="file in files">
+						<span ng-bind="file.filename"></span>
+					</li>
+				</ul>
+			</fieldset>
+		</before>
+		<enabled>
+			<div class="form-group" ng-show="state == FET.SignWorkflowState.FILE_SELECTION">
+				<input type="file" class="form-control" file-model="$parent.$parent.file" required="required"
+					focus-on-show />
+			</div>
+		</enabled>
+		<loading>
+			{{'LOADING' | translate}} ...
+		</loading>
+		<disabled>
+		</disabled>
+		<commands>
+			<div class="row" ng-show="state == FET.SignWorkflowState.FILE_SELECTION && files.length == 0">
+				<div class="col-lg-12">
+					<button type="submit"
+						class="btn btn-success btn-block">{{'SIGN.LOAD_FILE_PANEL.SUBMIT' | translate}}</button>
+				</div>
+			</div>
+			<div class="row" ng-show="state == FET.SignWorkflowState.FILE_SELECTION && files.length > 0">
+				<div class="col-lg-6">
+					<button type="button" class="btn btn-warning btn-block"
+						ng-click="filesAddingCompleted()">{{'SIGN.LOAD_FILE_PANEL.NEXT' | translate}}</button>
+				</div>
+				<div class="col-lg-6">
+					<button type="submit"
+						class="btn btn-success btn-block">{{'SIGN.LOAD_FILE_PANEL.SUBMIT' | translate}}</button>
+				</div>
+			</div>
+			<div class="row" ng-show="state == FET.SignWorkflowState.ASKING_FOR_MORE_FILES">
+				<div class="col-lg-6">
+					<button type="button" class="btn btn-warning btn-block"
+						ng-click="addAnotherFile()">{{'SIGN.LOAD_FILE_PANEL.ADD_FILE' | translate}}</button>
+				</div>
+				<div class="col-lg-6">
+					<button type="button" class="btn btn-success btn-block"
+						ng-click="filesAddingCompleted()">{{'SIGN.LOAD_FILE_PANEL.NEXT' | translate}}</button>
+				</div>
+			</div>
+		</commands>
+	</fet-wizard-item>
+
+	<!-- SIGN CHANNEL PANEL -->
+	<fet-wizard-item title="{{'SIGN.SET_SIGN_CHANNEL_PANEL.TITLE' | translate}}" css-classes="col-md-3"
+		status="panels.signChannels" submit-button="{{'SIGN.SET_SIGN_CHANNEL_PANEL.SUBMIT' | translate}}"
+		onsubmit="setSignChannel()" ng-show="!isStandalone || state == FET.SignWorkflowState.SIGN_CHANNEL_SELECTION">
+		<enabled>
+			<div class="form-group">
+				<label>{{'SIGN.SET_SIGN_CHANNEL_PANEL.SELECT_METHOD.LABEL' | translate}}</label>
+				<select class="form-control" ng-model="$parent.$parent.signChannel" required="required" focus-on-show>
+					<option value=""></option>
+					<option ng-repeat="channel in availableSignChannels" value="{{channel}}">
+						{{'SIGN.CHANNEL.' + channel + '.LABEL'| translate}}</option>
+				</select>
+			</div>
+		</enabled>
+		<disabled>
+			<fieldset>
+				<legend ng-bind="'SIGN.SET_SIGN_CHANNEL_PANEL.SELECTED_CHANNEL.LABEL' | translate"></legend>
+				<span>{{'SIGN.CHANNEL.' + signChannel + '.LABEL'| translate}}</span>
+			</fieldset>
+		</disabled>
+	</fet-wizard-item>
+
+	<!-- SIGN METHOD PANEL -->
+
+	<fet-wizard-item title="{{isStandalone ? '2. ' : '3. '}}{{'SIGN.SET_SIGN_METHOD_PANEL.TITLE' | translate}}"
+		css-classes="col-md-3" status="panels.signMethods"
+		submit-button="{{'SIGN.SET_SIGN_METHOD_PANEL.SUBMIT' | translate}}" onsubmit="setSignMethod()">
+		<enabled>
+			<div class="form-group">
+				<label>{{'SIGN.SET_SIGN_METHOD_PANEL.SELECT_METHOD.LABEL' | translate}}</label>
+				<select class="form-control" ng-model="$parent.$parent.signMethod" required="required" focus-on-show>
+					<option value=""></option>
+					<option ng-repeat="method in availableSignMethods" value="{{method}}">
+						{{!isStandalone ? ('SIGN.METHOD.' + method + '.LABEL_ONLINE'| translate) : ('SIGN.METHOD.' + method + '.LABEL'| translate)}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>{{'SIGN.SET_SIGN_METHOD_PANEL.SELECT_TYPE.LABEL' | translate}}</label>
+				<select class="form-control" ng-model="$parent.$parent.signType" required="required" focus-on-show>
+					<option value=""></option>
+					<option ng-repeat="type in availableSignTypes" value="{{type}}">
+						{{'SIGN.TYPE.' + type + '.LABEL'| translate}}</option>
+				</select>
+			</div>
+		</enabled>
+		<disabled>
+			<fieldset>
+				<legend ng-bind="'SIGN.SET_SIGN_METHOD_PANEL.SELECTED_METHOD.LABEL' | translate"></legend>
+				<span>{{isStandalone ? ('SIGN.METHOD.' + signMethod + '.LABEL'| translate) : ('SIGN.METHOD.' + signMethod + '.LABEL_ONLINE'| translate)}}</span>
+			</fieldset>
+			<fieldset>
+				<legend ng-bind="'SIGN.SET_SIGN_METHOD_PANEL.SELECTED_TYPE.LABEL' | translate"></legend>
+				<span>{{'SIGN.TYPE.' + signType + '.LABEL'| translate}}</span>
+			</fieldset>
+		</disabled>
+		<loading>
+			{{'SIGN.SET_SIGN_METHOD_PANEL.LOADING_ASOL.MSG' | translate}}
+			<div class="row">
+				<div class="col-lg-12">
+					<a ng-if="redirectTimeoutSec && redirectTimeoutSec > 0 && redirectTimeoutSec < 15"
+						class="btn btn-warning btn-block">
+						<span>{{'SIGN.SIGNED_PANEL.TIMEOUT.BUTTON.LABEL' | translate}}</span>
+						<span ng-show="redirectTimeoutSec !== undefined && redirectTimeoutSec != null">
+							({{redirectTimeoutSec}})</span>
+					</a>
+				</div>
+			</div>
+		</loading>
+	</fet-wizard-item>
+
+
+	<!-- SET CREDENTIALS PANEL / REMOTE SIGNATURE -->
+
+	<fet-wizard-item title="{{isStandalone ? '3. ' : '4. '}}{{'SIGN.SET_ARSS_CREDENTIALS_PANEL.TITLE' | translate}}"
+		css-classes="col-md-3" status="panels.arssCredentials"
+		submit-button="{{'SIGN.SET_ARSS_CREDENTIALS_PANEL.SUBMIT' | translate}}" onsubmit="sign()">
+		<enabled>
+			<div class="form-group">
+				<label>{{'SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.USERNAME.LABEL' | translate}}</label>
+				<input type="text" class="form-control" ng-model="$parent.$parent.arssUsername" required="required"
+					focus-on-show />
+			</div>
+			<div class="form-group">
+				<label>{{'SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.PASSWORD.LABEL' | translate}}</label>
+				<input type="password" class="form-control" ng-model="$parent.$parent.arssPassword"
+					required="required" />
+			</div>
+			<div class="form-group">
+				<label>{{'SIGN.SET_ARSS_CREDENTIALS_PANEL.FORM.OTP.LABEL' | translate}}</label>
+				<input type="text" class="form-control" ng-model="$parent.$parent.arssOtp" required="required" />
+			</div>
+		</enabled>
+		<disabled>
+			<fieldset>
+				<legend ng-bind="'SIGN.STATUS.TITLE' | translate"></legend>
+				<span ng-bind="'SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNED.LABEL' | translate"></span>
+			</fieldset>
+		</disabled>
+		<loading>
+			<fieldset>
+				<legend ng-bind="'SIGN.STATUS.TITLE' | translate"></legend>
+				<span ng-bind="'SIGN.SET_ARSS_CREDENTIALS_PANEL.SIGNING.LABEL' | translate"></span>
+			</fieldset>
+		</loading>
+	</fet-wizard-item>
+
+	<!-- SET CREDENTIALS PANEL / TOKEN SIGNATURE -->
+
+	<fet-wizard-item title="{{isStandalone ? '3. ' : '4. '}}{{'SIGN.SET_ASOL_CREDENTIALS_PANEL.TITLE' | translate}}"
+		css-classes="col-md-3" status="panels.asolCredentials"
+		submit-button="{{'SIGN.SET_ASOL_CREDENTIALS_PANEL.SUBMIT' | translate}}" onsubmit="sign()">
+		<enabled>
+			<div class="form-group">
+				<label>{{'SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.CERTIFICATE.LABEL' | translate}}</label>
+				<select class="form-control" ng-model="$parent.$parent.asolCertificateId"
+					ng-options="certificate.id as certificate.common_name for certificate in workflow._asolCertificates"
+					required="required">
+					<!-- <option ng-repeat="certificate in workflow._asolCertificates" ng-value="certificate.id" ng-bind="certificate.common_name"></option> -->
+				</select>
+			</div>
+			<div class="form-group">
+				<label>{{'SIGN.SET_ASOL_CREDENTIALS_PANEL.FORM.PIN.LABEL' | translate}}</label>
+				<input type="password" class="form-control" ng-model="$parent.$parent.asolPin" required="required"
+					focus-on-show />
+			</div>
+		</enabled>
+		<disabled>
+			<fieldset>
+				<legend ng-bind="'SIGN.STATUS.TITLE' | translate"></legend>
+				<span ng-bind="'SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNED.LABEL' | translate"></span>
+			</fieldset>
+		</disabled>
+		<loading>
+			<fieldset>
+				<legend ng-bind="'SIGN.STATUS.TITLE' | translate"></legend>
+				<span ng-show="state == FET.SignWorkflowState.ASOL_PREPARING_FILES"
+					ng-bind="'SIGN.SET_ASOL_CREDENTIALS_PANEL.PREPARING_FILES.LABEL' | translate"></span>
+				<span ng-show="state == FET.SignWorkflowState.ASOL_SIGNING"
+					ng-bind="'SIGN.SET_ASOL_CREDENTIALS_PANEL.SIGNING.LABEL' | translate"></span>
+				<span ng-show="state == FET.SignWorkflowState.ASOL_FINALIZING_SIGNATURE"
+					ng-bind="'SIGN.SET_ASOL_CREDENTIALS_PANEL.FINALIZING.LABEL' | translate"></span>
+			</fieldset>
+		</loading>
+	</fet-wizard-item>
+
+	<!-- SIGNED PANEL -->
+
+	<fet-wizard-item title="{{isStandalone ? '4. ' : '5. '}}{{'SIGN.SIGNED_PANEL.TITLE' | translate}}" css-classes="col-md-3" status="panels.completed"
+		show-commands="redirectURL">
+		<enabled>
+			<fieldset ng-hide="signedFiles.length > 0 || signedFilesZipURL">
+				<legend ng-bind="'SIGN.SIGNED_PANEL.DONE.MSG' | translate"></legend>
+			</fieldset>
+			<fieldset ng-show="signedFiles.length > 0">
+				<legend>{{'SIGN.SIGNED_PANEL.SIGNED_FILES.TITLE' | translate}}</legend>
+				<ul>
+					<li ng-repeat="file in signedFiles">
+						<a href="{{file.url}}" ng-bind="file.filename" target="_blank"></a>
+					</li>
+				</ul>
+			</fieldset>
+			<fieldset ng-show="signedFilesZipURL">
+				<legend>{{'SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.TITLE' | translate}}</legend>
+				<div>
+					<a href="{{signedFilesZipURL}}"
+						ng-bind="'SIGN.SIGNED_PANEL.SIGNED_FILES_ZIP.DOWNLOAD.LABEL' | translate" target="_blank"></a>
+				</div>
+			</fieldset>
+		</enabled>
+		<commands>
+			<div class="row">
+				<div class="col-lg-12">
+					<a href="{{redirectURL}}" class="btn btn-success btn-block" ng-click="redirectRequested = true">
+						<span>{{'SIGN.SIGNED_PANEL.REDIRECT.BUTTON.LABEL' | translate}}</span>
+						<span ng-show="redirectTimeoutSec !== undefined && redirectTimeoutSec != null">
+							({{redirectTimeoutSec}})</span>
+					</a>
+				</div>
+			</div>
+		</commands>
+	</fet-wizard-item>
+
+</div>
+
+<tr class="row" ng-cloak>
+
+	<!-- SIGN EXSYST FILE PANEL -->
+	<fet-wizard-item title="{{'SIGN.SET_EXSYST_FILE_PANEL.TITLE' | translate}}" css-classes="col-md-8"
+		status="panels.signExt">
+		<enabled>
+			<fieldset>
+				<div class="row mb5" ng-cloak>
+					<div class="col-sm-5">
+						<legend class="pt8 text-align-center">
+							{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.TYPE_SIGNATURE' | translate}}</legend>
+					</div>
+					<div class="col-sm-4 ">
+						<select class="form-control col-sm-6" ng-model="$parent.$parent.signTypology"
+							required="required" ng-change="onChangeSelectTypology()" ng-click="onClickSelectbox()"
+							focus-on-show>
+							<option value=""></option>
+							<option ng-repeat="typology in availableSignTypologies" value="{{typology}}">
+								{{'SIGN.TYPOLOGY.' + typology + '.LABEL'| translate}}</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<label class="icon blue pb5 pt5 font-size-label newline"
+				ng-bind="'SIGN.SET_EXSYST_FILE_PANEL.MSG_ALERT' | translate"></label>
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr class="row">
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.ORIGINAL_DOCUMENT' | translate}}</th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD' | translate}}</th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.UPLOAD' | translate}}</th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED' | translate}}</th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.RESULT' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="row" ng-repeat="file in files track by $index">
+						<td>
+							{{file.filename}}
+						</td>
+						<td class="text-center">
+							<a id="file-download{{$index}}" data-toggle="tooltip" title="Download"
+								ng-model="$parent.$parent.downloadFile[$index]" ng-click="onClickDownloadFile($index)"
+								href="{{file.url}}" target="_blank" download>
+								<i class="btn btn-success fa fa-download"></i>
+							</a>
+						</td>
+						<td class="text-center">
+							<label for="file-upload{{$index}}"
+								ng-disabled="!signTypology || (!downloadFile[$index] && !downloadZip) || file.fileUpload.esito">
+								<i class="btn btn-warning fa fa-upload" data-toggle="tooltip" title="Upload"
+									ng-disabled="!signTypology || (!downloadFile[$index] && !downloadZip) || file.fileUpload.esito"></i>
+							</label>
+							<input
+								ng-if="signTypology && (downloadFile[$index] || downloadZip) && !file.fileUpload.esito"
+								style="display:none" type="file" name="file" id="file-upload{{$index}}"
+								required="required"
+								onchange="angular.element(this).scope().addFileUploaded(this.files[0], $(this).closest('tr').index())"
+								accept="application/pdf,application/pkcs7-mime" focus-on-show />
+						</td>
+						<td>
+							<a href="{{file.fileUpload.url}}" ng-bind="file.fileUpload.filename" target="_blank"
+								download></a>
+							<i class="fa fa-times-circle cursor"
+								title="{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED.TITLE' | translate}}"
+								ng-if="file.fileUpload"
+								ng-click="deleteSignedDocument(file, file.fileUpload, $index)"></i>
+						</td>
+						<td>
+							<div ng-if="signTypology && file.fileUpload">
+								<i class="fa fa-check-circle fa-2x text-success" ng-if="file.fileUpload.esito"></i>
+								<i class="fa fa-times-circle fa-2x text-danger" ng-if="!file.fileUpload.esito"></i>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row mt5">
+				<div class="col-sm-3 mt4">
+					<label>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD_ZIP' | translate}}
+						<a id="file-download-zip" href="{{filesToSignZipURL}}" ng-click="onClickDownloadZip()"
+							data-toggle="tooltip" title="DownloadZIP" target="_blank" download>
+							<i class="btn btn-success fa fa-folder"></i>
+						</a>
+					</label>
+				</div>
+				<div class="col-sm-6"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-success btn-block"
+						title="{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE' | translate}}"
+						ng-disabled="isDisableBtnDone"
+						ng-click="onClickBtnDone()">{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE' | translate}}</button>
+				</div>
+			</div>
+		</enabled>
+		<disabled>
+			<fieldset>
+				<div class="row mb5" ng-cloak>
+					<div class="col-sm-5">
+						<legend class="pt8 text-align-center">
+							{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.TYPE_SIGNATURE' | translate}}</legend>
+					</div>
+					<div class="col-sm-4 ">
+						<select class="form-control col-sm-6" ng-model="$parent.$parent.signTypology"
+							required="required" ng-disabled="true" ng-change="onChangeSelectTypology()" focus-on-show>
+							<option value=""></option>
+							<option ng-repeat="typology in availableSignTypologies" value="{{typology}}">
+								{{'SIGN.TYPOLOGY.' + typology + '.LABEL'| translate}}</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			<label class="icon blue pb5 pt5 font-size-label"
+				ng-bind="'SIGN.SET_EXSYST_FILE_PANEL.MSG_ALERT' | translate"></label>
+			<table class="table table-hover table-striped">
+				<thead>
+					<tr class="row">
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.ORIGINAL_DOCUMENT' | translate}}</th>
+						<th></th>
+						<th></th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOCUMENT_UPLOADED' | translate}}</th>
+						<th>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.RESULT' | translate}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="row" ng-repeat="file in files track by $index">
+						<td>
+							{{file.filename}}
+						</td>
+						<td class="text-center">
+							<a id="file-download{{$index}}" data-toggle="tooltip" title="Download"
+								ng-model="$parent.$parent.downloadFile[$index]" ng-click="onClickDownloadFile($index)"
+								href="{{file.url}}" target="_blank" download>
+								<i class="btn btn-success fa fa-download"></i>
+							</a>
+						</td>
+						<td class="text-center">
+							<button class="btn btn-warning fa fa-upload" ng-disabled="true">
+							</button>
+						</td>
+						<td>
+							<a href="{{file.fileUpload.url}}" ng-bind="file.fileUpload.filename" target="_blank"
+								download></a>
+						</td>
+						<td>
+							<div ng-if="signTypology && file.fileUpload">
+								<i class="fa fa-check-circle fa-2x text-success" ng-if="file.fileUpload.esito"></i>
+								<i class="fa fa-times-circle fa-2x text-danger" ng-if="!file.fileUpload.esito"></i>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="row mt5">
+				<div class="col-sm-3 mt4">
+					<label>{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.DOWNLOAD_ZIP' | translate}}
+						<a id="file-download-zip" href="{{filesToSignZipURL}}" ng-click="onClickDownloadZip()"
+							data-toggle="tooltip" title="DownloadZIP" target="_blank" download>
+							<i class="btn btn-success fa fa-folder"></i>
+						</a>
+					</label>
+				</div>
+				<div class="col-sm-6"></div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-success btn-block"
+						title="{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE' | translate}}"
+						ng-disabled="true">{{'SIGN.SET_EXSYST_FILE_PANEL.TABLE.BUTTON_DONE' | translate}}</button>
+				</div>
+			</div>
+		</disabled>
+	</fet-wizard-item>
+
+	<!-- SIGNED EXSYST PANEL -->
+	<fet-wizard-item title="{{'SIGN.SIGNED_EXSYST_PANEL.TITLE' | translate}}" css-classes="col-md-4"
+		status="panels.completedSignExt" show-commands="redirectURL">
+		<loading>
+			{{'SIGN.SIGNED_EXSYST_PANEL.LOADING' | translate}}
+		</loading>
+		<enabled>
+			<fieldset ng-if="resultVol">
+				<legend ng-bind="'SIGN.SIGNED_PANEL.DONE.MSG' | translate"></legend>
+			</fieldset>
+			<fieldset ng-if="!resultVol">
+
+				<div class="row mb5" ng-cloak>
+					<div class="col-sm-2">
+						<i class="fa fa-times fa-2x txt-red" aria-hidden="true"></i>
+					</div>
+					<div class="col-sm-10 mt8 pl0">
+						<legend ng-bind="'SIGN.SIGNED_EXSYST_PANEL.ERROR.MSG' | translate"></legend>
+					</div>
+				</div>
+				<ul>
+					<li ng-repeat="file in volFiles">
+						<span ng-bind="file.signedDocument.name"></span>:
+						<span ng-if="file.errorMessageVol" class="txt-red" ng-bind="file.errorMessageVol"></span>
+						<span ng-if="!file.errorMessageVol"><i class="fa fa-check-circle text-success"></i></span>
+
+					</li>
+				</ul>
+			</fieldset>
+		</enabled>
+		<commands>
+			<div class="row">
+				<div class="col-lg-12">
+					<a href="{{redirectURL}}" class="btn btn-success btn-block" ng-click="setRedirectRequested()">
+						<span>{{'SIGN.SIGNED_PANEL.REDIRECT.BUTTON.LABEL' | translate}}</span>
+						<span ng-show="redirectTimeoutSec !== undefined && redirectTimeoutSec != null">
+							({{redirectTimeoutSec}})</span>
+					</a>
+				</div>
+			</div>
+		</commands>
+	</fet-wizard-item>
+	</div>

@@ -1,0 +1,510 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="promofarmaCtrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'PROMOFARMA_A_FLOW' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="promofarmaCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="promofarmaCtrl.alertClass" ng-show="promofarmaCtrl.message">
+						<strong translate="{{promofarmaCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="promofarmaCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+								<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+								<custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="COMPANIES"
+											name="COMPANIES"
+											ng-model="promofarmaCtrl.companies"
+											ng-required="true"/>		
+									</div>
+									<ui-select multiple id="select-company" ng-model="promofarmaCtrl.companies" ng-disabled="lockedMode">
+										<ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}"> 
+											<span>{{$item.label != null ? $item.value + ' - ' +  $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices 
+										refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+											</div>
+                                            <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                                <button 
+                                                  class="btn btn-xs btn-success" 
+                                                  style="width: 100%; margin-top: 5px;" 
+                                                  ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+                                                    {{'SHOW_OTHER' | translate}}
+                                                </button> 
+                                            </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<label translate="{{'MEDICINE'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'MEDICINE' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'MEDICINE'| translate}}"
+											type="text"
+											ng-model="promofarmaCtrl.medicineDescription"
+											id="medicineDescription"
+											class="form-control"/>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<label translate="{{'BOX_DESCRIPTION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'BOX_DESCRIPTION' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'BOX_DESCRIPTION'| translate}}"
+											type="text"
+											ng-model="promofarmaCtrl.boxDescription"
+											id="boxDescription"
+											class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+								<label translate="{{'REIMBURSEMENT_CLASS'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'REIMBURSEMENT_CLASS' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="REIMBURSEMENT_CLASS"
+											name="REIMBURSEMENT_CLASS"
+											ng-model="promofarmaCtrl.reimbursementClass"
+											/>		
+									</div>
+									<ui-select multiple ng-model="promofarmaCtrl.reimbursementClass">
+										<ui-select-match allow-clear="true" placeholder="{{'REIMBURSEMENT_CLASS'| translate}}"> 
+											<span>{{$item.label != null ? $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices refresh = "getPossibleValues( 0, 'reimbursementClass', $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.reimbursementClass.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.reimbursementClass.total-1">
+                                                  <button 
+                                                   class="btn btn-xs btn-success" 
+                                                   style="width: 100%; margin-top: 5px;" 
+                                                   ng-mouseover="getPossibleValues( filters.reimbursementClass.page + 1, 'reimbursementClass', $select.search )">
+                                                     {{'SHOW_OTHER' | translate}}
+                                                 </button>
+                                             </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<label translate="{{'AIC9'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'AIC9' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'AIC9'| translate}}"
+											type="text"
+											ng-model="promofarmaCtrl.aic"
+											id="aic"
+											class="form-control"/>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+								<label translate="{{'ATC'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'ATC' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="ATC"
+											name="ATC"
+											ng-model="promofarmaCtrl.atc"
+											/>		
+									</div>
+									<ui-select multiple ng-model="promofarmaCtrl.atc">
+										<ui-select-match allow-clear="true" placeholder="{{'ATC'| translate}}"> 
+											<span>{{$item.label != null ? $item.label : $item.value}}</span>
+										</ui-select-match> 
+										<ui-select-choices refresh = "getPossibleValues( 0, 'atc', $select.search )" 
+		 												refresh-delay ="500"
+														repeat="option.value as option in filters.atc.elements | filter: $select.search track by $index">
+											<div>	
+												<span>{{option.label != null ? option.label : option.value}}</span>
+											</div>
+											
+                                             <div ng-if="$index == $select.items.length-1 && $index < filters.atc.total-1">
+                                                 <button 
+                                                   class="btn btn-xs btn-success" 
+                                                   style="width: 100%; margin-top: 5px;" 
+                                                   ng-mouseover="getPossibleValues( filters.atc.page + 1, 'atc', $select.search )">
+                                                     {{'SHOW_OTHER' | translate}}
+                                                 </button>
+                                             </div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+							</div>
+						</div>	
+						<div class="row">
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<label for="TRANSPARENCY" translate="{{'TRANSPARENCY'| translate}}">TRANSPARENCY</label>
+								<custom-popover-spha custom-popover-text="{{'TRANSPARENCY' | translate}}"></custom-popover-spha>
+								<div class="form-group" >
+									<ui-select ng-model="promofarmaCtrl.transparency">
+										<ui-select-match allow-clear="true">
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.transparency | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="TRANSPARENCY"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<label for="ORPHAN" translate="{{'ORPHAN'| translate}}">ORPHAN</label>
+								<custom-popover-spha custom-popover-text="{{'ORPHAN' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<ui-select ng-model="promofarmaCtrl.orphan">
+										<ui-select-match allow-clear="true"> 
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.orphan | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="ORPHAN"></xt-validation-inline>
+							</div>
+							
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+								<label for="PATENTED" translate="{{'PATENTED'| translate}}">PATENTED</label>
+								<custom-popover-spha custom-popover-text="{{'PATENTED' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<ui-select ng-model="promofarmaCtrl.patented">
+										<ui-select-match allow-clear="true"> 
+											<span translate="{{$select.selected.label | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices repeat="option.value as option in filters.patented | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="PATENTED"></xt-validation-inline>
+							</div>
+						</div>	
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+								<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="REGION" name="REGION"
+											ng-model="promofarmaCtrl.region" />
+									</div>
+									<ui-select id="select-region" multiple ng-model="promofarmaCtrl.region">
+										<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+											<span>{{$item.label}}</span>
+										</ui-select-match>
+										<ui-select-choices
+											repeat="option in filters.region | filter: $select.search track by $index">
+											<div>
+												<span>{{option.object + ' - ' + option.label}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="REGION"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">	
+								<label translate="{{'ASL'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'ASL' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'ASL'| translate}}"
+											type="text"
+											ng-model="promofarmaCtrl.asl"
+											id="asl"
+											class="form-control"/>
+								</div>
+							</div>	
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_FROM"
+										translate="{{'TIME_FROM' | translate}}">
+										TIME_FROM 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_FROM_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_FROM' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_FROM"
+										name="TIME_FROM"
+										is-open="datesOptions.TIME_FROM.opened"
+										ng-class="addClass( 'TIME_FROM', filtersForm )"
+										ng-model="promofarmaCtrl.timeFrom"
+										datepicker-options="datesOptions.TIME_FROM.datepickerOptions"
+										ng-change="validateDate(filtersForm,promofarmaCtrl.timeFrom,'TIME_FROM')"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-required="true"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_FROM')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_FROM"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_TO"
+										translate="{{'TIME_TO' | translate}}">
+										TIME_TO 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_TO_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_TO' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_TO"
+										name="TIME_TO"
+										is-open="datesOptions.TIME_TO.opened"
+										ng-class="addClass( 'TIME_TO, filtersForm' )"
+										ng-model="promofarmaCtrl.timeTo"
+										datepicker-options="datesOptions.TIME_TO.datepickerOptions"
+										ng-change="validateDate(filtersForm,promofarmaCtrl.timeTo,'TIME_TO')"
+										ng-required="true"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_TO')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_TO"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="text-right">
+							<button type="submit"
+								class="btn btn-primary text-uppercase"
+								id="reset-button"
+								translate="{{'RESET' | translate}}"
+								ng-click="promofarmaCtrl.reset()">
+							</button>
+							<button type="submit"
+									class="btn btn-primary text-uppercase"
+									translate="{{'SEARCH' | translate}}"
+									id="search-button"
+									ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !promofarmaCtrl.showData" >
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="panel-body-section" ng-if="promofarmaCtrl.showData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+
+					<table ng-table="promofarmaCtrl.promofarmaTable"
+							class="table table-bordered">
+						<tr role="row"
+							id="rows"
+							ng-hide="promofarmaCtrl.isLoading"
+							ng-init="promofarmaCtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+						<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('aic9') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'AIC9' | translate"
+									sortable="'aic9'">
+								<div class="text-center">
+									<a title="{{'AIC9' | translate}}" href="" >
+										{{row.aic9}}
+									</a>
+								</div>
+							</td>
+<!-- 							<td ng-if="!promofarmaCtrl.fieldsToNotShow -->
+<!--                                         || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('year') !== -1)" -->
+<!-- 									class="col-xs-12 col-sm-6 col-md-1 col-lg-1" -->
+<!-- 									data-title="'YEAR' | translate" -->
+<!-- 									sortable="'year'"> -->
+<!-- 								<div class="text-center"> -->
+<!-- 									<a title="{{'YEAR' | translate}}" href="" > -->
+<!-- 										{{row.year}} -->
+<!-- 									</a> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+<!-- 							<td ng-if="!promofarmaCtrl.fieldsToNotShow -->
+<!--                                         || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('month') !== -1)" -->
+<!-- 									class="col-xs-12 col-sm-6 col-md-1 col-lg-1" -->
+<!-- 									data-title="'MONTH' | translate" -->
+<!-- 									sortable="'month'"> -->
+<!-- 								<div class="text-center"> -->
+<!-- 									<a title="{{'MONTH' | translate}}" href="" > -->
+<!-- 										{{row.month}} -->
+<!-- 									</a> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('time') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'TIME' | translate"
+                                    sortable="'time'">
+                                <div class="text-center">
+                                    <a title="{{'TIME' | translate}}" href="">
+                                        {{row.time| date : "MM/yyyy"}}
+                                    </a>
+                                </div>
+							</td>
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                      || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('regionCode') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'REGION_CODE' | translate"
+									sortable="'regionCode'">
+								<div class="text-center">
+									<a title="{{'REGION_CODE' | translate}}" href="" >
+										{{row.regionCode}}
+									</a>
+								</div>
+							</td>
+							
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                      || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('regionCodeLabel') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'REGION' | translate"
+									sortable="'regionCodeLabel'">
+								<div class="text-center">
+									<a title="{{'REGION' | translate}}" href="" >
+										{{row.regionCodeLabel}}
+									</a>
+								</div>
+							</td>
+							
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('asl') !== -1)"
+									class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'ASL' | translate"
+									sortable="'asl'">
+								<div class="text-center">
+									<a title="{{'ASL' | translate}}" href="" >
+										{{row.asl}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('noBoxes') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'NO_BOXES' | translate"
+									sortable="'noBoxes'">
+								<div class="text-center">
+									<a title="{{'NO_BOXES' | translate}}" href="" >
+										{{row.noBoxes}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('value') !== -1)"
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'VALUE' | translate"
+									sortable="'value'">
+								<div class="text-center">
+									<a title="{{'VALUE' | translate}}" href="" >
+										{{row.value  | number:2 }}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('averagePrice') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+									data-title="'AVERAGE_PRICE' | translate"
+									sortable="'averagePrice'">
+								<div class="text-center">
+									<a title="{{'AVERAGE_PRICE' | translate}}" href="" >
+										{{row.averagePrice | number:2 }}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!promofarmaCtrl.fieldsToNotShow
+                                        || !(promofarmaCtrl.fieldsToNotShow && promofarmaCtrl.fieldsToNotShow.indexOf('actions') !== -1)"
+								class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+						</tr>
+                        <tr ng-show="promofarmaCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+					</table>
+				</div>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="submit"
+							class="btn btn-primary"
+							translate="{{'EXPORT' | translate}}"
+							ng-click="promofarmaCtrl.exportReport(filtersForm)"
+							ng-disabled="filtersForm.$invalid || !actions['EXPORT']" >
+				</button>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="promofarmaCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="promofarmaCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

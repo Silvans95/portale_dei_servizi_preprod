@@ -1,0 +1,138 @@
+<a id="head"></a>
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="procedureCtrl">
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+		  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			  <h4
+				translate="{{'PROCEDURE_VIEW_TITLE' | translate}}">
+			</h4>
+		  </div>
+		   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="procedureCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div ng-class="procedureCtrl.alertClass" ng-show="procedureCtrl.message">
+				<strong>{{procedureCtrl.message | translate}}</strong>
+			</div>
+			<form xt-form ng-submit="procedureCtrl.submitCreate(myForm)" name="myForm" novalidate>
+				<spha-procedure
+					data="procedureCtrl.procedure"
+					form="myForm"
+					read-only="true">
+				</spha-procedure>
+			</form>
+		<br/>
+		<br/>
+		<div class = "text-right">
+			<button type="submit"
+					class="btn btn-primary"
+					translate="{{'EXPORT_SAS' | translate}}"
+					id="EXPORT_SAS"
+					ng-click="procedureCtrl.exportSas()"
+					ng-if="procedureCtrl.procedure && procedureCtrl.procedure.actions && procedureCtrl.procedure.actions.indexOf('EXPORT_SAS') > 0">
+			</button>
+            <div class="btn-group dropup" 
+                 ng-if="procedureCtrl.procedure && procedureCtrl.procedure.actions && procedureCtrl.procedure.actions.indexOf('IMPORT_SAS') > 0">
+                 <a 
+                    href=""
+                    class="btn btn-primary"
+                    title="{{'IMPORT_SAS'| translate}}">
+                     {{'IMPORT_SAS'| translate}}
+                </a>
+                <button 
+                    type="button" 
+                    class="btn btn-primary dropdown-toggle" 
+                    title=""
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                            <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <input type="file" style="display:none;" accept=".zip" id="import_sas_partial_file_content" onchange="angular.element(this).scope()
+                            .importSasPartialFileChanged();this.value=null; return false;" />
+                        <a class="text-center"
+                           href=""
+						   ng-if="procedureCtrl.procedure.status == 'STARTED'"
+                           ng-click="procedureCtrl.uploadSasPartial()"
+                           title="{{'IMPORT_SAS_PARTIAL' | translate}}">
+                            {{'IMPORT_SAS_PARTIAL' | translate}}
+                        </a>
+                        <input type="file" style="display:none;" accept=".zip" id="import_sas_file_content" onchange="angular.element(this).scope().
+                            importSasFileChanged();this.value=null; return false;" />
+                        <a class="text-center"
+                           href=""
+						   ng-if="procedureCtrl.procedure.status == 'DRAFT'"
+                           ng-click="procedureCtrl.uploadSas()"
+                           title="{{'IMPORT_SAS_TOTAL' | translate}}">
+                            {{'IMPORT_SAS_TOTAL' | translate}}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+		</div>
+		<hr ng-if="procedureCtrl.procedure.phase == 2 && procedureCtrl.links != null">
+		<div class="row" ng-if="procedureCtrl.procedure.phase == 2 && procedureCtrl.links != null">
+			<div class="page-links col-xs-12 col-sm-12 col-md-6 col-lg-6">
+	            <dl>
+	                <dt><h4>Esplora Dati:</h4></dt>
+	                <dd style="display: list-item;" ng-repeat="link in procedureCtrl.links track by $index">
+	                    <a
+	                            id="{{link.sref}}"
+	                            ui-sref="{{link.sref}}({queryType: link.queryType, 
+	                                                    procedureType: procedureCtrl.procedure.type,
+	                                                    procedureId: procedureCtrl.procedure.id})"
+	                            translate="{{ link.text | translate}}"
+	                            title="{{ link.title | translate}}">
+	                    </a>
+	                </dd>
+	
+	            </dl>
+	            
+	        </div> 
+      	</div>
+		<div class="row">
+			<div ng-if="procedureCtrl.importLogs && procedureCtrl.importLogs.length" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<label
+					for="LOG_IMPORT"
+					translate="{{'LOG_IMPORT' | translate}}">
+					LOG_IMPORT
+				</label>
+				<custom-popover-spha
+						custom-popover-text="{{'LOG_IMPORT' | translate}}"></custom-popover-spha>
+				<br>
+				<div class="form-group" style="border: 1px solid grey; border-radius: 4px; padding: 4px">
+				<h5
+					ng-repeat="log in procedureCtrl.importLogs"
+					id="LOG_IMPORT"
+					name="LOG_IMPORT">
+					{{log.importLog}}
+				</h5>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<div class = "text-right">
+			<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="procedureCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        </button>
+			<button type="button" class="btn btn-default"  id="back-button-bottom" ng-click="procedureCtrl.goBack()">
+				{{'BACK' | translate}}
+            </button>
+		</div>
+		</div>
+	</div>
+</div>

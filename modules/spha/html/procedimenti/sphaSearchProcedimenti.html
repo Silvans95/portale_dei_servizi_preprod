@@ -1,0 +1,231 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="procedimentiCtrl.procedimentiTable">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'PROCEDIMENTI_SEARCH' | translate }}">
+            	</h4>
+        	</div>
+        	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default"  id="back-button-top" ng-click="procedimentiCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="procedimentiCtrl.alertClass" ng-show="procedimentiCtrl.message">
+						<strong translate="{{procedimentiCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="procedimentiCtrl.submitSearch()">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+								<label translate="{{'TYPE_PROCEDIMENTI'| translate}}"></label>
+								<div class="form-group">
+									<ui-select ng-model="procedimentiCtrl.typeProcedimenti" 
+											ng-change="procedimentiCtrl.onTypeChange()"
+											ng-disabled="!ownerTypesProcedimenti || ownerTypesProcedimenti.length<2">
+										<ui-select-match>
+											<span translate="{{$select.selected| translate}}"></span>
+										</ui-select-match>
+										<ui-select-choices repeat="item as item in ownerTypesProcedimenti">
+											<div>
+												<span translate="{{item| translate}}"></span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+								<label translate="{{'YEAR'| translate}}">
+								</label>
+								<div class="form-group">
+									<input  placeholder="{{'YEAR'| translate}}"
+											type="number"
+											ng-model="procedimentiCtrl.year"
+											id="year"
+											ng-disabled="!procedimentiCtrl.typeProcedimenti"
+											class="form-control" min="2000" max="3000"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<label translate="{{'DESCRIZIONE'| translate}}">
+								</label>
+								<div class="form-group">
+									<input  placeholder="{{'DESCRIZIONE'| translate}}"
+											type="text"
+											ng-model="procedimentiCtrl.description"
+											id="descrizione"
+											ng-disabled="!procedimentiCtrl.typeProcedimenti"
+											class="form-control" maxlength="4000"/>
+								</div>
+							</div>
+						</div>
+						<br/>
+						<div class="text-right">
+							<button
+									ng-if="!ownerTypesProcedimenti || ownerTypesProcedimenti.length<2" 
+									type="button"
+									class="btn btn-primary"
+									id="new-button"
+									ng-disabled="!procedimentiCtrl.typeProcedimenti"
+									ng-click = "procedimentiCtrl.new()"
+									translate="{{'NEW' | translate}}">
+							</button>
+							<button type="button"
+									class="btn btn-primary"
+									id="reset-button"
+									ng-click = "procedimentiCtrl.reset()"
+									translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit"
+									class="btn btn-primary"
+									id="search-button"
+									translate="{{'SEARCH' | translate}}">
+							</button>
+						</div>
+						<br/>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div class="panel-body-section">
+        	<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table table-responsive">
+					<table	id ="anagraphic-procedure-table"
+							ng-table="procedimentiCtrl.procedimentiTable"
+							class="table table-bordered">
+							
+						<tr role="row"
+							ng-hide="procedimentiCtrl.isLoading"
+							ng-init="procedimentiCtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data" id="rows">
+							<!-- Abilitare se si prevede la debugMode
+							<td
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+									data-title="'ID' | translate"
+									ng-if="debugMode"
+									sortable="'id'">
+								<div class="text-center">
+									{{row.id}}
+								</div>
+							</td> -->
+							<td
+									id="DESCRIZIONE"
+									class="col-xs-3 col-sm-3 col-md-3 col-lg-3 titleTableProcedimenti"
+									data-title="'DESCRIZIONE' | translate"
+									ng-init = "procedimentiCtrl.isCollapsed[$index] = true"
+									ng-class="{'tableDataTitleCollapseIn': procedimentiCtrl.isCollapsed[$index] && row.description.length > 150, 'tableDataTitleCollapseOut': !procedimentiCtrl.isCollapsed[$index] && row.description.length > 150 }"
+									sortable="'description'">
+								{{row.description}}
+								<div class="text-center">
+				  	    					<span
+													ng-click="procedimentiCtrl.isCollapsed[$index] = !procedimentiCtrl.isCollapsed[$index]"
+													ng-if="row.description.length > 150"
+													style="cursor: pointer;"
+													class="glyphicon"
+													title="{{ (procedimentiCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+													ng-class="{
+										          'glyphicon-chevron-down': procedimentiCtrl.isCollapsed[$index],
+										          'glyphicon-chevron-up': !procedimentiCtrl.isCollapsed[$index]
+										        }">
+											</span>
+								</div>
+							</td>
+							<td
+									class="col-xs-1 col-sm-1 col-md-1 col-lg-1 datesTable"									
+									sortable="'startDate'"
+									data-title="'DATA_APERTURA' | translate">
+								<div class="text-center">
+									<a title="{{'DATA_APERTURA' | translate}}" href="" >
+										{{row.startDate | date : "dd/MM/yyyy"}}
+									</a>
+								</div>
+							</td>
+							<td
+									id="DATA_CHIUSURA"
+									class="col-xs-1 col-sm-1 col-md-1 col-lg-1 datesTable"
+									sortable="'endDate'"
+									data-title="'DATA_CHIUSURA' | translate">
+								<div class="text-center">
+									<a title="{{'DATA_CHIUSURA' | translate}}" href=""> 
+										{{row.endDate | date : "dd/MM/yyyy"}}
+									</a>
+								</div>
+							</td>
+							<td
+									class="col-xs-1 col-sm-1 col-md-1 col-lg-1 datesTable"
+									sortable="'startPeriodDate'"
+									data-title="'DATA_INIZIO_PERIODO' | translate">
+								<div class="text-center">
+									<a title="{{'DATA_INIZIO_PERIODO' | translate}}" href="">
+										{{row.startPeriodDate | date : "dd/MM/yyyy"}}
+									</a>
+								</div>
+							</td>
+							<td
+									class="col-xs-1 col-sm-1 col-md-1 col-lg-1 datesTable"
+									sortable="'endPeriodDate'"
+									data-title="'DATA_FINE_PERIODO' | translate">
+								<div class="text-center">
+									<a title="{{'DATA_FINE_PERIODO' | translate}}" href=""> 
+										{{row.endPeriodDate | date : "dd/MM/yyyy"}}
+									</a>
+								</div>
+							</td>
+							<td
+									class="col-xs-1 col-sm-1 col-md-1 col-lg-1 datesTable"
+									sortable="'status'"
+									ng-style="{'background-color': getColorFromState(row)}"
+									data-title="'STATUS' | translate">
+								<div class="text-center">
+									<a title="{{'STATUS' | translate}}" href=""> 
+										{{row.status | translate }}
+									</a>
+								</div>
+							</td>
+							<td
+								class="col-xs-3 col-sm-3 col-md-3 col-lg-3"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+						</tr>
+						<tr ng-show="procedimentiCtrl.isLoading">
+							<td colspan="8">
+								<div id="loadingSpinnerRow"></div>
+							</td>
+						</tr>
+						
+					</table>
+			</div>		
+		</div>
+		<br/>
+		<br/>
+		<div class = "text-right">
+			<button type="button"
+					   id="top-button"
+                       class="btn btn-default"
+                       ng-click="procedimentiCtrl.goToTop()"
+                       translate="{{'GO_TO_TOP' | translate}}">
+        	</button>
+			<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="procedimentiCtrl.goBack()">
+				{{'BACK' | translate}}
+               </button>
+		</div>
+
+		</div>
+	</div>
+</div>

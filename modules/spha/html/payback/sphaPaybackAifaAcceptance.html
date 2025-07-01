@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<script id="selectAllHeader" type="text/ng-template">
+	<div class="text-center">
+		<input type="checkbox"
+			ng-checked="allItemsSelected" 
+			ng-click="selectAll()">
+    </div>
+</script>
+
+<div class="panel spha" ng-cloak>
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h4>
+					{{ ctrl.queryType | translate }}
+				</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-body">
+
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h4 class="text-center">
+						{{ ctrl.queryType == 'VERSARE' ? 'SELECT_REGION' : '' | translate }}
+					</h4>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					<table ng-table="ctrl.amountTable" class="table table-bordered">
+						
+						<tr role="row" id="rows"  ng-init="ctrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+
+                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1 selectAllItems" ng-if="ctrl.canExport()" header="'selectAllHeader'">
+                                <div class="text-center">
+                                    <input type="checkbox" ng-checked="rowSelected(row)" ng-click="selectEntity(row)" >
+                                </div>
+                            </td>
+
+							<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1" data-title="'COMPANY_CODE' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_COMPANY') != -1">
+								<div class="text-center">
+									<a title="{{'COMPANY_CODE' | translate}}">
+										{{row.codiceSis}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-6 col-lg-6" data-title="'COMPANY_NAME' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_COMPANY') != -1">
+								<div class="text-center">
+									<a title="{{'COMPANY_NAME' | translate}}">
+										{{row.nomeTitolare}}
+									</a>
+								</div>
+							</td>
+
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2" data-title="'ACCEPTANCE_MODULE' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB5') != -1">
+								<div class="text-center">
+									<a title="{{'ACCEPTANCE_MODULE' | translate}}">
+										<a class="table-button-directive-space" ng-click="ctrl.showAcceptanceFile(row.procedureInstanceId)">
+											<span class="fa fa-file-pdf-o" title="Download"></span>
+										</a>
+										<a class="table-button-directive-space" ng-click="ctrl.deleteAcceptanceFile(row.id)">
+											<span class="fa fa-lock" title="Sblocca"></span>
+										</a>
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1" data-title=" 'OPTION' | translate"
+								ng-if="actions.indexOf('PAYMENT_VIEW_PB5') != -1">
+								<div class="text-center">
+									<a title="{{'OPTION' | translate}}">
+										{{getStatusValue(row.statusAccettazione)}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
+								data-title=" actions.indexOf('PAYMENT_VIEW_PB5') != -1 || actions.indexOf('PAYMENT_VIEW_SHELF') != -1 ? 'TOT_VALUE' : 'TO_PAID_AMOUNT' | translate">
+								<div class="text-right">
+									<a title="{{'TO_PAID_AMOUNT' | translate}}">
+										{{row.totalAmount | number : 2}}
+									</a>
+								</div>
+							</td>
+
+							<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
+								data-title="'VIEW_REGION_DETAIL' | translate">
+								<div class="text-center">
+									<a title="{{'VIEW_REGION_DETAIL' | translate}}">
+										<ng-payment-operations operations="row.operations" />
+									</a>
+								</div>
+							</td>
+
+						</tr>
+						<tr ng-show="ctrl.isLoading">
+		                    <td colspan="{{$data.length}}">
+		                        <div id="loadingSpinnerRow"></div>
+		                    </td>
+		                </tr>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+		<div class="text-center">
+			<button class="btn btn-default" ng-if="ctrl.canExport()" ng-click="ctrl.esporta()">Esporta in CSV</button>
+			<button class="btn btn-default" ng-if="ctrl.canExport()" ng-disabled="!ctrl.selectedEntities.length" ng-click="ctrl.deleteAllAcceptanceFile()">
+				<a class="table-button-directive-space">
+					<span class="fa fa-lock" title="Sblocca"></span>
+				</a>Sblocca</button>
+		</div>
+		<div class="text-right">
+			<button type="button" class="btn btn-default" id="top-button" ng-click="ctrl.goToTop()">
+				{{'GO_TO_TOP' | translate}}
+			</button>
+			<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="ctrl.goBack()">
+				{{'BACK' | translate}}
+			</button>
+		</div>
+	</div>
+</div>

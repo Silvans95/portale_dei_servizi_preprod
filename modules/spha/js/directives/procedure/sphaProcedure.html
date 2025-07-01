@@ -1,0 +1,376 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+		<label translate="{{'TYPE_PROCEDIMENTI'| translate}}"></label>
+		<div class="form-group">
+			<div style="height:0px;">
+				<input type="text" style="opacity: 0;" ng-model="data.type" required />
+			</div>
+			<ui-select ng-model="data.type" ng-change="updateDescription()" ng-required="true" ng-disabled="true">
+				<ui-select-match>
+					<span translate="{{$select.selected| translate}}"></span>
+				</ui-select-match>
+				<ui-select-choices repeat="item as item in allProcedureTypes">
+					<div>
+						<span translate="{{item| translate}}"></span>
+					</div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+		<label translate="{{'TYPE_PERIOD'| translate}}"></label>
+		<div class="form-group">
+			<div style="height:0px;">
+				<input type="text" style="opacity: 0;" ng-model="data.period"/>
+			</div>
+			<ui-select ng-model="data.period" ng-change="updateDescription()" ng-disabled="readOnly || startDateLessThanToday">
+				<ui-select-match>
+					<span>{{$select.selected.label}}</span>
+				</ui-select-match>
+				<ui-select-choices repeat="item.value as item in periodTypes">
+					<div>
+						<span>{{item.label}}</span>
+					</div>
+				</ui-select-choices>
+			</ui-select>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+		<label 
+				for="YEAR"
+				translate="{{'YEAR' | translate}}">
+				YEAR 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'YEAR' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input 
+				ng-change="updateDescription()"
+				type="number"
+				placeholder="{{'YEAR'| translate}}"
+				class="form-control"
+				ng-class="addClass( 'YEAR' )"
+				id="YEAR"
+				name="YEAR"
+				ng-disabled="readOnly || startDateLessThanToday"
+				ng-model="data.year"
+				min="1000"
+				max="9999"
+				ng-required="true"/>
+			<xt-validation-inline for="YEAR"></xt-validation-inline>		
+		</div>		
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<label 
+				for="DESCRIZIONE"
+				translate="{{'DESCRIZIONE' | translate}}">
+				DESCRIZIONE 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'DESCRIZIONE' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				type="text"
+				placeholder="{{'DESCRIZIONE'| translate}}"
+				class="form-control"
+				ng-class="addClass( 'DESCRIZIONE' )"
+				id="DESCRIZIONE"
+				name="DESCRIZIONE"
+				ng-disabled="!startNewPhase && (readOnly  || startDateLessThanToday)"
+				ng-model="data.description"
+				maxlength="4000"
+				ng-required="true"/>
+			<xt-validation-inline for="DESCRIZIONE"></xt-validation-inline>		
+		</div>		
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="DATA_APERTURA"
+				translate="{{'DATA_APERTURA_LABEL' | translate}}">
+				DATA_APERTURA_LABEL 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'DATA_APERTURA' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				uib-datepicker-popup="dd/MM/yyyy"
+				placeholder="{{'DATA_APERTURA' | translate}}"
+				type="text"
+				class="form-control"
+				id="DATA_APERTURA"
+				name="DATA_APERTURA"
+				is-open="datesOptions.DATA_APERTURA.opened"
+				ng-disabled="!startNewPhase && (readOnly || startDateLessThanToday ) && (readOnly || !startDateEditableIfprocedureDraft)"
+				ng-class="addClass( 'DATA_APERTURA' )"
+				ng-model="data.startDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-required="true"
+				msg-daterange="ERRORE_DATA_APERTURA"/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="openDatePopup('DATA_APERTURA')">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="DATA_APERTURA"></xt-validation-inline>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="DATA_CHIUSURA"
+				translate="{{'DATA_CHIUSURA_LABEL' | translate}}">
+				DATA_CHIUSURA_LABEL
+		</label>
+		<custom-popover-spha custom-popover-text="{{'DATA_CHIUSURA' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				uib-datepicker-popup="dd/MM/yyyy"
+				placeholder="{{'DATA_CHIUSURA' | translate}}"
+				type="text"
+				class="form-control"
+				id="DATA_CHIUSURA"
+				name="DATA_CHIUSURA"
+				is-open="datesOptions.DATA_CHIUSURA.opened"
+				ng-disabled="!startNewPhase && readOnly"
+				ng-class="addClass( 'DATA_CHIUSURA' )"
+				ng-model="data.endDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-required="true"
+				msg-daterange="ERRORE_DATA_APERTURA"/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="openDatePopup('DATA_CHIUSURA')">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="DATA_CHIUSURA"></xt-validation-inline>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+		<label 
+				for="NUMERO_RATE"
+				translate="{{'NUMERO_RATE' | translate}}">
+				NUMERO_RATE 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'NUMERO_RATE' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				type="number"
+				placeholder="{{'NUMERO_RATE'| translate}}"
+				class="form-control"
+				ng-class="addClass( 'NUMERO_RATE' )"
+				id="NUMERO_RATE"
+				name="NUMERO_RATE"
+				ng-disabled="!startNewPhase && (readOnly || startDateLessThanToday)"
+				ng-change="cleanInputDate()"
+				ng-model="data.feeNumber"
+				min="{{ domain.fees.min }}"
+				max="{{ domain.fees.max }}"
+				ng-required="true"/>
+			<xt-validation-inline for="NUMERO_RATE"></xt-validation-inline>		
+		</div>		
+	</div>
+		
+		<div style="margin-top:1.8%"  ng-if="isAvailablePaymentFeeDate && (data.feeExpireDates.length < data.feeNumber) && !readOnly">
+			<a class="buttons" ng-click = "addNewFeeDate()" style="padding: 1%;">
+					<span class="fa fa-plus" title="{{'DATA_FEE_ADD' | translate}}"></span>
+			</a>
+			
+		</div>	
+				
+</div>
+
+<div class="row">
+	<div ng-repeat="input in data.feeExpireDates" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+		<label 
+					for="input.label"
+					translate="{{'DATA_FEE' | translate}} {{ $index +1 }}">
+					DATA_FEE 
+			</label>
+		<custom-popover-spha custom-popover-text="{{'DATA_FEE'  | translate}} {{ $index +1 }}"></custom-popover-spha>
+		<div class="input-group" >
+				<input 
+				uib-datepicker-popup="dd/MM/yyyy"
+				placeholder="{{'DATA_FEE' | translate}} {{ $index +1 }}"
+				type="text"
+				class="form-control"
+				id="{{input.label}}"
+				id="{{input.label}}"
+				is-open="datesOptions[input.label].opened"
+				ng-disabled="readOnly"
+				ng-class="addClass( input.label )"
+				ng-model="input.feeExpireDate"
+				ng-model-options="{ timezone: 'UTC' }"/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-disabled="readOnly" ng-click="openDatePopup(input.label)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div> 
+		<xt-validation-inline for="input.label"></xt-validation-inline>	
+	</div>
+	
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+		<label 
+				for="EMAIL"
+				translate="{{'EMAIL' | translate}}">
+				EMAIL 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'EMAIL' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				type="text"
+				placeholder="{{'EMAIL'| translate}}"
+				class="form-control"
+				ng-class="addClass( 'EMAIL' )"
+				id="EMAIL"
+				name="EMAIL"
+				ng-disabled="!startNewPhase && (readOnly  || startDateLessThanToday)"
+				ng-model="data.email"
+				maxlength="4000"
+				/>
+			<xt-validation-inline for="EMAIL"></xt-validation-inline>		
+		</div>		
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+		<label 
+				for="PEC"
+				translate="{{'PEC' | translate}}">
+				PEC 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'PEC' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				type="text"
+				placeholder="{{'PEC'| translate}}"
+				class="form-control"
+				ng-class="addClass( 'PEC' )"
+				id="PEC"
+				name="PEC"
+				ng-disabled="!startNewPhase && (readOnly  || startDateLessThanToday)"
+				ng-model="data.pec"
+				maxlength="4000"
+				/>
+			<xt-validation-inline for="PEC"></xt-validation-inline>		
+		</div>		
+	</div>
+</div>
+<div class="row" ng-if="domain.phases">
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+		<label 
+			for="FASE"
+			translate="{{'FASE' | translate}}">
+			FASE
+		</label>
+		<custom-popover-spha custom-popover-text="{{'FASE' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+ 			<ui-select
+				id="FASE"
+				name="FASE"
+				ng-model="data.phase"
+				ng-disabled="true">
+				<ui-select-match>
+					<span translate="{{$select.selected.label | translate}}"> </span>
+				</ui-select-match>
+				<ui-select-choices repeat="option.value as option in phase_label | filter: $select.search">
+					<div>
+						<span translate="{{option.label| translate}}"></span>
+					</div>
+				</ui-select-choices>
+			</ui-select>
+		</div>		
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	<h4 translate="{{'DATA_EXPOSURE' | translate}}">
+	</h4>
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="DATA_INIZIO_PERIODO"
+				translate="{{'instance.DATA_APERTURA_DAL' | translate}}">
+				DATA_APERTURA_DAL 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'DATA_INIZIO_PERIODO' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				uib-datepicker-popup="dd/MM/yyyy"
+				placeholder="{{'DATA_INIZIO_PERIODO' | translate}}"
+				type="text"
+				class="form-control"
+				id="DATA_INIZIO_PERIODO"
+				name="DATA_INIZIO_PERIODO"
+				is-open="datesOptions.DATA_INIZIO_PERIODO.opened"
+				ng-disabled="readOnly || startDateLessThanToday"
+				ng-class="addClass( 'DATA_INIZIO_PERIODO' )"
+				ng-model="data.startPeriodDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-required="true"
+				msg-daterange="ERRORE_DATA_INIZIO_PERIODO"/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="openDatePopup('DATA_INIZIO_PERIODO')">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="DATA_INIZIO_PERIODO"></xt-validation-inline>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="DATA_FINE_PERIODO"
+				translate="{{'instance.DATA_FINE_PERIODO' | translate}}">
+				DATA_FINE_PERIODO 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'DATA_FINE_PERIODO' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				uib-datepicker-popup="dd/MM/yyyy"
+				placeholder="{{'DATA_FINE_PERIODO' | translate}}"
+				type="text"
+				class="form-control"
+				id="DATA_FINE_PERIODO"
+				name="DATA_FINE_PERIODO"
+				is-open="datesOptions.DATA_FINE_PERIODO.opened"
+				ng-disabled="readOnly || startDateLessThanToday"
+				ng-class="addClass( 'DATA_FINE_PERIODO' )"
+				ng-model="data.endPeriodDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-required="true"
+				msg-daterange="ERRORE_DATA_INIZIO_PERIODO"/>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="openDatePopup('DATA_FINE_PERIODO')">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="DATA_FINE_PERIODO"></xt-validation-inline>
+	</div>
+</div>
+<br>
+<br>
+
+<div class="row" ng-if="data.id != null">
+	<div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+		<label  translate="{{'ALLEGATI'| translate}}">
+		</label>
+		<span  class="glyphicon glyphicon-book" id="ATTACHMENT_BUTTON" ng-click="gotoAllegati()"></span>
+	</div>
+</div>

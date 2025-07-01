@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="medicineCtrl.accordionMarketingAndMore"
+                 style="margin-bottom: -15px;">
+                <div uib-accordion-heading>
+                    {{'MARKETING_AND_MORE' | translate}}
+                    <custom-popover-spha
+                            custom-popover-text="{{'MARKETING_AND_MORE' | translate}}"></custom-popover-spha>
+                    <div class="pull-right">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-chevron-down': medicineCtrl.accordionMarketingAndMore, 'glyphicon-chevron-right': !medicineCtrl.accordionMarketingAndMore}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_FROM"
+                                translate="{{'FIRST_MARKETING_FROM' | translate}}">
+                            FIRST_MARKETING_FROM
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_FROM' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_FROM' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_FROM"
+                                    name="FIRST_MARKETING_FROM"
+                                    is-open="datesOptions.FIRST_MARKETING_FROM.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_FROM', filtersForm )"
+                                    ng-model="medicineCtrl.firstMarketingFrom"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="openDatePopup('FIRST_MARKETING_FROM')">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_FROM"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_TO"
+                                translate="{{'FIRST_MARKETING_TO' | translate}}">
+                            VALID_MARKETING_TO
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_TO' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_TO' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_TO"
+                                    name="FIRST_MARKETING_TO"
+                                    is-open="datesOptions.FIRST_MARKETING_TO.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_TO, filtersForm' )"
+                                    ng-model="medicineCtrl.firstMarketingTo"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default"
+                                        ng-click="openDatePopup('FIRST_MARKETING_TO')">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_TO"></xt-validation-inline>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'TRANSPARENCY'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'TRANSPARENCY' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="medicineCtrl.transparency">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.transparency | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'ORPHAN'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'ORPHAN' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="medicineCtrl.orphan">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.orphan | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'INNOVATIVE'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'INNOVATIVE' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="medicineCtrl.innovative">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.innovative | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'PATENTED'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'PATENTED' | translate}}"></custom-popover-spha>
+                        <div class="form-group">
+                            <ui-select ng-model="medicineCtrl.patented">
+                                <ui-select-match allow-clear="true">
+                                    <span translate="{{$select.selected.label | translate}}"></span>
+                                </ui-select-match>
+                                <ui-select-choices
+                                        repeat="option.value as option in filters.patented | filter: $select.search track by $index">
+                                    <div>
+                                        <span translate="{{option.label | translate}}"></span>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

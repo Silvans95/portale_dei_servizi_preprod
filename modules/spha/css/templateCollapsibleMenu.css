@@ -1,0 +1,71 @@
+	.divButtonMenu{
+	    padding-left: 0px; 
+	    max-width: 40px;
+	    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.24), 0px 2px 3px rgba(0, 0, 0, 0.12);
+	}
+	
+	.buttonMenu{
+		width: 40px;
+		height: 125px;
+		cursor: pointer;
+		background: url("../images/bg-user-dashboard.jpg");
+		text-align: center;
+		
+	}
+	
+	.sidebar .panel{
+	    min-height: 125px;
+	}
+	
+	.buttonMenu > a{
+		text-decoration: none;
+	}
+	
+	.faBars{
+		 font-size: 28px;
+	}
+	
+	.buttonText{
+		-webkit-transform: rotate(90deg);
+		 margin-right: 8px;
+	
+	}
+	
+	.divMenu{
+		padding-right: 0px; 
+	}
+	
+	@media screen and (max-width: 768px){
+		.divMenu > .affix{
+			position:relative;
+			width:100%;
+		}
+		.divButtonMenu > .affix{
+			position:relative;
+		}
+	}
+	@media screen and (min-width: 768px){
+		.divMenu > .affix {
+			width:24%;
+		}
+	}
+	@media screen and (min-width: 1535px){
+		.divButtonMenu{
+			margin-left: -1px;
+		}
+	}
+	@media screen and (min-width: 1658px){
+		.divButtonMenu{
+			margin-left: -2px;
+		}
+	}
+	@media screen and (min-width: 1750px){
+		.divButtonMenu{
+			margin-left: -3px;
+		}
+	}
+	@media screen and (min-width: 1842px){
+		.divButtonMenu{
+			margin-left: -4px;
+		}
+	}

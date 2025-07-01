@@ -1,0 +1,18 @@
+
+{
+	"OPERATION":"Operation",
+	"OPERATION_FROM":"From",
+	"OPERATION_FROM_LABEL":"Operation from",
+	"OPERATION_TO":"To",
+	"OPERATION_TO_LABEL":"Operation to",
+	"RECTIFICATION_SUBMISSION":"Rectification submission",
+	"PAYMENT":"Payment",
+	"CREATION_PROC_INSTANCE":"Creation procedure instance",
+	"USER_CN":"User",
+	"OPERATION_NUMBER":"Operation number",
+	"COMPANIES":"Pharmaceutical company",
+	"COMPANIES_TOOLTIP": "Pharmaceutical company (SIS code a/o description)",
+	"PROCEDIMENTI_STATISTICHE":"Data statistics",
+	"EXPORT_ALL":"Export All",
+	"ACCEPTATION":"Completion of the acceptance form"
+}

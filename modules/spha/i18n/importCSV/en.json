@@ -1,0 +1,13 @@
+{
+    "IMPORTCSV": "Import CSV",
+    "DBTYPE": "DB Type",
+    "FILE_NAME": "File name",
+    "FILE_NAME_LABEL": "Insert file name",
+    "UPLOAD_FILE": "Upload file",
+    "START_UPLOAD": "Upload",
+    "EXIT" : "Exit",
+    "LOG_IMPORT": "Log Import csv",
+    "CONFIRM_RESET": "Are you sure you want to reset? doing so the import will not be saved on the db!",
+    "CONFIRM_EXIT":"Do you want to save before exiting?",
+    "SUCCESS_SAVED_CSV": "the csv was saved successfully"
+}

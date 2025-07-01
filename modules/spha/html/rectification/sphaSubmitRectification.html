@@ -1,0 +1,176 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="submitRectificationCtrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row" ng-if="submitRectificationCtrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!submitRectificationCtrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'SUBMIT_RECTIFICATION' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="submitRectificationCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+  	<div  ng-show="submitRectificationCtrl.isLoading" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!submitRectificationCtrl.isLoading">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="submitRectificationCtrl.alertClass" ng-show="submitRectificationCtrl.message">
+						<strong translate="{{submitRectificationCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="submitRectificationCtrl.closeRectification(submitForm)" xt-form role="form" name="submitForm" > 
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+								<label 
+								for="DESCRIPTION"
+								translate="{{'DESCRIPTION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'DESCRIPTION' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'DESCRIPTION'| translate}}"
+											type="text"
+											ng-model="submitRectificationCtrl.description"
+											id="description"
+											maxlength="100"
+											required
+											ng-class="addClass( 'DESCRIPTION', submitForm )"
+											class="form-control""/>
+								</div>
+								<xt-validation-inline for="DESCRIPTION"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<div  onloadstart="">
+								      <object id="teste1" data="{{pdfContent}}" type="{{type}}" style="width:100%; height:600px" />
+								    </div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+								<div class="row">
+									<div class="col-sm-6">
+										<div 
+											ngf-drop 
+											ngf-select 
+											ng-model="submitRectificationCtrl.draggedFile" 
+											ng-change="change()"
+											class="drop-box" 
+										    ngf-multiple="true" 
+										    ngf-allow-dir="true"
+										    ngf-accept="acceptedFiles"
+										    ngf-pattern="acceptedFiles">
+										    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP_RECTIFICATION' | translate}}
+									    </div>
+									    <div ngf-no-file-drop>
+									    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP_ERROR' | translate}}
+									    </div>
+										<div class="text-right button-select-file">
+									 		<div 
+									 			class="btn btn-success" 
+									 			ngf-select="upload($files)" 
+									 			ngf-accept="acceptedFiles"
+									 			ngf-pattern="acceptedFiles" 
+									 			ngf-multiple="true">
+									 			  <i class="fa fa-folder-open-o"></i>
+									 				{{'UPLOAD_FILES_BUTTON' | translate}}
+								 				  <span class="progress" ng-show="f.progress >= 0">
+														 <div 
+														 	style="width:{{f.progress}}%" 
+														 	ng-bind="f.progress + '%'">
+														 </div>
+												 	  </span>	
+									 		</div>
+									 	</div>
+									</div>
+									<div class="col-sm-6">
+										 <div class="file-upload">
+										    <label>Files:</label>
+										    <div class="row" ng-repeat="f in submitRectificationCtrl.files">
+									       	 	<div class="col-sm-12">
+									       	 		{{f.name}} {{f.$error}} {{f.$errorParam}}
+										        	<a 
+										        		class=" fa fa-trash" 
+										        		ng-click="removeFile(f)">
+										        	</a>
+									       	 	</div>
+									 	    </div>
+									 	    <div class="row" ng-repeat="file in submitRectificationCtrl.rectificationFiles">
+									       	 	<div class="col-sm-12">
+													{{ file.description }}
+													<a class="fa fa-trash" ng-click="submitRectificationCtrl.remove(file)" title="{{'DELETE_RECTIFICATION_FILE' | translate}}">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<br> 
+		<br>
+		<div class="panel-body-section">
+			<div class = "text-right">
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="submitRectificationCtrl.delete()"
+							translate="{{'DELETE_RECT' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="submitRectificationCtrl.reset()"
+							translate="{{'RESET' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-disabled="submitForm.$invalid"
+							ng-click="submitRectificationCtrl.save()"
+							translate="{{'SAVE' | translate}}">
+				</button>
+				<button type="submit"
+							class="btn btn-primary"
+							ng-click="submitRectificationCtrl.submit()"
+							ng-disabled="submitForm.$invalid"
+							translate="{{'SUBMIT' | translate}}">
+				</button>
+				
+			</div>
+			<div class="text-right">
+				<h4 class="errorSummaryText">
+					{{'PAYMENT_FILE_LIMIT_SIGNED' | translate}}</h4>
+					<h4 class="moreInfoSummaryText">
+						{{'FILE_SIGN_WARN' | translate}}</h4>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="submitRectificationCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" ng-click="submitRectificationCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

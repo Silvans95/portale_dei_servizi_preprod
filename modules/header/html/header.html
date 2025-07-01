@@ -1,0 +1,135 @@
+<nav ng-controller="headerCtrl" class="navbar navbar-default navbar-fixed-top bg-white mb0">
+  <div class="container-fluid">
+    <div class="row top-navbar pt11 pb12">
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h4 ng-if="$root.currentApp=='DHB'" class="m0 txt-white top-navbar-align" translate>DASHBOARD</h4>
+        <h4 ng-if="$root.currentApp!='DHB'" class="m0 txt-white top-navbar-align">
+          <i ui-sref="dashboard.home" class="flaticon-back"></i>
+          <a ui-sref="dashboard.home" title="Torna alla Dashboard" class="txt-white ml40" translate>
+            TORNA_DASHBOARD
+          </a>
+        </h4>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-right">
+
+        <div class="pr10 display inline">
+          <a href="" ng-click="changeLanguage('it')" title="Italiano">
+            <img src="./icons/it.png" alt="Italiano" title="Italiano"/>
+          </a>
+          <a href="" ng-click="changeLanguage('en')" title="English">
+            <img src="./icons/en.png" alt="English" title="English"/>
+          </a>
+        </div>
+
+        <ui-select ng-model="$root.currentApp" on-select="changeApp($select.selected.codice)"
+                   class="dropdown radius small pull-right">
+          <ui-select-match placeholder="Seleziona un'applicazione">
+            <span ng-bind="$select.selected.descrizione"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="elem.codice as elem in (listaApplicazioni | filter: $select.search)">
+            {{elem.descrizione}}
+          </ui-select-choices>
+        </ui-select>
+
+        <!--  <ui-select ng-model="$root.currentRole" on-select="changeRole($select.selected)"
+                    class="dropdown radius small pull-right">
+           <ui-select-match placeholder="Seleziona un ruolo">
+             <span ng-bind="$select.selected"></span>
+           </ui-select-match>
+           <ui-select-choices repeat="elem in (listaRuoli | filter: $select.search)">
+             {{elem}}
+           </ui-select-choices>
+         </ui-select> -->
+
+
+        <!--spana.txt-white(href='#', title='English') English
+        -->
+        <!--span.ml30a.txt-white(href='#', title='Italiano') Italiano
+        -->
+      </div>
+    </div>
+    <div class="navbar-header">
+      <button type="button" data-toggle="collapse" data-target=".topNavbar" aria-expanded="false" aria-controls="navbar"
+              class="navbar-toggle collapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#" class="navbar-brand">
+        <img src="./images/logo-aifa.svg" alt="Logo AIFA" title="Homepage del Portale istituzionale AIFA" class="brand"/>
+      </a>
+    </div>
+    <div class="navbar-collapse collapse topNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown notifications">
+          <div data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+               class="dropdown-toggle"><i class="fa fa-bell"></i><span ng-class="{'badge bg-red ml6': isWarning}"
+                                                                       class="badge ml6">{{listaNotifiche.length}}</span><span
+            class="caret ml6"></span></div>
+          <ul aria-labelledby="notifications" class="dropdown-menu">
+            <h5 class="text-uppercase txt-blue bold m0 p15" translate>NOTIFICHE</h5>
+            <li ng-repeat="notifica in listaNotifiche | limitTo: 5">
+              <div class="notice">
+                <a ui-sref="notifiche.read({idNotifica: notifica.idMessaggio})">
+                  <div class="date">{{ {{ convertiInData(notifica.dataInizioValidita) | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+                  <div class="title">{{ notifica.titolo }}</div>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="notice"></div>
+            </li>
+            <!--<li class="all-notice">
+              <a ui-sref="notifiche.list()">
+                <i class="fa fa-list mr6"></i>
+                <span>Elenco notifiche</span>
+              </a>
+            </li>-->
+          </ul>
+        </li>
+        <li class="dropdown user-menu">
+          <div data-target="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+               class="dropdown-toggle">{{user.givenName}} {{user.sn}}<span class="caret ml6"></span></div>
+          <ul aria-labelledby="user-menu" class="dropdown-menu p0">
+            <li><a href="" ng-if="!utenteInterno" ng-click="modificaPassword()" translate>MODIFICA_PWD<i
+              class="flaticon-pencil-striped-symbol-for-interface-edit-buttons ml6"></i></a></li>
+            <li><a href="" ng-if="!utenteInterno" ng-click="modificaDatiPersonali()" translate>MODIFICA_DATI<i
+              class="flaticon-pencil-striped-symbol-for-interface-edit-buttons ml6"></i></a></li>
+            <li><a href="" ng-if="!utenteInterno" ng-click="gestioneProfilo()" translate>GESTIONE_PROFILO<i
+              class="flaticon-pencil-striped-symbol-for-interface-edit-buttons ml6"></i></a></li>
+            <li role="separator" class="divider m0"></li>
+            <li><a href="" ng-click="logout()" translate>ESCI<i class="flaticon-power"></i></a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="row btm-header-navigation">
+      <div ncy-breadcrumb="" class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+        <ol class="breadcrumb bg-white mb0 p-rel">
+          <li><i class="flaticon-dashboard p-abs"></i>
+            <a href="./index.html" title="Dashboard" translate>DASHBOARD</a>
+          </li>
+        </ol>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 text-right">
+        <ul class="display-in-line style-none">
+          <li class="mr25">
+            <i class="fa fa-list mr6"></i>
+            <a ui-sref="notifiche.list()" href="#" title="Notifiche" translate>NOTIFICHE</a>
+          </li>
+          <li ng-if="tipoUtente" class="mr25">
+               <i class="fa fa-envelope" aria-hidden="true"></i>
+               <a href="https://outlook.office.com/mail"  target="_blank" title="Mail" translate="">Posta Elettronica</a>
+               <!-- <a ng-href="{{linkPel}}"  title="Mail" translate>Posta Elettronica</a> -->
+          </li>
+        
+          <li>
+            <i class="fa fa-book mr6"></i>
+            <a ng-href="{{downloadUrl}}" title="Guida al servizio" download translate>GUIDA_SERVIZIO</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

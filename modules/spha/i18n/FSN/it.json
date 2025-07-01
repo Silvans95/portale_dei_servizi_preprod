@@ -1,0 +1,14 @@
+{
+    "FSN_SEARCH": "Ricerca Fondo Sanitario Nazionale (FSN)",
+    "REGION":"Regione",
+    "REGION_CODE": "Codice Regione",
+    "REGION_TOOLTIP": "Regione (Codice e/o descrizione)",
+    "FINANCING_ORDINARY_INDISTINCT_NEEDS":"Finanziamento per fabbisogno indistinto ordinario",
+    "FINANCING_CONSTRAINED_PLAN_OBJECTIVES":"Finanziamento per vincolate e obiettivi di piano",
+    "TOTAL_STATE_FUNDING":"Totale finanziamento stato",
+    "COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE":"Tetto spesa assistenza farmaceutica convenzionata",
+    "COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE":"Tetto spesa assistenza farmaceutica per acquisti diretti",
+    "COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE_PERC":"Percentuale tetto spesa assistenza farmaceutica convenzionata",
+    "COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE_PERC":"Percentuale tetto spesa assistenza farmaceutica per acquisti diretti",
+    "YEAR":"Anno"
+}

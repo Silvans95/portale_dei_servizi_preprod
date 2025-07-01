@@ -1,0 +1,113 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title" >
+    	ATTORI
+    </h3>
+    <button style="margin-top:-20px;" type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" id="modal-body">
+	<form 	name="formActors" 
+			class="tab-form-demo validation" 
+			xt-form strategy="invalid" 
+       		ng-submit="formActors.$valid && ok()" 
+           	novalidate>
+		<div class="text-right">
+   			<button type="submit" class="btn btn-primary" translate="{{'SEND_CTE' | translate}}"></button>
+   			<button type="button"
+ 					data-dismiss="modal" 
+ 					ng-click="cancel()" 
+ 					class="btn btn-default" 
+ 					translate="{{'CANCEL' | translate}}">
+			</button>
+   		</div>
+   		<br/>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label for="AIFA">AIFA</label>
+				<div class="form-group">
+					<input  class="checkbox"
+							type="checkbox"
+							name="AIFA"
+							id="AIFA"
+							class="form-control"
+							ng-model="data.actors.envolveAifa"
+							ng-required="data.actors.envolveAifa != true && data.actors.envolveCec != true && data.actors.envolveCes !=true"/>
+				</div>
+				<xt-validation-inline for="AIFA"></xt-validation-inline>		
+			</div> 
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label for="CEC">CEC</label>
+				<div class="form-group">
+					<input
+						class="checkbox"
+						type="checkbox"
+						name="CEC"
+						id="CEC"
+						class="form-control"
+						ng-model="data.actors.envolveCec"
+						ng-required="data.actors.envolveAifa != true && data.actors.envolveCec != true && data.actors.envolveCes !=true"/>
+				</div>
+				<xt-validation-inline for="AIFA"></xt-validation-inline>		
+			</div> 
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label 
+						for="CES"> 
+						CES
+				</label>
+				<div class="form-group">
+					<input
+						class="checkbox"
+						type="checkbox"
+						name="CES"
+						id="CES"
+						ng-disabled="data.actors.ctaCesList.length == 0"
+						class="form-control"
+						ng-model="data.actors.envolveCes"
+						ng-required="data.actors.envolveAifa != true && data.actors.envolveCec != true && data.actors.envolveCes !=true && data.actors.ctaCesList.length > 0"/>
+				</div>
+				<xt-validation-inline for="CES"></xt-validation-inline>		
+			</div> 
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-12 col-lg-4">
+				<label for="CES_STRUCTURES">Strutture Ces</label>
+				<div class="form-group" ng-class="{'has-errors': formActors.CES_STRUCTURES.$invalid }">
+		    		<div style="height:0px;">
+		     			<input style="opacity: 0;" 
+		     				class="form-control"
+							ng-model="data.actors.cesList"
+							id="CES_STRUCTURES"
+							name="CES_STRUCTURES"
+							ng-required="data.actors.envolveCes == true"/>  
+					</div>
+			    	<ui-select
+			    		ng-disabled="data.actors.envolveCes != true && data.actors.ctaCesList.length == 0"
+						ng-model="data.actors.cesList"
+						multiple
+						on-select="getObject($select.selected.object)">
+						<ui-select-match allow-clear="true">
+							<span>{{$item.label}}</span>
+						</ui-select-match>
+						<ui-select-choices 
+							repeat="value.object as value in  ( data.actors.ctaCesList | filter: $select.search )">
+							<div><span translate="{{value.label | translate}}"></span></div>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+		    	<xt-validation-inline for="CES_STRUCTURES"></xt-validation-inline>
+			</div>
+		</div>
+   		<br/>
+		<div class="text-right">
+   			<button type="submit" class="btn btn-primary" translate="{{'SEND_CTE' | translate}}"></button>
+   			<button type="button"
+ 					data-dismiss="modal" 
+ 					ng-click="cancel()" 
+ 					class="btn btn-default" 
+ 					translate="{{'CANCEL' | translate}}">
+			</button>
+   		</div>
+   	</form>
+</div>

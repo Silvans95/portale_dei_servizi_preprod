@@ -1,0 +1,184 @@
+<div class="modal-header">
+   <button type="button" class="close" data-dismiss="modal" ng-click="cancel()" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 translate="{{'UPLOAD_FILE' | translate}}"></h4>
+</div>
+<div class="modal-body" id="modal-body">
+	<div 
+      		ng-class="alertClass" 
+       		ng-show="message">
+			<strong translate="{{message | translate}}"></strong> 
+	</div>
+	<form 
+		name="uploadForm" 
+		class="tab-form-demo validation" 
+		xt-form strategy="invalid" 
+       	novalidate
+		ng-submit="uploadForm.$valid && upload();">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label 
+					for="DOC_CATEGORY"
+					translate="{{'DOC_CATEGORY' | translate}}">
+					DOC_CATEGORY
+				</label>
+				<div class="form-group" >
+					<select 
+						class="form-control"
+						name="DOC_CATEGORY"
+						id="DOC_CATEGORY"
+						ng-disabled="uploadVersion"
+						ng-required="true"
+						ng-model="metadata.category"
+						ng-options="option | translate for option in documentCategories">
+					</select>
+					<xt-validation-inline for="DOC_CATEGORY"></xt-validation-inline>
+				</div>
+			</div>	
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label 
+					for="DOC_AREA"
+					translate="{{'DOC_AREA' | translate}}">
+					DOC_AREA
+				</label>
+				<div class="form-group" >
+					<select 
+						class="form-control"
+						name="DOC_AREA"
+						id="DOC_AREA"
+						ng-disabled="metadata.category == null || uploadVersion"
+						ng-required="true"
+						ng-model="documentArea"
+						ng-options="option | translate for option in documentAreas">
+					</select>
+				</div>
+				<xt-validation-inline for="DOC_AREA"></xt-validation-inline>
+			</div>	
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label 
+					for="DOC_TYPE"
+					translate="{{'DOC_TYPE' | translate}}">
+					DOC_TYPE
+				</label>
+				<div class="form-group" >
+					<select 
+						class="form-control"
+						name="DOC_TYPE"
+						id="DOC_TYPE"
+						ng-disabled="documentArea == null || uploadVersion"
+						ng-required="true"
+						ng-model="metadata.documentTypeCode"
+						ng-options="option | translate for option in documentTypesArr">
+					</select>
+				</div>
+				<xt-validation-inline for="DOC_TYPE"></xt-validation-inline>
+			</div>	
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="metadata.category == 'DOC_CENTRE'">
+				<label 
+					for="CTA_CENTRE"
+					translate="{{'CTA_CENTRE' | translate}}">
+					CTA_CENTRE
+				</label>
+				<div class="form-group" >
+					<select 
+						class="form-control"
+						name="CTA_CENTRE"
+						id="CTA_CENTRE"
+						ng-disabled="uploadVersion"
+						ng-required="true"
+						ng-model="metadata.creationGroup"
+						ng-options="(option.groupType + '|' + option.code) as option.codeFullLabel + (option.isCoordinator ? '( Coordinatore )':'') | translate for option in listOfCentre">
+					</select>
+				</div>
+				<xt-validation-inline for="CTA_CENTRE"></xt-validation-inline>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<label 
+						for="DOC_DESCRIPTION"
+						translate="{{'DOC_DESCRIPTION' | translate}}">
+						DOC_DESCRIPTION 
+				</label>
+				<custom-popover-spha custom-popover-text="{{'DOC_DESCRIPTION_TT' | translate}}"></custom-popover-spha>
+				<div class="form-group">
+					<textarea
+						class="form-control"
+						rows ="3"
+						id="DOC_DESCRIPTION"
+						name="DOC_DESCRIPTION"
+						ng-required="false"
+						ng-model="metadata.description">
+					</textarea>	
+				 	<xt-validation-inline for="DOC_DESCRIPTION"></xt-validation-inline>
+			 	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<label 
+						for="DOC_VERSION"
+						translate="{{'DOC_VERSION' | translate}}">
+						DOC_VERSION 
+				</label>
+				<div class="form-group">
+					<input
+						class="form-control"
+						id="DOC_VERSION"
+						name="DOC_VERSION"
+						ng-required="false"
+						ng-model="metadata.customVersion">
+					</input>	
+				 	<xt-validation-inline for="DOC_VERSION"></xt-validation-inline>
+			 	</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+				<label 
+						for="DOC_VERSION_DATE"
+						translate="{{'DOC_VERSION_DATE' | translate}}">
+						DOC_VERSION_DATE 
+				</label>
+				
+				<div class="input-group">
+					<input 
+						id="DOC_VERSION_DATE"
+						name="DOC_VERSION_DATE"
+						uib-datepicker-popup="dd/MM/yyyy" 
+						type="text"
+						class="form-control" 
+						is-open="versionDatePopup.opened"
+						ng-model="metadata.customVersionDate"
+						ng-required="false" />
+					<span class="input-group-btn">
+					<button type="button" class="btn btn-default" ng-click="toggleDatePopup()">
+						<i class="glyphicon glyphicon-calendar"></i>
+					</button>
+					</span>
+				</div>
+				<xt-validation-inline for="DOC_VERSION_DATE"></xt-validation-inline>
+				
+				
+			</div>
+		</div>
+		<br/>
+		<div ng-hide="metadata.documentTypeCode == null || metadata.documentTypeCode == 'GMP_AUTH_NOT_APPLICABLE'">
+			<div class="alert alert-info">
+				<span>{{'UPLOAD_DOC_INFO_MESSAGE' | translate}}</span>
+			</div>
+			<upload-files-spha
+				only-one-file="true"
+				dragged-file="filesDrag"
+				files="files"
+				validate-fn="validateFilesFn">
+			</upload-files-spha>
+		</div>
+		<div class="text-right">
+	 		<button type="submit" class="btn btn-primary"> 
+	 			{{'UPLOAD_FILE_BUTTON' | translate}}
+	 		</button>
+	 	</div>
+	 </form>
+</div>

@@ -1,0 +1,234 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="code"
+				translate="{{'detail.code' | translate}}"> 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.code' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				name="code"
+				id="code"
+				type="text"
+				class="form-control"
+				ng-model="data.code"
+				ng-pattern="selectedObject['code'].pattern"
+				ng-disabled="readOnly || !selectedObject['code'].editable"
+				ng-class="addClass( 'code', form )"
+				ng-required="selectedObject['code'].required ? true : false"/>
+				<xt-validation-inline for="code"></xt-validation-inline>		
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+		<label 
+				for="description"
+				translate="{{'detail.description' | translate}}"> 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.description' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				name="description"
+				id="description"
+				type="text"
+				class="form-control"
+				ng-model="data.description"
+				ng-pattern="selectedObject['description'].pattern"
+				ng-disabled="readOnly || !selectedObject['description'].editable"
+				ng-class="addClass( 'description', form )"
+				ng-required="selectedObject['description'].required ? true : false"/>
+				<xt-validation-inline for="description"></xt-validation-inline>		
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="data.innovationLevel != null">
+		<label 
+				for="innovationLevel"
+				translate="{{'detail.innovationLevel' | translate}}"> 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.innovationLevel' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				name="innovationLevel"
+				id="innovationLevel"
+				type="text"
+				class="form-control"
+				ng-model="data.innovationLevel"
+				ng-pattern="selectedObject['innovationLevel'].pattern"
+				ng-disabled="readOnly || !selectedObject['innovationLevel'].editable"
+				ng-class="addClass( 'innovationLevel', myForm )"
+				ng-required="selectedObject['innovationLevel'].required ? true : false" />
+				<xt-validation-inline for="innovationLevel"></xt-validation-inline>		
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="data.fundAccess != null">
+		<label 
+				for="fundAccess"
+				translate="{{'detail.fundAccess' | translate}}"> 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.fundAccess' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				name="fundAccess"
+				id="fundAccess"
+				type="text"
+				class="form-control"
+				ng-model="data.fundAccess"
+				ng-pattern="selectedObject['fundAccess'].pattern"
+				ng-disabled="readOnly || !selectedObject['fundAccess'].editable"
+				ng-class="addClass( 'fundAccess', myForm )"
+				ng-required="selectedObject['fundAccess'].required ? true : false"/>
+				<xt-validation-inline for="fundAccess"></xt-validation-inline>		
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="data.fundType != null">
+		<label 
+				for="fundType"
+				translate="{{'detail.fundType' | translate}}"> 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.fundType' | translate}}"></custom-popover-spha>
+		<div class="form-group">
+			<input
+				name="fundType"
+				id="fundType"
+				type="text"
+				class="form-control"
+				ng-model="data.fundType"
+				ng-pattern="selectedObject['fundType'].pattern"
+				ng-disabled="readOnly || !selectedObject['fundType'].editable"
+				ng-class="addClass( 'fundType', myForm )"
+				ng-required="selectedObject['fundType'].required ? true : false"/>
+				<xt-validation-inline for="fundType"></xt-validation-inline>		
+		</div>
+	</div>
+</div>
+<div class="row">
+<!-- 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> -->
+<!-- 		<label  -->
+<!-- 				for="effectiveDate" -->
+<!-- 				translate="{{'detail.effectiveDate' | translate}}"> -->
+<!-- 				effectiveDate  -->
+<!-- 		</label> -->
+<!-- 		<custom-popover-spha custom-popover-text="{{'detail.effectiveDate' | translate}}"></custom-popover-spha> -->
+<!-- 		<div class="input-group"> -->
+<!-- 			<input  -->
+<!-- 				uib-datepicker-popup="{{dateFormat}}"  -->
+<!-- 				type="text" -->
+<!-- 				class="form-control" -->
+<!-- 				id="effectiveDate" -->
+<!-- 				name="effectiveDate" -->
+<!-- 				is-open="datesOptions.effectiveDate.opened" -->
+<!-- 				ng-disabled="readOnly || !selectedObject['effectiveDate'].editable" -->
+<!-- 				ng-model="data.effectiveDate" -->
+<!-- 				ng-model-options="{ timezone: 'UTC' }" -->
+<!-- 				ng-pattern="selectedObject['effectiveDate'].pattern" -->
+<!-- 				ng-required="selectedObject['effectiveDate'].required ? true : false" /> -->
+<!-- 			<span class="input-group-btn"> -->
+<!-- 				<button type="button" class="btn btn-default" ng-click="datesOptions.effectiveDate.opened = !datesOptions.effectiveDate.opened"> -->
+<!-- 					<i class="glyphicon glyphicon-calendar"></i> -->
+<!-- 				</button> -->
+<!-- 			</span> -->
+<!-- 		</div> -->
+<!-- 		<xt-validation-inline for="effectiveDate"></xt-validation-inline> -->
+<!-- 	</div> -->
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="effectiveDate"
+				translate="{{'detail.effectiveDate' | translate}}">
+				effectiveDate 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.effectiveDate' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				type="text"
+				class="form-control"
+				id="effectiveDate"
+				name="effectiveDate"				
+				ng-disabled="readOnly || !selectedObject['effectiveDate'].editable"
+				ng-model="data.effectiveDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-pattern="selectedObject['effectiveDate'].pattern"
+				ng-required="selectedObject['effectiveDate'].required ? true : false" />
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" >
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="effectiveDate"></xt-validation-inline>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+		<label 
+				for="expirationDate"
+				translate="{{'detail.expirationDate' | translate}}">
+				expirationDate 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.expirationDate' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				type="text"
+				class="form-control"
+				id="expirationDate"
+				name="expirationDate"
+				ng-disabled="readOnly || !selectedObject['expirationDate'].editable"
+				ng-model="data.expirationDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-pattern="selectedObject['expirationDate'].pattern"
+				ng-required="selectedObject['expirationDate'].required ? true : false" />
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" >
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="expirationDate"></xt-validation-inline>
+	</div>
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="data.criterionUsed != null">
+			<label 
+					for="criterionUsed"
+					translate="{{'detail.criterionUsed' | translate}}"> 
+			</label>
+			<custom-popover-spha custom-popover-text="{{'detail.criterionUsed' | translate}}"></custom-popover-spha>
+			<div class="form-group">
+				<input
+					name="criterionUsed"
+					id="criterionUsed"
+					type="text"
+					class="form-control"
+					ng-model="data.criterionUsed"
+					ng-pattern="selectedObject['criterionUsed'].pattern"
+					ng-disabled="readOnly || !selectedObject['criterionUsed'].editable"
+					ng-class="addClass( 'criterionUsed', myForm )"
+					ng-required="selectedObject['criterionUsed'].required ? true : false"/>
+					<xt-validation-inline for="criterionUsed"></xt-validation-inline>		
+			</div>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-if="data.tscDate != null">
+		<label 
+				for="tscDate"
+				translate="{{'detail.tscDate' | translate}}">
+				tscDate 
+		</label>
+		<custom-popover-spha custom-popover-text="{{'detail.tscDate' | translate}}"></custom-popover-spha>
+		<div class="input-group">
+			<input 
+				type="text"
+				class="form-control"
+				id="tscDate"
+				name="tscDate"
+				ng-disabled="readOnly || !selectedObject['tscDate'].editable"
+				ng-model="data.tscDate"
+				ng-model-options="{ timezone: 'UTC' }"
+				ng-pattern="selectedObject['tscDate'].pattern"
+				ng-required="selectedObject['tscDate'].required ? true : false" />
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</button>
+			</span>
+		</div>
+		<xt-validation-inline for="tscDate"></xt-validation-inline>
+	</div>
+</div>

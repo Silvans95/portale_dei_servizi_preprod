@@ -1,0 +1,13 @@
+<div class="modal-body" id="modal-body">
+	<button type="button" class="close" data-dismiss="modal" ng-click="cancel()"
+		aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+   	<div class="text-center" ng-if="isPdf"> 
+   		<iframe class="modal-iframe" ng-src="{{link}}"></iframe>
+	</div>
+	<div class="text-center" ng-if="!isPdf">
+		<img ng-src="{{link}}"/>
+	</div>
+</div>
+

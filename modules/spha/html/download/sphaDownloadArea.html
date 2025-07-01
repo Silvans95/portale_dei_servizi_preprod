@@ -1,0 +1,132 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<script id="selectAllHeader" type="text/ng-template">
+	<div class="text-center">
+		<input type="checkbox"
+			ng-model="downloadCtrl.allItemsSelected" 
+			ng-change="selectAll()">
+    </div>
+</script>
+<div class="panel spha" ng-cloak ng-if="downloadCtrl.downloadTable">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4 translate="{{'DOWNLOAD_LIST' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+		            <button type="button" 
+		                class="btn btn-primary" 
+		                ng-click = "downloadCtrl.downloadFiles()"
+		                ng-disabled="downloadCtrl.filesToDownload.length == 0"
+		                translate="{{'DOWNLOAD' | translate}}">
+		            </button>
+		            <button type="button" class="btn btn-default" ng-click="downloadCtrl.goBack()">
+		                {{'BACK' | translate}}
+		            </button>
+	            </div>
+        	</div>
+        </div>
+    </div>
+
+    <div class="panel-body">   
+        <div class="panel-body-section">
+        
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table ng-table="downloadCtrl.downloadTable" class="table table-bordered">
+                        <tr role="row" ng-hide="downloadCtrl.isLoading" ng-init="downloadCtrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+                        
+                            <!-- Abilitare se si prevede la debugMode
+							<td
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+									data-title="'ID' | translate"
+									ng-if="debugMode"
+									sortable="'id'">
+								<div class="text-center">
+									{{row.id}}
+								</div>
+                            </td>-->
+                            <td class="col-xs-1 col-sm-1 col-md-1 col-lg-1 selectAllItems" header="'selectAllHeader'">
+                                <div class="text-center">
+                                    <!-- <input type="checkbox" ng-change="downloadCtrl.addInDownloadList(row.id)" ng-model="vlaue.isSelected"> -->
+                                    <input type="checkbox" ng-model="row.isChecked" ng-click="selectEntity(row)" >
+                                </div>
+                            </td>
+                            <td class="col-xs-12 col-sm-12 col-md-4 col-lg-4" data-title="'FILE_NAME' | translate" ng-init="downloadCtrl.isCollapsed[$index] = true" ng-class="{'tableDataTitleCollapseIn': downloadCtrl.isCollapsed[$index] && row.filename.length > 150, 'tableDataTitleCollapseOut': !downloadCtrl.isCollapsed[$index] && row.filename.length > 150 }" ng-style="{'font-weight': row.downloadDate == null ? 'bold' : 'none'}">
+                                {{row.filename}}
+                                <div class="text-center">
+                                    <span ng-click="downloadCtrl.isCollapsed[$index] = !downloadCtrl.isCollapsed[$index]" ng-if="row.filename.length > 150" style="cursor: pointer;" class="glyphicon" title="{{ (downloadCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                        ng-class="{
+												'glyphicon-chevron-down': downloadCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !downloadCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td class="col-xs-12 col-sm-6 col-md-2 col-lg-2" data-title="'FILE_TYPE' | translate">
+                                <div class="text-center">
+                                    <span title="{{'FILE_TYPE' | translate}}" href="">
+										{{row.type}}
+									</span>
+                                </div>
+                            </td>
+                            <td class="col-xs-12 col-sm-6 col-md-2 col-lg-2" data-title="'FILE_CREATION_DATE' | translate">
+                                <div class="text-center">
+                                    <a title="{{'FILE_CREATION_DATE' | translate}}">
+										{{row.creationDate | date : "dd/MM/yyyy HH:mm"}}
+									</a>
+                                </div>
+                            </td>
+                            <td class="col-xs-12 col-sm-6 col-md-2 col-lg-2" data-title="'DOWNLOAD_DATE' | translate">
+                                <div class="text-center">
+                                    <a title="{{'DOWNLOAD_DATE' | translate}}">
+										{{row.downloadDate | date : "dd/MM/yyyy HH:mm"}}
+									</a>
+                                </div>
+                            </td>
+                            <td class="col-xs-12 col-sm-6 col-md-2 col-lg-2" data-title="'FILE' | translate">
+                                <!-- <div class="text-center">
+                                    <a class="buttons table-button-directive-space" ng-click="downloadCtrl.hello(row.filename)">
+                                        <span class="glyphicon glyphicon-download" title="Download"></span>
+                                    </a>
+                                </div> -->
+                                <ng-versionable-file
+								    file="row" 
+								    show-version="false"
+								    upload-version="false" 
+								    remove-disable="true" 
+								    remove-external-disable="true"								 
+								    url="url">
+							    </ng-versionable-file>
+                            </td>
+                            
+                        </tr>
+                        <tr ng-show="downloadCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- <div class = "text-left">
+                        <button ng-disabled="downloadCtrl.isInvalid()" type="button" class="btn btn-warning" ng-click="downloadCtrl.downloadAll()">
+                            {{'DOWNLOADALL' | translate}}
+                        </button>
+                    </div> -->
+                    
+                </div>
+
+            </div>
+            <br/>
+            <br/>
+			<div class = "text-right">
+				<button type="button" class="btn btn-default" ng-click="downloadCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+        </div>
+    </div>
+</div>

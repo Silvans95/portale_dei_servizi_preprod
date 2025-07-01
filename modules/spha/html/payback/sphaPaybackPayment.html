@@ -1,0 +1,246 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak >
+  	<div class="panel-header text-uppercase pb10">
+	  	<div class="row" ng-if="ctrl.isProtocolling">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!ctrl.isProtocolling">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h4 >
+					{{ ctrl.queryType | translate }}
+				</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		  
+	<div  ng-show="ctrl.isProtocolling" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!ctrl.isProtocolling">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<form xt-form ng-submit="ctrl.submitSearch()" name="filtersForm" novalidate>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+									<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+									<custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+									<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm )">
+										<div style="height:0px;">
+											<input style="opacity: 0;"
+													class="form-control"
+															id="COMPANIES"
+															name="COMPANIES"
+															ng-model="ctrl.companies"
+															/>
+													</div>
+													<ui-select multiple id="select-company" ng-model="ctrl.companies" ng-disabled="lockedMode">
+														<ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+															<span>{{$item.label != null ? $item.value + ' - ' +  $item.label : $item.value}}</span>
+														</ui-select-match>
+														<ui-select-choices 
+															refresh = "getCompaniesPossibleValues(0, $select.search, form )" 
+															refresh-delay ="500"
+															repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+															<div>
+																<span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+															</div>
+															<div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+																<button
+																		class="btn btn-xs btn-success"
+																		style="width: 100%; margin-top: 5px;"
+															ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search, form )">
+														{{'SHOW_OTHER' | translate}}
+													</button>
+												</div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+									
+									
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" >
+									<label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+									<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+									<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+										<div style="height:0px;">
+											<input style="opacity: 0;" class="form-control" id="REGION" name="REGION"
+												ng-model="ctrl.region" />
+										</div>
+										<ui-select id="select-region" multiple ng-model="ctrl.region">
+											<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+												<span>{{$item.label}}</span>
+											</ui-select-match>
+											<ui-select-choices
+												repeat="option in filters.region | filter: $select.search track by $index">
+												<div>
+													<span>{{option.object + ' - ' + option.label}}</span>
+												</div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<xt-validation-inline for="REGION"></xt-validation-inline>
+								</div>
+							</div>
+
+							<div class="text-right">
+								<button type="button"
+										class="btn btn-primary text-uppercase"
+										id="reset-button"
+										ng-click = "ctrl.reset()"
+										translate="{{'RESET' | translate}}">
+								</button>
+								<button type="submit"
+										class="btn btn-primary text-uppercase"
+										translate="{{'SEARCH' | translate}}"
+										id="save-button"
+										ng-disabled="filtersForm.$invalid">
+								</button>
+							</div>
+							<br/>
+						
+					</form>	
+				</div>
+			</div>	
+		</div>
+
+		<div class="panel-body-section">
+			<div class="row" ng-if="actions.indexOf('PAYMENT_VIEW_REGION') != -1">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<h4 class="text-center">{{ 'SELECT_REGION' | translate }}</h4>
+				</div>
+			</div>
+			<div class="row">
+
+				<div
+					class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+					
+					<table  ng-table="ctrl.amountTable" class="table table-bordered" >
+						<tr ng-show="!ctrl.isLoading" role="row" id="rows" 
+							ng-init="ctrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+
+
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								ng-if="ctrl.queryType == 'SHELF_SHARE_REGION'"
+								data-title="'COMPANY_CODE' | translate" sortable="'codiceSis'">
+								<div class="text-center">
+									<a title="{{'COMPANY_CODE' | translate}}">
+										{{row.codiceSis}} </a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								ng-if="ctrl.queryType == 'SHELF_SHARE_REGION'"
+								data-title="(ctrl.procedureType == 'SHELF' ? 'SHELF_COMPANY_NAME' : 'COMPANY_NAME') | translate"
+								sortable="'nomeTitolare'">
+								<div class="text-center">
+									<a title="{{(ctrl.procedureType == 'SHELF' ? 'SHELF_COMPANY_NAME' : 'COMPANY_NAME') | translate}}">
+										{{row.nomeTitolare}} </a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								ng-if="ctrl.queryType == 'SHELF_SHARE_REGION'"
+								data-title="(ctrl.procedureType == 'SHELF' ? 'SHELF_ISTAT_REGION_CODE' : 'ISTAT_REGION_CODE') | translate"
+								sortable="'regionCode'">
+								<div class="text-center">
+									<a title="{{(ctrl.procedureType == 'SHELF' ? 'SHELF_ISTAT_REGION_CODE' : 'ISTAT_REGION_CODE') | translate}}">
+										{{row.regionCode}} </a>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+							
+								data-title="'REGION' | translate" sortable="'regionDescription'">
+								<div class="text-center">
+									<span title="{{'REGION' | translate}}">
+										{{row.regionDescription}} </span>
+								</div>
+							</td>
+							<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+								data-title="(ctrl.procedureType == 'SHELF' ? 'SHELF_TO_PAID_AMOUNT_TT' : (ctrl.queryType == 'SHELF_SHARE_REGION' ? 'TO_PAID_AMOUNT_TT' : 'TO_PAID_AMOUNT')) | translate"
+								sortable="'totalAmount'">
+								<div class="text-right">
+									<span
+											title="{{(ctrl.procedureType == 'SHELF' ? 'SHELF_TO_PAID_AMOUNT_TT' : (ctrl.queryType == 'SHELF_SHARE_REGION' ? 'TO_PAID_AMOUNT_TT' : 'TO_PAID_AMOUNT')) | translate}}">
+										{{row.totalAmount}} </span>
+								</div>
+							</td>
+							
+							
+							
+							<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+								ng-if="ctrl.isFieldsToShow"
+								data-title="ctrl.queryType == 'SHELF_SHARE_REGION' ? 'PAID_AMOUNT_TT' : 'PAID_AMOUNT'  | translate">
+								<div class="text-right ">
+									<span
+										title="{{ctrl.queryType == 'SHELF_SHARE_REGION' ? 'PAID_AMOUNT_TT' : 'PAID_AMOUNT' | translate}}">
+										{{sumFee(row.paymentFees)}} </span>
+								</div>
+							</td>
+							<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+								ng-if="ctrl.isFieldsToShow"
+								data-title="'DIFFERENCE_E' | translate">
+								<div class="text-right ">
+									<span title="{{'DIFFERENCE_E' | translate}}">
+										{{getDifference(row.totalAmount, sumFee(row.paymentFees) ) }}
+									</span>
+								</div>
+							</td>
+							<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+								ng-if="ctrl.queryType != 'SHELF_SHARE_REGION'"
+								data-title="'ACTIONS' | translate">
+								<div class="text-center">
+									<ng-payment-operations operations="row.operations" />
+								</div>
+							</td>
+
+						</tr>
+						<tr ng-show="ctrl.isLoading">
+		                    <td colspan="{{$columns.length}}">
+		                        <div id="loadingSpinnerRow"></div>
+		                    </td>
+		                </tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<div class="text-right">
+					<button type="submit" class="btn btn-primary"
+						translate="{{'EXPORT' | translate}}"
+						ng-click="ctrl.exportReport(filtersForm)"
+						ng-disabled="filtersForm.$invalid"></button>
+		</div>
+		<br/>
+		<div class = "text-right">
+				<button type="button"
+                       class="btn btn-default"
+                       id="top-button"
+                       ng-click="ctrl.goToTop()">
+                    {{'GO_TO_TOP' | translate}}
+            	</button>
+				<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="ctrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

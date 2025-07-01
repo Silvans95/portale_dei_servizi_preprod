@@ -1,0 +1,91 @@
+/* NOTIFICHE
+----------------------------------------------- */
+body main .panel.notifiche .notificaNonLetta.icon {
+  background: #147bbd;
+  -webkit-border-radius: 50%;
+  -mos-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  padding: 6px 5px 3px 10px;
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaNonLetta + .text {
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaAlert.icon {
+  background: #ffc20e;
+  -webkit-border-radius: 50%;
+  -mos-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  color: #2f2f2f;
+  display: inline-block;
+  padding: 6px 5px 3px 10px;
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaAlert + .text {
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaNormal.icon {
+  background: #056839;
+  -webkit-border-radius: 50%;
+  -mos-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  padding: 6px 5px 3px 10px;
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaNormal + .text {
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaWarning.icon {
+  background: #9d1e25;
+  -webkit-border-radius: 50%;
+  -mos-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  padding: 6px 5px 3px 10px;
+  vertical-align: middle;
+}
+body main .panel.notifiche .notificaWarning + .text {
+  vertical-align: middle;
+}
+body main .panel.notifiche .distribution-list {
+  border-bottom: 1px dashed #e2e4e7;
+  margin-bottom: 15px;
+}
+body main .panel.notifiche .distribution-list:hover {
+  background: rgba(226, 228, 230, 0.35);
+}
+body main .panel.notifiche .distribution-list:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+body main .panel.notifiche .add.row {
+  font-size: .92857143em;
+  margin: 0;
+  text-align: right;
+}
+body main .panel.notifiche .add.row a {
+  color: #147bbd;
+  margin-right: 15px;
+}
+body main .panel.notifiche .add.row a:last-child {
+  margin-right: 0;
+}
+body main .panel.notifiche .add.row a.remove {
+  color: #9d1e25;
+}
+body main .panel.notifiche .acapo {
+  white-space: pre;       /* css-3 */
+  white-space: -moz-pre;  /* Mozilla, since 1999 */
+  white-space: -pre;      /* Opera 4-6 */
+  white-space: -o-pre;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}

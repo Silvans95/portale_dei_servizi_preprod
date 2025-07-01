@@ -1,0 +1,306 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="innovativeCtrl.anagraphicTable">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4 ng-if="!(innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL)">
+                    {{'INNOVATIVE_SEARCH' | translate }}
+                </h4>
+                <h4 ng-if="innovativeCtrl.isRectificationAic6ADD">
+                    {{'INNOVATIVE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'ADD_AIC6' | translate}}
+                </h4>
+                <h4 ng-if="innovativeCtrl.isRectificationAic6DEL">
+                    {{'INNOVATIVE_SEARCH' | translate }} - {{'OWNERSHIP_CHANGE' | translate}} {{'DEL_AIC6' | translate}}
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="innovativeCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-body-section">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div ng-class="innovativeCtrl.alertClass" ng-show="innovativeCtrl.message">
+                        <strong translate="{{innovativeCtrl.message | translate}}"></strong>
+                    </div>
+                    <form ng-submit="innovativeCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm">
+                        <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionRefPeriod.html'"></div>
+                        <div ng-if="!(innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL)">
+                            <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionMedicineData.html'"></div>
+                            <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionMarketingAndMore.html'"></div>
+                            <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionMoreInfo.html'"></div>
+                        </div>
+                        <div ng-if="innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL">
+                            <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionRectificationFilters.html'"></div>
+                        </div>
+                        <br/>
+                        <div class="text-right">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-if="actions['EDIT'] && !(innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL)"
+                                    ng-click="innovativeCtrl.aic6Rectification('ADD_AIC6')"
+                                    ng-disabled="innovativeCtrl.isLoading">
+                                {{'NEW' | translate}}
+                            </button>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-click="innovativeCtrl.reset()"
+                                    id="reset-button"
+                                    translate="{{'RESET' | translate}}"
+                                    ng-disabled="innovativeCtrl.isLoading">
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    id="search-button"
+                                    translate="{{'SEARCH' | translate}}"
+                                    ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !innovativeCtrl.showData || innovativeCtrl.isLoading">
+                            </button>
+                        </div>
+                        <br/>
+                    </form>
+                    <div ng-if="innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL">
+                        <div ng-include="'modules/spha/html/innovative/innovativeFiltersAccordions/accordionAic6RectificationSaveForm.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body-section"  ng-if="innovativeCtrl.showData && actions['VIEW']">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table ng-table="innovativeCtrl.anagraphicTable" class="table table-bordered">
+                        <tr id="rows" role="row" ng-hide="innovativeCtrl.isLoading" ng-init="innovativeCtrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+                            <!-- Abilitare se si prevede la debugMode
+							<td
+									class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+									data-title="'ID' | translate"
+									ng-if="debugMode"
+									sortable="'id'">
+								<div class="text-center">
+									{{row.id}}
+								</div>
+							</td>-->
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('aic6') !== -1)"
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'AIC6' | translate" sortable="'aic6'">
+                                <div class="text-center">
+                                    <a title="{{'AIC6' | translate}}" href="">
+										{{row.aic6}}
+									</a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('medicineDescription') !== -1)"
+                                class="col-xs-12 col-sm-12 col-md-1 col-lg-1" data-title="'MEDICINE' | translate"
+                                ng-init="innovativeCtrl.isCollapsed[$index] = true" 
+                                ng-class="{'tableDataTitleCollapseIn': innovativeCtrl.isCollapsed[$index] && row.medicineDescription.length > 150, 'tableDataTitleCollapseOut': !innovativeCtrl.isCollapsed[$index] && row.medicineDescription.length > 150 }"
+                                sortable="'medicineDescription'">
+                                {{row.medicineDescription}}
+                                <div class="text-center">
+                                    <span ng-click="innovativeCtrl.isCollapsed[$index] = !innovativeCtrl.isCollapsed[$index]" ng-if="row.medicineDescription.length > 150" style="cursor: pointer;" class="glyphicon" title="{{ (innovativeCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                        ng-class="{
+												'glyphicon-chevron-down': innovativeCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !innovativeCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('aic9') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'AIC9' | translate" sortable="'aic9'">
+                                <div class="text-center">
+                                    <img ng-if="actions && actions.RECTIFICATION_VIEW_DETAIL && row.rectificationDetailInfo.type"
+                                         ng-src="modules/spha/icons/{{innovativeCtrl.rectificationDetailInfoTypeIconsUrl[row.rectificationDetailInfo.type]}}"
+                                         width="25" height="25"
+                                         alt="{{row.rectificationDetailInfo.type}}">
+                                    <a title="{{'AIC9' | translate}}" href="">
+										{{row.aic9}}
+									</a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('boxDescription') !== -1)"
+                                class="col-xs-12 col-sm-12 col-md-1 col-lg-1" data-title="'BOX_DESCRIPTION' | translate" 
+                                ng-init="innovativeCtrl.isCollapsed[$index] = true" 
+                                ng-class="{'tableDataTitleCollapseIn': innovativeCtrl.isCollapsed[$index] && row.boxDescription.length > 150, 'tableDataTitleCollapseOut': !innovativeCtrl.isCollapsed[$index] && row.boxDescription.length > 150 }"
+                                sortable="'boxDescription'">
+                                {{row.boxDescription}}
+                                <div class="text-center">
+                                    <span ng-click="innovativeCtrl.isCollapsed[$index] = !innovativeCtrl.isCollapsed[$index]" ng-if="row.boxDescription.length > 150" style="cursor: pointer;" class="glyphicon" title="{{ (innovativeCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                        ng-class="{
+												'glyphicon-chevron-down': innovativeCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !innovativeCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('tiiList') !== -1)"
+                                class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+                                data-title="'TIILIST' | translate">
+                                <div style="margin-left: 15px;"
+                                     ng-init="items = parseTiiList(row.tiiList)"
+                                     class="text-center">
+                                    <ul ng-if="items.length==1">
+                                        <li>{{items[0]}}</li>
+                                    </ul>
+                                    <ul ng-if="items.length>1"
+                                        ng-style="isCollapsed ? {'overflow-y': 'hidden', 'overflow-x': 'hidden', 'height': '40px'} : ''">
+                                        <li ng-repeat="item in items" ng-show="item.length>0">
+                                            <div ng-class="{'tableDataListCollapseIn': isCollapsed && item.length > 100, 'tableDataListCollapseOut': !isCollapsed && item.length > 100 }">
+                                                <span>{{item}}</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div style="cursor: pointer;" class="text-center">
+                                        <div>
+                                               <span
+                                                       ng-show="items.length > 1"
+                                                       style="cursor: pointer;"
+                                                       ng-click="isCollapsed = !isCollapsed"
+                                                       title="{{ (isCollapsed ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                                       class="glyphicon"
+                                                       ng-class="{
+                                                   'glyphicon-chevron-down': isCollapsed,
+                                                   'glyphicon-chevron-up': !isCollapsed
+                                                 }">
+                                             </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('innovationLevel') !== -1)"
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'INNOVATIONLEVEL' | translate" sortable="'innovationLevel'">
+                                <div class="text-center">
+                                    <a title="{{'INNOVATIONLEVEL' | translate}}" href="">
+								{{row.innovationLevel}}
+								</a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('effectiveDate') !== -1)"
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'EFFECTIVE_DATE' | translate" sortable="'effectiveDate'">
+                                <div class="text-center">
+                                    <a title="{{'EFFECTIVE_DATE' | translate}}">
+										{{row.effectiveDate | date : "dd/MM/yyyy"}}
+									</a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('expirationDate') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'EXPIRATION_DATE' | translate" sortable="'expirationDate'">
+                                <div class="text-center">
+                                    <a title="{{'EXPIRATION_DATE' | translate}}">
+										{{row.expirationDate | date : "dd/MM/yyyy"}}
+									</a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('tscDate') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'TSC_DATE' | translate" sortable="'tscDate'">
+                                <div class="text-center">
+                                    <a title="{{'TSC_DATE' | translate}}">
+										{{row.tscDate | date : "dd/MM/yyyy"}}
+									</a>
+                                </div>
+                            </td>
+                             <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('fundAccess') !== -1)"
+                                 class="col-xs-6 col-sm-2 col-md-1 col-lg-1" data-title="'FUNDACCESS' | translate" sortable="'fundAccess'">
+                                <div class="text-center">
+                                    <a title="{{'FUNDACCESS' | translate}}">
+                                        {{row.fundAccess | translate }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('fundType') !== -1)" 
+                                class="col-xs-12 col-sm-6 col-md-1 col-lg-1" data-title="'FUNDTYPE' | translate" sortable="'fundType'">
+                                <div class="text-center">
+                                    <a title="{{'FUNDTYPE' | translate}}" href="">
+								{{row.fundType | translate}}
+								</a>
+                                </div>
+                            </td>
+
+                            <td ng-if="(!innovativeCtrl.fieldsToNotShow
+                                        || !(innovativeCtrl.fieldsToNotShow && innovativeCtrl.fieldsToNotShow.indexOf('actions') !== -1))
+                                        && !(innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL)"
+								class="col-xs-12 col-sm-6 col-md-1 col-lg-1"
+								data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                    <ng-table-operations actions="row.actions"/>
+                                </div>
+							</td>
+                        </tr>
+                        <tr ng-show="innovativeCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+			<br/>
+			<div class = "text-right">
+				<button type="button" class="btn btn-primary" ng-if="actions['SUBMIT']" ng-disabled="innovativeCtrl.isLoading"  ng-click="innovativeCtrl.submitRectification()">
+					{{'SUBMIT' | translate}}
+				</button>
+				<input type="file" style="display:none;" accept=".xlsx" id="file_content" onchange="angular.element(this).scope().fileChanged();this.value=null; return false;" >
+				<button type="button" class="btn btn-primary" ng-disabled="!actions['IMPORT'] || innovativeCtrl.isLoading" ng-click="innovativeCtrl.upload()">
+					{{'IMPORT' | translate}}
+				</button>
+				<div class="btn-group">
+		   			 <a 
+	  					href=""
+	  					class="btn btn-primary"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || innovativeCtrl.isLoading"
+						title="{{'EXPORT'| translate}}"
+						translate="{{'EXPORT'| translate}}">
+					</a>
+					<button 
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT'] || innovativeCtrl.isLoading"
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						title=""
+						data-toggle="dropdown" 
+						aria-haspopup="true" 
+						aria-expanded="false">
+								<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+					</button>
+				    <ul class="dropdown-menu">
+			   			<li  ng-repeat="exportType in exportTypes">
+			   				<a 
+			   					class="text-center"
+					    		href=""
+					    		ng-click="innovativeCtrl.switchExportType(filtersForm,exportType.value)"
+					    		title="{{exportType.label | translate}}" > 
+					    		<span translate="{{exportType.label | translate}}"></span>
+					    		<img ng-src="{{ exportType.value == 1 ? 'modules/spha/images/file/pdf.png' : 'modules/spha/images/file/excel.png' }}" width="25" height="25">
+					    	</a>
+			   			</li>
+					</ul>
+				</div>
+			</div>
+			<br/>
+			<div class = "text-right">
+			    <button type="button"
+	                       class="btn btn-default"
+	                       ng-click="innovativeCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="innovativeCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+        </div>
+    </div>
+</div>

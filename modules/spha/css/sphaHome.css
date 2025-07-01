@@ -1,0 +1,293 @@
+
+
+
+/* SPHA
+----------------------------------------------- */
+
+body .modal .modal-header button > span {
+    color: #585555;
+}
+.centerImage {
+	width: 50%;
+	height: 50%;
+	cursor: pointer;
+	padding : 50px;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+.btn {
+	color:inherit;
+	text-transform: none;
+	margin-right:0px;
+}
+.input-group-btn{
+	font-size: 16px;
+}
+body main .panel.spha .k-textbox {
+  height: 2.134em;
+}
+
+body main #wrapper .whd table .dropdown .dropdown-menu a {
+  padding: 8px 20px;
+}
+
+body main #wrapper .spha .scrollable .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background-color: #147bbd;
+  background-color: rgba(20, 123, 189, 0.75);
+}
+
+body main .panel .panel-body{
+	padding: 15px;
+}
+
+/* css for validation */
+.validation.ng-submitted .ng-invalid {
+    border-color: #FA787E;
+}
+
+.validation .ng-valid.ng-dirty.ng-touched{
+  border-color: #78FA89;
+}
+
+.validation .ng-valid.ng-dirty.ng-not-empty{
+  border-color: #78FA89;
+}
+.validation .ng-invalid.ng-dirty.ng-touched{
+  border-color: #FA787E;
+}
+.validation .ng-invalid.ng-dirty.ng-not-empty{
+  border-color: #FA787E;
+}
+
+.has-errors{
+	 padding-bottom: 1px;
+	 border: solid 1px #FA787E;
+}
+
+
+/* file-upload directive  */
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 100%;
+    height: 150px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+.button-select-file{
+    margin-left: 10px;
+}
+
+.file-upload{
+    border: 1px solid #DDD;
+    padding: 5px;
+    margin-left:10px;
+    margin-top: 20px;
+}
+
+.remove-file:hover{
+	color: black;
+}
+.remove-file{
+	cursor: pointer;
+	color: black;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+
+.progress div {
+    font-size: smaller;
+    background: green;
+    width: 0;
+}
+
+/* css for aifa opinion*/
+	.button{
+		border: 1px none transparent;
+		padding: 0px 0px;
+		width: 100%;
+		z-index: 10000;	
+	}
+	
+	.button:hover,
+	.button:after{
+		cursor:pointer;
+		background: transparent;
+		color: black;	
+	}
+	
+	.button .form-control{
+		cursor:pointer;		
+	}
+		
+	.selectedField,
+	.selectedField:hover,
+	.selectedField:visited,
+	.selectedField:active,
+	.selectedField:focus{
+    	border: 2px solid #FA787E;
+    	background: transparent;
+	}
+	
+/* css rules for documents list */
+	.document .content {
+		position: relative;
+		background:none;
+		text-align: center;
+		align:center;
+		padding:10px;		
+	}
+	
+	.document .content .documentLink .immagineDocumento{
+		width: 30%;
+		margin: 0px, auto,0px, auto;
+		height: 30%;
+	}
+	
+	.content .nomeDocumento {
+		display:block;	
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.content > a > span{
+		display:block;
+	}
+	
+	.document .content .commands {
+	height:25px
+}
+
+	.document .content .buttons{
+		display:inline-block;
+		width:30px;
+		height:23px;
+		background-color: #e7e7e7;
+		border:none;
+		padding:4px 4px 4px 4px;
+		border-radius: 10px 10px 10px 10px;
+		color: #000000;
+		margin-top:10px;
+		vertical-align: bottom;
+		cursor:pointer;
+	}
+	
+	.document .content .buttons > span,
+	.document .content .buttons > i {
+		vertical-align: top;
+	}
+	
+/* custom style  */
+
+.buttonCollapseCosts {
+	padding: 2px;
+}
+
+.liElementCost{
+	background: #e5e5e5;
+	padding: 6px;
+	border-radius: 10px;
+	margin-bottom: 2px;
+	border: 1px solid gray;
+}
+
+
+/* class for info label */
+.info{
+	font-size: 10.5px;
+    color: gray;
+}
+ 
+.statusEnded {
+	color: gray;
+	font-weight: bold;
+}
+
+.statusNotEnded {
+}
+
+.red-text {
+	color: red;
+}
+
+.green-text {
+	color: green;
+}
+
+/* class for emergency request in datatable */
+.emergencyRequest > td {
+	background-color: #FFFF66;
+} 
+
+/* ui select min-height*/
+.ui-select-multiple.ui-select-bootstrap{
+	min-height: 34px;
+}
+
+input[spha-csv-reader] {
+	opacity: 0;
+	display: initial;
+	width: 0;
+}
+
+/* ui-select padding and heigth fix*/
+.ui-select-container {
+    min-height: 35px;
+}
+
+.ui-select-container.dropdown .btn.form-control {
+	padding: 5px 0 5px 10px;
+	min-height: 32px;
+}
+
+/* Fix margine bottone di clear per le <ui-select /> */
+.ui-select-match a.btn-link {
+	margin-right: 25px !important;
+}
+
+/* Fix css <ui-select /> disabilitate */
+.ui-select-match .btn-default[disabled]:hover,
+.ui-select-match .btn-default[disabled]:focus {
+    background-color: #e6e6e6;
+}
+
+/* Fix larghezza minima barra di ricerca nella testata */
+header .topNavbar .ui-select-match {
+	min-width: 50px;
+}
+
+.tableDataStatusCollapseIn {
+	min-width: 150px;
+	max-width: 150px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 0px;
+}
+
+.tableDataStatusCollapseOut {
+	min-width: 150px;
+	max-width: 150px;
+	display:block;
+	word-wrap: break-word;
+	overflow: inherit;
+	text-overflow: inherit;
+	white-space: inherit;
+	padding: 0px;
+}

@@ -1,0 +1,10 @@
+{
+    "REGION":"Regione",
+    "REGION_CODE": "Codice Regione",
+    "REGION_TOOLTIP": "Regione (Codice e/o descrizione)",
+    "FFI_SEARCH": "Ricerca Fondo Farmaco Innovativo (FFI)",
+    "INNOVATION_FUND":"Fondo innovativit\u00E0",
+	"FINAL_BALANCE_ACCESS_FUND":"Totale acconto liquidato per i farmaci innovativi",
+	"REPROPORTIONED_ACCESS_FUND":"Accesso riproporzionato al fondo dei 500 mln",
+	"YEAR":"Anno"
+}

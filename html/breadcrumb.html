@@ -1,0 +1,7 @@
+<ol class="breadcrumb">
+  <li ng-repeat="step in steps | limitTo:(steps.length)">
+    <i class="fa fa-dashboard icon hide" aria-hidden="true"></i>
+    <a ng-if="step.name == 'fet.home'">{{step.ncyBreadcrumbLabel}}</a>
+    <a ng-if="step.name != 'fet.home'" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a>
+  </li>
+</ol>

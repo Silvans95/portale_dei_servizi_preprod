@@ -1,0 +1,11 @@
+{
+    "CE_SEARCH": "Search CE (Income Statement)",
+    "CE_URL": "CE",
+    "MEDICINES_COST_AIC":"Costo medicine con aic",
+	"MEDICINES_COST_NOT_AIC":"Costo medicine senza aic",
+    "REGIONAL_PRODUCTION_BLOOD_PRODUCTS_COST":"Costo emoderivati di produzione regionale",
+    "TIME_FROM": "Data da",
+	"TIME_FROM_TT": "Data da",
+	"TIME_TO": "Data a",
+	"TIME_TO_TT": "Data a"
+}

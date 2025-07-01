@@ -1,0 +1,8 @@
+<div class="row">
+    <a ng-repeat="operation in operations" 
+	    class="buttons table-button-directive-space" 
+	    href=""
+	    ng-click="clickCallback(operation)">
+        <span ng-class="icons[operation.action] ? icons[operation.action] : icons['DEFAULT']"  id="{{operation.action}}-button" title="{{operation.action | translate}}"></span>
+    </a>
+</div>

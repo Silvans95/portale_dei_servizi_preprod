@@ -1,0 +1,237 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<!-- <div class="panel spha" ng-cloak ng-if="FSNCtrl.NSISTable"> -->
+<div class="panel spha" ng-cloak ng-if="FSNCtrl">
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h4 translate="{{'FSN_SEARCH' | translate }}">
+				</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="FSNCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="scope.alertClass" ng-show="scope.message">
+						<strong translate="{{scope.message | translate}}"></strong>
+					</div>
+
+					<form ng-submit="FSNCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm">
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="REGION" translate="{{'REGION'| translate}}">REGION</label>
+								<custom-popover-spha custom-popover-text="{{'REGION_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'REGION', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="REGION" name="REGION"
+											ng-model="FSNCtrl.region"/>
+									</div>
+									<ui-select id="select-region" multiple ng-model="FSNCtrl.region">
+										<ui-select-match allow-clear="true" placeholder="{{'REGION'| translate}}">
+											<span>{{$item.label}}</span>
+										</ui-select-match>
+										<ui-select-choices
+											repeat="option in filters.region | filter: $select.search track by $index">
+											<div>
+												<span>{{option.object + ' - ' + option.label}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="REGION"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label for="YEAR" translate="{{'YEAR'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'YEAR' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'YEAR', filtersForm  )">
+								<div style="height:0px;">
+									<input  ng-model="FSNCtrl.yearSelected"
+											style="opacity: 0;" class="form-control" id="YEAR" name="YEAR"
+											ng-required="true"
+											
+											class="form-control" />
+									</div>
+									<ui-select  id="select-region" onkeypress="return false;" multiple ng-model="FSNCtrl.yearSelected">
+										<ui-select-match allow-clear="true" placeholder="{{'YEAR'| translate}}">
+											<span>{{$item}}</span>
+										</ui-select-match>
+										<ui-select-choices repeat="option in FSNCtrl.year | filter: $select.search track by $index">
+											<div>
+												<span>{{option}}</span>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="YEAR"></xt-validation-inline>
+							</div>
+						</div>
+
+
+						<div class="text-right">
+							<button type="button" class="btn btn-primary text-uppercase" ng-click="FSNCtrl.reset()"
+								id="reset-button" translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit" class="btn btn-primary text-uppercase" id="search-button" translate="{{'SEARCH' | translate}}"
+								ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !FSNCtrl.showData" >
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body-section" ng-if="FSNCtrl.showData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+
+					<table ng-table="FSNCtrl.FSNTable" class="table table-bordered">
+						<tr id="rows" role="row" ng-hide="FSNCtrl.isLoading" ng-init="FSNCtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1" data-title="'REGION_CODE' | translate"
+								sortable="'region'">
+								<div class="text-center">
+									<a title="{{'REGION_CODE' | translate}}" href="" style="text-transform: capitalize;">
+										{{row.region}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('region') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1" data-title="'REGION' | translate"
+								sortable="'region'">
+								<div class="text-center">
+									<a title="{{'REGION' | translate}}" href="" style="text-transform: capitalize;">
+										{{row.regionCodeLabel}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('financingOrdinary') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'FINANCING_ORDINARY_INDISTINCT_NEEDS' | translate"
+								sortable="'financingOrdinary'">
+								<div class="text-center">
+									<a title="{{'FINANCING_ORDINARY_INDISTINCT_NEEDS' | translate}}" href="">
+										{{row.financingOrdinary | number: 2}}
+									</a>
+								</div>
+							</td>
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('financingConstrained') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'FINANCING_CONSTRAINED_PLAN_OBJECTIVES' | translate"
+								sortable="'financingConstrained'">
+								<div class="text-center">
+									<a title="{{'FINANCING_CONSTRAINED_PLAN_OBJECTIVES' | translate}}" href="">
+										{{row.financingConstrained | number: 2}}
+									</a>
+								</div>
+							</td>
+
+
+
+
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('totalStateFunding') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'TOTAL_STATE_FUNDING' | translate" sortable="'totalStateFunding'">
+								<div class="text-center">
+									<a title="{{'TOTAL_STATE_FUNDING' | translate}}" href="">
+										{{row.totalStateFunding | number: 2}}
+									</a>
+								</div>
+							</td>
+
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('costAgreedPharmaAssistancePercentage') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE_PERC' | translate"
+								sortable="'costAgreedPharmaAssistancePercentage'">
+								<div class="text-center">
+									<a title="{{'COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE_PERC' | translate}}" href="">
+										{{(row.costAgreedPharmaAssistancePercentage * 100) | number: 2}}%
+									</a>
+								</div>
+							</td>
+
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('costAgreedPharmaAssistance') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE' | translate"
+								sortable="'costAgreedPharmaAssistance'">
+								<div class="text-center">
+									<a title="{{'COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE' | translate}}" href="">
+										{{row.costAgreedPharmaAssistance | number: 2}}
+									</a>
+								</div>
+							</td>
+
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('costDirectPurchasesPharmaAssistancePercentage') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE_PERC' | translate"
+								sortable="'costDirectPurchasesPharmaAssistancePercentage'">
+								<div class="text-center">
+									<a title="{{'COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE_PERC' | translate}}"
+										href="">
+										{{(row.costDirectPurchasesPharmaAssistancePercentage * 100) | number: 2}}%
+									</a>
+								</div>
+							</td>
+
+							<td ng-if="!FSNCtrl.fieldsToNotShow
+                                        || !(FSNCtrl.fieldsToNotShow && FSNCtrl.fieldsToNotShow.indexOf('costDirectPurchasesPharmaAssistance') !== -1)"
+                                class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+								data-title="'COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE' | translate"
+								sortable="'costDirectPurchasesPharmaAssistance'">
+								<div class="text-center">
+									<a title="{{'COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE' | translate}}"
+										href="">
+										{{row.costDirectPurchasesPharmaAssistance | number: 2}}
+									</a>
+								</div>
+							</td>
+
+						</tr>
+						<tr ng-show="FSNCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+					</table>
+				</div>
+			</div>
+			<br />
+			<div class="text-right">
+				<button type="submit" class="btn btn-primary" translate="{{'EXPORT' | translate}}"
+					ng-disabled="filtersForm.$invalid || !actions['EXPORT']" 
+					ng-click="FSNCtrl.exportReport(filtersForm)">
+				</button>
+			</div>
+			<br />
+			<div class="text-right">
+				<button type="button" class="btn btn-default" ng-click="FSNCtrl.goToTop()"
+					translate="{{'GO_TO_TOP' | translate}}">
+				</button>
+				<button type="button" class="btn btn-default"  id="back-button-bottom" ng-click="FSNCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,153 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="orphanCtrl.accordionMarketingAndMore">
+                <div uib-accordion-heading>
+                    {{'MARKETING_AND_EFFECTIVENESS' | translate}}
+                    <custom-popover-spha
+                            custom-popover-text="{{'MARKETING_AND_EFFECTIVENESS' | translate}}"></custom-popover-spha>
+                    <div class="pull-right">
+                        <i class="glyphicon"
+                           ng-class="{'glyphicon-chevron-down': orphanCtrl.accordionMarketingAndMore, 'glyphicon-chevron-right': !orphanCtrl.accordionMarketingAndMore}"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_FROM"
+                                translate="{{'FIRST_MARKETING_FROM' | translate}}">
+                            FIRST_MARKETING_FROM
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_FROM' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_FROM' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_FROM"
+                                    name="FIRST_MARKETING_FROM"
+                                    is-open="datesOptions.FIRST_MARKETING_FROM.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_FROM', filtersForm )"
+                                    ng-model="orphanCtrl.firstMarketingFrom"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_FROM')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_FROM"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="FIRST_MARKETING_TO"
+                                translate="{{'FIRST_MARKETING_TO' | translate}}">
+                            VALID_MARKETING_TO
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FIRST_MARKETING_TO' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'FIRST_MARKETING_TO' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="FIRST_MARKETING_TO"
+                                    name="FIRST_MARKETING_TO"
+                                    is-open="datesOptions.FIRST_MARKETING_TO.opened"
+                                    ng-class="addClass( 'FIRST_MARKETING_TO, filtersForm' )"
+                                    ng-model="orphanCtrl.firstMarketingTo"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('FIRST_MARKETING_TO')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="FIRST_MARKETING_TO"></xt-validation-inline>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                        <label translate="{{'ORPHAN'| translate}}"></label>
+                        <custom-popover-spha custom-popover-text="{{'ORPHAN' | translate}}"></custom-popover-spha>
+                        <div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="ORPHAN"
+                                    name="ORPHAN"
+                                    value="{{orphanCtrl.orphan | translate}}"
+                                    ng-readonly="true"/>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="EFFECTIVE_DATE"
+                                translate="{{'EFFECTIVE_DATE_LABEL' | translate}}">
+                            EFFECTIVE_DATE_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'EFFECTIVE_DATE' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'EFFECTIVE_DATE' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="EFFECTIVE_DATE"
+                                    name="EFFECTIVE_DATE"
+                                    is-open="datesOptions.EFFECTIVE_DATE.opened"
+                                    ng-class="addClass( 'EFFECTIVE_DATE, filtersForm' )"
+                                    ng-model="orphanCtrl.effectiveDate"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('EFFECTIVE_DATE')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="EFFECTIVE_DATE"></xt-validation-inline>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <label
+                                for="EXPIRATION_DATE"
+                                translate="{{'EXPIRATION_DATE_LABEL' | translate}}">
+                            EXPIRATION_DATE_LABEL
+                        </label>
+                        <custom-popover-spha
+                                custom-popover-text="{{'EXPIRATION_DATE' | translate}}"></custom-popover-spha>
+                        <div class="input-group">
+                            <input
+                                    uib-datepicker-popup="dd/MM/yyyy"
+                                    placeholder="{{'EXPIRATION_DATE' | translate}}"
+                                    type="text"
+                                    class="form-control"
+                                    id="EXPIRATION_DATE"
+                                    name="EXPIRATION_DATE"
+                                    is-open="datesOptions.EXPIRATION_DATE.opened"
+                                    ng-class="addClass( 'EXPIRATION_DATE, filtersForm' )"
+                                    ng-model="orphanCtrl.expirationDate"
+                                    ng-model-options="{ timezone: 'UTC' }"/>
+                            <span class="input-group-btn">
+														<button type="button" class="btn btn-default"
+                                                                ng-click="openDatePopup('EXPIRATION_DATE')">
+															<i class="glyphicon glyphicon-calendar"></i>
+														</button>
+													</span>
+                        </div>
+                        <xt-validation-inline for="EXPIRATION_DATE"></xt-validation-inline>
+                    </div>
+
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>

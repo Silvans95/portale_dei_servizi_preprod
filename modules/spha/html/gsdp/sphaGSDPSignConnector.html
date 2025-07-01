@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="gsdpCtrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'GSDBDF' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  	</div>
+  	<div ng-class="gsdpCtrl.alertClass" 
+       	 ng-show="gsdpCtrl.message">
+		<strong translate="{{gsdpCtrl.message | translate}}"></strong> 
+	</div>
+</div>

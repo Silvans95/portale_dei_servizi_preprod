@@ -1,0 +1,42 @@
+<div ng-if="filterElem.type === 'text'" class="{{filterElem.class ? filterElem.class : 'col-xs-12 col-sm-6 col-md-4 col-lg-4'}}">
+
+    <label for="{{filterElem.code}}" translate="{{filterElem.code| translate}}"></label>
+    <custom-popover-spha custom-popover-text="{{filterElem.code | translate}}"></custom-popover-spha>
+    <div class="form-group">
+        <input placeholder="{{filterElem.code | translate}}"
+               type="text"
+               ng-model="data[filterElem.ngModelName]"
+               id="{{filterElem.code}}"
+               class="form-control"
+               name="{{filterElem.code}}"
+               ng-required="filterElem.required"/>
+    </div>
+</div>
+
+<div ng-if="filterElem.type === 'multiselect_companies'" class="{{filterElem.class ? filterElem.class : 'col-xs-12 col-sm-12 col-md-6 col-lg-6'}}">
+    <ng-include src="'modules/spha/js/directives/dynamicFilters/singleFilterTemplate/multiselectCompanies.html'">
+        
+    </ng-include>
+</div>
+
+<div ng-if="filterElem.type === 'multiselect_atc'" class="{{filterElem.class ? filterElem.class : 'col-xs-12 col-sm-12 col-md-6 col-lg-6'}}">
+    <ng-include src="'modules/spha/js/directives/dynamicFilters/singleFilterTemplate/multiselectAtc.html'"></ng-include>
+</div>
+
+<div ng-if="filterElem.type === 'simple_select'" class="{{filterElem.class ? filterElem.class : 'col-xs-12 col-sm-6 col-md-4 col-lg-4'}}">
+    <label for="{{filterElem.code}}" translate="{{filterElem.code| translate}}"></label>
+    <custom-popover-spha custom-popover-text="{{filterElem.code | translate}}"></custom-popover-spha>
+    <div class="form-group">
+        <ui-select ng-model="data[filterElem.ngModelName]">
+            <ui-select-match allow-clear="true">
+                <span translate="{{$select.selected.label | translate}}"></span>
+            </ui-select-match>
+            <ui-select-choices
+                    repeat="option.value as option in filterElem.options | filter: $select.search track by $index">
+                <div>
+                    <span translate="{{option.label | translate}}"></span>
+                </div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>

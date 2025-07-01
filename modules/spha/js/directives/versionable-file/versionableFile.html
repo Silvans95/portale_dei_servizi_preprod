@@ -1,0 +1,51 @@
+<!-- <label ng-if="file.modifyRequested" for="{{'file_'+ file.id}}" ng-hide="true">{{file.filename}}</label>
+<div style="height:0px;" ng-if="file.modifyRequested">
+		<input style="opacity: 0;"
+				id="{{'file_'+ file.id}}"
+				name="{{'file_'+ file.id}}" 
+				class="form-control"
+				msg-pattern="{{file.modifyRequestedCause}}"
+				ng-model="file.value"/>
+</div>  -->
+<div class="document"> <!-- ng-class="{'has-errors': form['file_'+ file.id].$invalid}"> -->
+	<div class="content">
+		<a ng-if="enablePreview" href="" ng-click="open( file.id )" target="" class="documentLink" title="{{file.filename}}">
+			<div style="position: relative;" >
+				<img class="immagineDocumento" ng-src="{{path}}"/>
+			</div>
+			<span class="nomeDocumento">{{file.filename}}</span>
+			<span ng-if="file.documentCategory != 'DOC_CTA'" class="versioneDocumento">n. caricamenti : {{file.version}}</span>
+			<span ng-if="file.documentCategory == 'DOC_CTA'" class="versioneDocumento">{{'VERSION' | translate}} : {{file.version}}</span>
+		</a>
+        <div ng-if="!enablePreview" class="documentLink" title="{{file.filename}}">
+			<div style="position: relative;" >
+				<img class="immagineDocumento" ng-src="{{path}}"/>
+			</div>
+			<span class="nomeDocumento">{{file.filename}}</span>
+			<span ng-if="file.documentCategory != 'DOC_CTA'" class="versioneDocumento">n. caricamenti : {{file.version}}</span>
+			<span ng-if="file.documentCategory == 'DOC_CTA'" class="versioneDocumento">{{'VERSION' | translate}} : {{file.version}}</span>
+		</div>
+		<div class="commands">
+			<a class="table-button-directive-space" ng-href="{{viewUrl}}" target="_blank" >
+				<span class="fa fa-eye" title="Visualizza"></span>
+			</a>
+			<a class="table-button-directive-space" ng-href="{{downloadUrl}}" target="_blank">
+				<span class="fa fa-download" title="Download"></span>
+			</a>
+			<a class="table-button-directive-space" ng-show="showVersion" ng-click="openVersion( file.id )" target="_blank">
+				<span class="fa fa-history" title="History"></span>
+			</a>
+			<a class="table-button-directive-space" ng-show="uploadVersion" ng-click="openUploadPopup( file )" target="_blank">
+				<span class="fa fa-upload" title="{{configs && configs.uploadTitle ? configs.uploadTitle : 'Upload' | translate}}"></span>
+			</a>
+			<a ng-if="!removeDisable" class="table-button-directive-space" ng-href="" ng-click="remove(file)">
+				<span class="fa fa-trash" title="Elimina"></span>
+			</a>
+			<a ng-if="!removeExternalDisable" class="table-button-directive-space" ng-href="" ng-click="externalRemove(file)">
+				<span class="fa fa-trash" title="Elimina"></span>
+			</a>
+		</div>
+	</div>
+	<!-- <div ng-show="file.updated" class="alert alert-warning">{{'NEW_VERSION_UPLOADED' | translate}}</div> -->	
+</div>
+<!-- <xt-validation-inline ng-if="file.modifyRequested" for="{{'file_'+ file.id}}"></xt-validation-inline> -->

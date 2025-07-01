@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="http://firma.aifa.gov.it/asonline-wsserver/scripts/webkitligth.js" type="text/javascript"></script>
+		<script>
+		   var webkit = null;
+		   $(document).ready(function () {
+		    try {
+		     //Inizializzazione con id cliente
+		     webkit = new WebKitOnLine("aifa.test");
+		    } catch (e) {
+		     alert(e.message);
+		    }
+		   });
+		</script>
+	</head>
+	<body>
+		 <button onclick="webkit.init_card_service()">inizializza</button>
+	</body>
+</html>

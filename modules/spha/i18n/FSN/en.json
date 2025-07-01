@@ -1,0 +1,14 @@
+{
+    "FSN_SEARCH": "Search National Health Fund (FSN)",
+    "REGION":"Regione",
+    "REGION_CODE": "Codice Regione",
+    "REGION_TOOLTIP": "Regione (Codice e/o descrizione)",
+    "FINANCING_ORDINARY_INDISTINCT_NEEDS":"Financing for ordinary indistinct needs",
+    "FINANCING_CONSTRAINED_PLAN_OBJECTIVES":"Financing for constraints and plan objectives",
+    "TOTAL_STATE_FUNDING":"Total state funding",
+    "COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE":"Discounted pharmaceutical assistance expense ceiling",
+    "COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE":"Cost ceiling for direct purchase of pharmaceutical assistance",
+    "COST_CEILING_AGREED_PHARMACEUTICAL_ASSISTANCE_PERC":"Discounted pharmaceutical assistance expense ceiling percentage",
+    "COST_CEILING_DIRECT_PURCHASES_PHARMACEUTICAL_ASSISTANCE_PERC":"Cost ceiling for direct purchase of pharmaceutical assistance percentage",
+    "YEAR":"Year"
+}

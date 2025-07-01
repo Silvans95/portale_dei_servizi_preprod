@@ -1,0 +1,15 @@
+{
+    "GSDBDF_SEARCH": "Search BDF Corporate Group",
+    "GSDBDF": "GSdBDF",
+    "GSDBDF_DETAIL": "GSdBDF detail",
+    "SISRSG": "SIS - Group name",
+    "SISA": "Company SIS",
+    "RSA": "Company description",
+    "VALID_PROCEDURE_TO": "Procedure end date",
+	"SHELF":"Shelf",
+	"BUDGET": "Budget",
+	"PB5": "Payback 5%",
+	"PB183": "Payback 1,83%",
+	"ADD_SISA":"Add company",
+    "DEL_SISA":"Delete company"
+}

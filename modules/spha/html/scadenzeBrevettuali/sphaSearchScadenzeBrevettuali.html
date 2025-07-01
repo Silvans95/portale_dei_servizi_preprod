@@ -1,0 +1,347 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="scadenzeBrevettualiCtrl.patentsExpirationTable">
+    <div class="panel-header text-uppercase pb10">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <h4
+                        translate="{{'PATENT_EXPIRY_SEARCH' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="scadenzeBrevettualiCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div class="panel-body-section">
+           <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div ng-class="scadenzeBrevettualiCtrl.alertClass" ng-show="scadenzeBrevettualiCtrl.message">
+                        <strong translate="{{scadenzeBrevettualiCtrl.message | translate}}"></strong>
+                    </div>
+                    <form ng-submit="scadenzeBrevettualiCtrl.submitSearch(filtersForm)" xt-form role="form"
+                          name="filtersForm">
+
+                        <div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="ATC" translate="{{'ATC'| translate}}">
+                                </label>
+                                <custom-popover-spha custom-popover-text="{{'ATC' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                                    <input placeholder="{{'ATC'| translate}}"
+                                           type="text"
+                                           ng-model="scadenzeBrevettualiCtrl.atc"
+                                           id="atc"
+                                           required
+                                           class="form-control"/>
+                                </div>
+                                <xt-validation-inline for="ATC"></xt-validation-inline>
+                            </div>
+							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+                                <label translate="{{'PATENTED'| translate}}"></label>
+                                <custom-popover-spha custom-popover-text="{{'PATENTED' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                                    <ui-select id="select-patented" ng-model="scadenzeBrevettualiCtrl.patented">
+                                        <ui-select-match allow-clear="true">
+                                            <span translate="{{$select.selected.label | translate}}"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices
+                                                repeat="option.value as option in filters.patented | filter: $select.search track by $index">
+                                            <div>
+                                                <span id="{{option.label}}" translate="{{option.label | translate}}"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-4 col-lg-4">
+                                <label translate="{{'ACTIVE_INGREDIENT'| translate}}">
+                                </label>
+                                <custom-popover-spha custom-popover-text="{{'ACTIVE_INGREDIENT' | translate}}"></custom-popover-spha>
+                                <div class="form-group">
+                                    <input placeholder="{{'ACTIVE_INGREDIENT'| translate}}"
+                                           type="text"
+                                           ng-model="scadenzeBrevettualiCtrl.activeIngredient"
+                                           id="activeIngredientCode"
+                                           class="form-control"/>
+                                </div>
+                            </div>
+							
+                        </div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="EXPIRATION_DATA"
+										translate="{{'EXPIRATION_DATA' | translate}}">
+										EXPIRATION_DATA 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'EXPIRATION_DATA' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'EXPIRATION_DATA' | translate}}"
+										type="text"
+										class="form-control"
+										id="EXPIRATION_DATA"
+										name="EXPIRATION_DATA"
+										is-open="datesOptions.EXPIRATION_DATA.opened"
+										ng-class="addClass( 'EXPIRATION_DATA', filtersForm )"
+										ng-model="scadenzeBrevettualiCtrl.patentExpireDate"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('EXPIRATION_DATA')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="EXPIRATION_DATA"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="EXPIRATION_DATA_CCP"
+										translate="{{'EXPIRATION_DATA_CCP' | translate}}">
+										EXPIRATION_DATA_CCP 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'EXPIRATION_DATA_CCP' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'EXPIRATION_DATA_CCP' | translate}}"
+										type="text"
+										class="form-control"
+										id="EXPIRATION_DATA_CCP"
+										name="EXPIRATION_DATA_CCP"
+										is-open="datesOptions.EXPIRATION_DATA_CCP.opened"
+										ng-class="addClass( 'EXPIRATION_DATA_CCP', filtersForm )"
+										ng-model="scadenzeBrevettualiCtrl.ccpExpireDate"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('EXPIRATION_DATA_CCP')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="EXPIRATION_DATA_CCP"></xt-validation-inline>
+							</div>
+						</div>
+
+                        <br/>
+                        <div class="text-right">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    id="reset-button"
+                                    ng-click="scadenzeBrevettualiCtrl.reset()"
+                                    translate="{{'RESET' | translate}}">
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    translate="{{'SEARCH' | translate}}"
+                                    id="search-button"
+                                    ng-disabled="filtersForm.$invalid || !actions['VIEW'] || !scadenzeBrevettualiCtrl.showData">
+                            </button>
+                        </div>
+                        <br/>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel-body-section" ng-if="scadenzeBrevettualiCtrl.showData">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+                    <table
+                            ng-table="scadenzeBrevettualiCtrl.patentsExpirationTable"
+                            class="table table-bordered">
+                        <tr role="row"
+                        	id="rows"
+                            ng-hide="scadenzeBrevettualiCtrl.isLoading"
+                            ng-init="scadenzeBrevettualiCtrl.isCollapsed[$index] = true;"
+                            ng-repeat="row in $data">
+                            <!-- Abilitare se si prevede la debugMode
+                            <td
+                                    class="col-xs-12 col-sm-12 col-md-1 col-lg-1"
+                                    data-title="'ID' | translate"
+                                    ng-if="debugMode"
+                                    sortable="'id'">
+                                <div class="text-center">
+                                    {{row.id}}
+                                </div>
+                            </td>-->
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('atc') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'ATC' | translate"
+                                    sortable="'atc'">
+                                <div class="text-center">
+                                    <a title="{{'ATC' | translate}}" href="">
+                                        {{row.atc}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('activeIngredient') !== -1)"
+                                    class="col-xs-12 col-sm-6 col-md-2 col-lg-2 text-center"
+                                    data-title="'ACTIVE_INGREDIENT' | translate"
+                                    ng-init="scadenzeBrevettualiCtrl.isCollapsed[$index] = true"
+                                    ng-class="{'tableDataTitleCollapseIn': scadenzeBrevettualiCtrl.isCollapsed[$index] && row.activeIngredient.length > 150, 'tableDataTitleCollapseOut': !scadenzeBrevettualiCtrl.isCollapsed[$index] && row.activeIngredient.length > 150 }"
+                                    sortable="'activeIngredient'">
+                                {{row.activeIngredient}}
+                                <div class="text-center">
+										<span
+                                                ng-click="scadenzeBrevettualiCtrl.isCollapsed[$index] = !scadenzeBrevettualiCtrl.isCollapsed[$index]"
+                                                ng-if="row.activeIngredient.length > 150"
+                                                style="cursor: pointer;"
+                                                class="glyphicon"
+                                                title="{{ (scadenzeBrevettualiCtrl.isCollapsed[$index] ? 'SHOW_OTHER' : 'SHOW_LESS') | translate}}"
+                                                ng-class="{
+												'glyphicon-chevron-down': scadenzeBrevettualiCtrl.isCollapsed[$index],
+												'glyphicon-chevron-up': !scadenzeBrevettualiCtrl.isCollapsed[$index]
+											}">
+										</span>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('patented') !== -1)"
+                                    class="col-xs-6 col-sm-2 col-md-1 col-lg-1"
+                                    data-title="'PATENTED' | translate"
+                                    sortable="'patented'">
+                                <div class="text-center">
+                                    <a title="{{'PATENTED' | translate}}">
+                                        {{row.patented | translate }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('patentNumber') !== -1)"
+                                    class="col-xs-12 col-sm-3 col-md-1 col-lg-1"
+                                    data-title="'PATENT_NUMBER' | translate"
+                                    sortable="'patentNumber'">
+                                <div class="text-center">
+                                    <a title="{{'PATENT_NUMBER' | translate}}" href="">
+                                        {{row.patentNumber}}
+                                    </a>
+                                </div>
+                            </td>
+
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('patentTitle') !== -1)"
+                                    class="col-xs-12 col-sm-3 col-md-1 col-lg-1"
+                                    class="datesTable"
+                                    data-title="'PATENT_TITLE' | translate"
+                                    sortable="'patentTitle'">
+                                <div class="text-center">
+                                    <a title="{{'PATENT_TITLE' | translate}}">
+                                        {{row.patentTitle}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('patentExpireDate') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    class="datesTable"
+                                    data-title="'EXPIRATION_DATA' | translate"
+                                    sortable="'patentExpireDate'">
+                                <div class="text-center">
+                                    <a title="{{'EXPIRATION_DATA' | translate}}">
+                                        {{row.patentExpireDate | date : "dd/MM/yyyy" }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('ccpNumber') !== -1)"
+                                    class="col-xs-6 col-sm-3 col-md-1 col-lg-1"
+                                    class="datesTable"
+                                    data-title="'CCP_NUMBER' | translate"
+                                    sortable="'ccpNumber'">
+                                <div class="text-center"
+                                     data-placement="left"
+                                     onmouseenter="$(this).tooltip('show')"
+                                     title="{{'CCP_NUMBER_DESCRIPTION' | translate}}">
+
+                                    <a>
+                                        {{row.ccpNumber}}
+                                    </a>
+                                </div>
+                            </td>
+                            <td ng-if="!scadenzeBrevettualiCtrl.fieldsToNotShow
+                                        || !(scadenzeBrevettualiCtrl.fieldsToNotShow && scadenzeBrevettualiCtrl.fieldsToNotShow.indexOf('ccpExpireDate') !== -1)"
+                                    class="col-xs-12 col-sm-3 col-md-1 col-lg-1"
+                                    class="datesTable"
+                                    data-title="'EXPIRATION_DATA_CCP' | translate"
+                                    sortable="'ccpExpireDate'">
+                                <div class="text-center"
+                                     data-placement="left"
+                                     onmouseenter="$(this).tooltip('show')"
+                                     title="{{'EXPIRATION_DATA_CCP' | translate}}">
+
+                                    <a>
+                                        {{row.ccpExpireDate | date : "dd/MM/yyyy" }}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-show="scadenzeBrevettualiCtrl.isLoading">
+                            <td colspan="{{$columns.length}}">
+                                <div id="loadingSpinnerRow">
+                                    <div class="text-center" id="loading-bar-spinner"><img
+                                            src="modules/spha/images/loading.gif" alt=""></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="text-right">
+                <div class="btn-group">
+		   			 <a 
+	  					href=""
+	  					class="btn btn-primary"
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT']"
+						title="{{'EXPORT'| translate}}"
+						translate="{{'EXPORT'| translate}}">
+					</a>
+					<button 
+						ng-disabled="filtersForm.$invalid || !actions['EXPORT']"
+						type="button" 
+						class="btn btn-primary dropdown-toggle" 
+						title=""
+						data-toggle="dropdown" 
+						aria-haspopup="true" 
+						aria-expanded="false">
+								<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+					</button>
+				    <ul class="dropdown-menu">
+			   			<li  ng-repeat="exportType in exportTypes">
+			   				<a  class="text-center"
+					    		href=""
+					    		ng-click="scadenzeBrevettualiCtrl.switchExportType(filtersForm,exportType.value)"
+					    		title="{{exportType.label | translate}}" > 
+					    		<span translate="{{exportType.label | translate}}"></span>
+					    		<img ng-src="{{ exportType.value == 0 ? 'modules/spha/images/file/excel.png' : 'modules/spha/images/file/pdf.png' }}" width="25" height="25">
+					    	</a>
+			   			</li>
+					</ul>
+				</div>	
+			</div>
+			 <br>
+            <div class="text-right">
+				<button type="button"
+                       class="btn btn-default"
+                       ng-click="scadenzeBrevettualiCtrl.goToTop()"
+                       translate="{{'GO_TO_TOP' | translate}}">
+        	   </button>
+				<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="scadenzeBrevettualiCtrl.goBack()">
+					{{'BACK' | translate}}
+                </button>
+              </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,355 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="ctrl">
+  	<div class="panel-header text-uppercase pb10">
+  		<div class="row" ng-if="ctrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!ctrl.isLoading">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		
+				<h4>
+					{{ 'FEE_TO_PAY' | translate }} {{ ctrl.feeNumber | translate }}
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+  	<div  ng-show="ctrl.isLoading" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!ctrl.isLoading">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="ctrl.closePayment(submitForm)" xt-form role="form" name="submitForm" > 
+						
+						<fieldset class="classic-fieldset">
+							<legend class="classic-legend">{{'PAYMENT_SUBMIT_SUBJECT' | translate}}</legend>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+									<div class="form-group" style="display: flex; flex-wrap: wrap; align-items: center; row-gap: 10px; column-gap: 5px;">
+										<span translate="{{ 'SUBJECT' | translate}}"></span>
+										<input ng-style="ctrl.getWidth(ctrl.soggetto)" class="form-inline"
+											id="SUBJECT" name="SUBJECT" ng-model="ctrl.soggetto"
+											ng-required="true"
+											ng-class="addClass( 'SUBJECT', submitForm )" />
+										<span translate="{{ 'AS' | translate}}"></span>
+										<input ng-style="ctrl.getWidth(ctrl.qualificaSoggetto)"
+											class="form-inline" id="AS" name="AS" ng-model="ctrl.qualificaSoggetto"
+											ng-required="true"
+											ng-class="addClass( 'AS', submitForm )" />
+										<span translate="{{ 'PT_SUBJECT' | translate}}"></span>
+										<span class="bold">{{ctrl.companyName}},</span>
+										<span translate="{{ 'SITE_SUBJECT' | translate}}"></span>
+										<input ng-style="ctrl.getWidth(ctrl.sedeAzienda)"
+											class="form-inline" id="SITE_COMPANY" name="SITE_COMPANY" ng-model="ctrl.sedeAzienda"
+											ng-required="true"
+											ng-class="addClass( 'SITE_COMPANY', submitForm )" />
+										<span translate="{{ 'POWER_SUBJECT' | translate}}"></span>
+										<input ng-style="ctrl.getWidth(ctrl.potereSoggetto)"
+										class="form-inline" id="POWER_SUBJECT" name="POWER_SUBJECT" ng-model="ctrl.potereSoggetto"
+										ng-required="true"
+										ng-class="addClass( 'POWER_SUBJECT', submitForm )" />
+										<span translate="{{ 'RESPONSABILITY' | translate}}"></span>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						<br>
+						<h4 class="text-center"><span  translate="{{ 'DECLARES_PAYMENT' | translate}}"></span></h4>
+						<br>
+						<fieldset class="classic-fieldset">
+							<legend class="classic-legend">{{'PAYMENT_SUBMIT_DATA' | translate}}</legend>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+									<label 
+									for="BENEFICIARY"
+									translate="{{'BENEFICIARY'| translate}}"></label>
+									<custom-popover-spha custom-popover-text="{{'BENEFICIARY' | translate}}"></custom-popover-spha>
+									<div class="form-group">
+										<input  placeholder="{{'BENEFICIARY'| translate}}"
+												type="text"
+												ng-model="ctrl.regionDescription"
+												id="beneficiary"
+												name="BENEFICIARY"
+												maxlength="100"
+												ng-required="true"
+												disabled
+												ng-class="addClass( 'BENEFICIARY', submitForm )"
+												class="form-control"/>
+									</div>
+									<xt-validation-inline for="BENEFICIARY"></xt-validation-inline>
+								</div>
+							</div>			
+							<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+									<label for="PAYMENT_TYPE" translate="{{'PAYMENT_TYPE'| translate}}">PAYMENT_TYPE</label>
+									<custom-popover-spha custom-popover-text="{{'PAYMENT_TYPE_TOOLTIP' | translate}}"></custom-popover-spha>
+									<div class="form-group" ng-class="addClass( 'PAYMENT_TYPE', submitForm )">
+										<div style="height:0px;">
+										<input style="opacity: 0;"
+												class="form-control"
+														id="PAYMENT_TYPE"
+														name="PAYMENT_TYPE"
+														ng-model="ctrl.paymentType"
+														ng-required="true"/>
+										</div>
+										<ui-select ng-model="ctrl.paymentType" >
+											<ui-select-match allow-clear="true">
+												<span translate="{{$select.selected.label | translate}}"></span>
+											</ui-select-match>
+											<ui-select-choices
+													repeat="option in filters.paymentType | filter: $select.search track by $index">
+												<div>
+													<span translate="{{option.label | translate}}"></span>
+												</div>
+											</ui-select-choices>
+										</ui-select>
+									</div>
+									<xt-validation-inline for="PAYMENT_TYPE"></xt-validation-inline>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<label 
+									for="paidAmount"
+									translate="{{'AMOUNT_PAID'| translate}}"></label>
+									<custom-popover-spha custom-popover-text="{{'AMOUNT_PAID' | translate}}"></custom-popover-spha>
+									<div class="form-group">
+										<input  placeholder="{{'AMOUNT_PAID'| translate}}"
+												type="number"
+												ng-model="ctrl.paidAmount"
+												name="AMOUNT_PAID"
+												id="paidAmount"
+												ng-required="true"
+												ng-paste="$event.preventDefault()"
+												ng-change="changeDifference(ctrl.paidAmount)"
+												ng-class="addClass( 'AMOUNT_PAID', submitForm )"
+												class="form-control"/>
+									</div>
+									<xt-validation-inline for="AMOUNT_PAID"></xt-validation-inline>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<label 
+									for="DIFFERENCE"
+									translate="{{'DIFFERENCE'| translate}}"></label>
+									<custom-popover-spha custom-popover-text="{{'DIFFERENCE' | translate}}"></custom-popover-spha>
+									<div class="form-group">
+										<input  placeholder="{{'DIFFERENCE'| translate}}"
+												type="text"
+												ng-model="ctrl.difference"
+												name="DIFFERENCE"
+												id="difference"
+												ng-required="true"
+												disabled
+												ng-class="addClass( 'DIFFERENCE', submitForm )"
+												class="form-control"/>
+									</div>
+									<xt-validation-inline for="DIFFERENCE"></xt-validation-inline>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<label 
+									for="CRO"
+									translate="{{'CRO'| translate}}"></label>
+									<custom-popover-spha custom-popover-text="{{'CRO_TOOLTIP' | translate}}"></custom-popover-spha>
+									<div class="form-group">
+										<input  placeholder="{{'CRO'| translate}}"
+												type="text"
+												ng-model="ctrl.paymentDetails"
+												id="cro"
+												name="CRO"
+												maxlength="100"
+												ng-required="true"
+												ng-class="addClass( 'CRO', submitForm )"
+												class="form-control"/>
+									</div>
+									<xt-validation-inline for="CRO"></xt-validation-inline>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<label
+											for="PAYMENT_DATE"
+											translate="{{'PAYMENT_DATE' | translate}}">
+										PAYMENT_DATE
+									</label>
+									<custom-popover-spha
+											custom-popover-text="{{'PAYMENT_DATE' | translate}}"></custom-popover-spha>
+									<div class="input-group">
+										<input
+												uib-datepicker-popup="dd/MM/yyyy"
+												placeholder="{{'PAYMENT_DATE' | translate}}"
+												type="text"
+												class="form-control"
+												id="PAYMENT_DATE"
+												ng-required="true"
+												name="PAYMENT_DATE"
+												is-open="datesOptions.PAYMENT_DATE.opened"
+												ng-class="addClass( 'PAYMENT_DATE', submitForm  )"
+												ng-model="ctrl.paymentDate"
+												ng-model-options="{ timezone: 'UTC' }"
+												datepicker-options="datesOptions.PAYMENT_DATE.datepickerOptions"
+												msg-daterange="ERROR_DATE_RANGE"/>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default"
+													ng-click="openDatePopup('PAYMENT_DATE')">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</span>
+									</div>
+									<xt-validation-inline for="PAYMENT_DATE"></xt-validation-inline>
+								</div>
+							</div>
+						</fieldset>
+						<br> 
+						<br>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								
+								<div class="row">
+									<div class="col-sm-6" >
+										
+										<label 
+											for="UPLOAD_FILES"
+											translate="{{'UPLOAD_FILES' | translate}}">
+											UPLOAD_FILES 
+									</label>
+									<custom-popover-spha custom-popover-text="{{'UPLOAD_FILES' | translate}}"></custom-popover-spha>
+						 		
+										<div ng-required="(ctrl.paymentType.value == 'BONIFICO' || ctrl.paymentType.value == 'PAGO_PA') 
+									 			&& (ctrl.paymentFiles.length == 0 &&  ctrl.files.length == 0 )"
+											ngf-drop 
+											ngf-select 
+											ng-model="ctrl.draggedFile" 
+											ng-change="change()"
+											class="drop-box" 
+											id="UPLOAD_FILES"
+											name="UPLOAD_FILES"
+											ng-class="addClass( 'UPLOAD_FILES', submitForm  )"
+										    ngf-multiple="true" 
+											ngf-allow-dir="true"
+										    ngf-accept="acceptedFiles"
+										    ngf-pattern="acceptedFiles">
+										    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP' | translate}}
+										</div>
+										
+									    <div ngf-no-file-drop>
+									    	{{'UPLOAD_FILES_MESSAGE_DRAG_DROP_ERROR' | translate}}
+									    </div>
+										<div class="text-right button-select-file">
+									 		<div 
+									 			ng-required="(ctrl.paymentType.value == 'BONIFICO' || ctrl.paymentType.value == 'PAGO_PA') 
+									 			&& (ctrl.paymentFiles.length == 0 && ctrl.files.length == 0 ) "
+									 			class="btn btn-success" 
+									 			ngf-select="upload($files)" 
+									 			ng-model="ctrl.draggedFile" 
+									 			ngf-accept="acceptedFiles"
+									 			ngf-pattern="acceptedFiles" 
+									 			ng-class="addClass( 'UPLOAD_FILES', submitForm  )"
+									 			ngf-multiple="true">
+									 			  <i class="fa fa-folder-open-o"></i>
+									 				{{'UPLOAD_FILES_BUTTON' | translate}}
+								 				  <span class="progress" ng-show="f.progress >= 0">
+														 <div 
+														 	style="width:{{f.progress}}%" 
+														 	ng-bind="f.progress + '%'">
+														 </div>
+												 	  </span>	
+									 		</div>
+										 </div>
+									
+									
+									<xt-validation-inline for="UPLOAD_FILES"></xt-validation-inline>
+									</div>
+									<div class="col-sm-6">
+										 <div class="file-upload">
+										    <label>Files:</label>
+										    <div class="row" ng-repeat="f in ctrl.files">
+									       	 	<div class="col-sm-12">
+									       	 		{{f.name}} {{f.$error}} {{f.$errorParam}}
+										        	<a 
+										        		class=" fa fa-trash" 
+										        		ng-click="removeFile(f)">
+										        	</a>
+									       	 	</div>
+									 	    </div>
+									 	    <div class="row" ng-repeat="file in ctrl.paymentFiles">
+									       	 	<div class="col-sm-12">
+													{{ file.description }}
+													<a class="fa fa-trash" ng-click="ctrl.remove(file)" title="{{'DELETE_RECTIFICATION_FILE' | translate}}">
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+		<br> 
+		<br>		
+		<div class="panel-body-section">
+			<div class = "text-right">
+				<button type="submit"
+							class="btn btn-primary"
+							ng-click="ctrl.submit()"
+							ng-disabled="submitForm.$invalid"
+							translate="{{'SUBMIT' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="ctrl.reset()"
+							translate="{{'RESET' | translate}}">
+				</button>
+				<button type="button"
+							class="btn btn-primary"
+							ng-disabled="submitForm.$invalid"
+							ng-click="ctrl.save()"
+							translate="{{'SAVE' | translate}}">
+				</button>
+				
+			</div>
+			<div class="text-right">
+				<h4 class="errorSummaryText">
+					{{'PAYMENT_FILE_LIMIT_SIGNED' | translate}}</h4>
+					<h4 class="moreInfoSummaryText">
+						{{'FILE_SIGN_WARN' | translate}}</h4>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="ctrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+
+	
+	
+</div>

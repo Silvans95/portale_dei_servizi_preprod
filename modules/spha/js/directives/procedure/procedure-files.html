@@ -1,0 +1,124 @@
+<br>
+<div class="text-right">
+	<button
+		ng-if="!readOnly && showImportButton"
+		type="button"
+		class="btn btn-primary"
+		ng-if="import"
+		ng-click="importFiles()">
+		{{'IMPORT_FILE' | translate}}
+	</button>
+	<button
+		ng-if="!readOnly"
+		type="button"
+		class="btn btn-primary"
+		ng-click="uploadFile()">
+		{{'UPLOAD_FILE' | translate}}
+	</button>
+</div>
+<fieldset class="responsive-fieldset" ng-repeat="category in sectionOrder track by $index">
+	<legend>{{'PROCEDURE_FILES_LEGEND' | translate}}</legend>
+	<div class="row" style="min-height:50px;">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive text-center">
+			<table class="table table-bordered table-striped" ng-if="files != null">
+				<thead>
+					<tr class="row">
+						<td class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+							{{'PROCEDURE_FILE_NAME'|translate}}
+						</td>
+<!--
+						<td  ng-if="category != 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'N_VERSION'|translate}}
+						</td>
+						<td  ng-if="category == 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'VERSION'|translate}}
+						</td>
+						<td class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+							{{'DOC_AREA'|translate}}
+						</td>
+						<td class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'DOC_TYPE'|translate}}
+						</td>
+						<td ng-class="{ 'col-xs-12 col-sm-12 col-md-4 col-lg-4' : category != 'DOC_CENTRE' || category != 'DOC_CTA', 'col-xs-12 col-sm-12 col-md-3 col-lg-3' : category == 'DOC_CENTRE' || category == 'DOC_CTA'}">
+-->
+						<td class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							{{'PROCEDURE_FILE_DESCRIPTION'|translate}}
+						</td>
+<!--
+						<td ng-if="category != 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'DOC_VERSION'|translate}}
+						</td>
+						<td ng-if="category != 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'DOC_VERSION_DATE'|translate}}
+						</td>
+						<td ng-if="category == 'DOC_CENTRE' || category == 'DOC_CTA' " class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{'CTA_CENTRE' | translate}}
+						</td>
+-->
+						<td class="col-xs-12 col-sm-12 col-md-2 col-lg-2" style="min-width: 200px;">
+							{{'ACTION'|translate}}
+						</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="row" ng-class="{'fileHasBeenModified' : file.modified}" ng-repeat="file in files track by $index"
+							ng-if= "debugMode || (category == 'DOC_CTA' && file.filename.indexOf('_signed') >0 ) || category != 'DOC_CTA'">
+						<td class="col-xs-12 col-sm-12 col-md-4 col-lg-4 filesToSignName" >
+							<ng-versionable-file
+								file="file" 
+								show-version="false"
+								upload-version="false" 
+								remove-disable="true" 
+								remove-external-disable="true"
+								function-upload-version="uploadFileVersion(file)" 
+								url="url"
+								function-remove-file="removeFile(file)">
+							</ng-versionable-file>
+						</td>
+<!--
+						<td class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{file.version | translate}}
+						</td>
+						<td class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+							{{file.documentArea | translate}}
+						</td>
+						<td class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{file.documentTypeCode | translate}}
+						</td>
+						<td ng-class="{ 'col-xs-12 col-sm-12 col-md-4 col-lg-4' : category != 'DOC_CENTRE' || category != 'DOC_CTA', 'col-xs-12 col-sm-12 col-md-3 col-lg-3' : category == 'DOC_CENTRE' || category == 'DOC_CTA'}">
+-->
+						<td class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							{{file.description}}
+						</td>
+<!--
+						<td ng-if="category != 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{file.customVersion}}
+						</td>
+						<td ng-if="category != 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							{{file.customVersionDate | date : 'dd/MM/yyyy'}}
+						</td>
+						<td ng-if="category == 'DOC_CENTRE' || category == 'DOC_CTA'" class="col-xs-12 col-sm-12 col-md-1 col-lg-1">
+							<span>{{file.creationGroupLabel | translate}}</span>
+							<span ng-if="(category == 'DOC_CENTRE' || category == 'DOC_CTA') && file.piName != null"> ({{file.piName}})</span>
+						</td>
+-->
+						<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1 filesToSign">
+							 <ng-versionable-file
+								file="file" 
+								show-version="false"
+								upload-version="!readOnly" 
+								remove-disable="true" 
+								remove-external-disable="readOnly"
+								function-upload-version="uploadFileVersion(file)" 
+								url="url"
+								function-remove-file="removeFile(file)"
+                                configs="versionabelFileConfigs">
+							</ng-versionable-file>
+						</td>
+					</tr>
+				</tbody>
+			</table>						
+		</div>
+	</div>
+</fieldset>
+<br/>

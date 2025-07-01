@@ -1,0 +1,5 @@
+<div class="row">
+    <a ng-if="!action.hide" ng-repeat="action in actions" class="buttons table-button-directive-space" ng-click="clickCallback(action)">
+        <span ng-class="icons[action.action] ? icons[action.action] : icons['DEFAULT']"  id="{{action.action}}-button" title="{{action.action | translate}}"></span>
+    </a>
+</div>

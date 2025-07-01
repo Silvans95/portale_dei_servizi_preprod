@@ -1,0 +1,48 @@
+<a id="head"></a>
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="procedureCtrl">
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+		  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			  <h4
+				translate="{{ 'PROCEDURE_FILE_VIEW' | translate}}">
+			</h4>
+		  </div>
+		  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default"  id="back-button-top" ng-click="procedureCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body">
+		<div class="panel-body-section">			
+			<div ng-class="procedureCtrl.alertClass" ng-show="procedureCtrl.message">
+				<strong>{{procedureCtrl.message | translate}}</strong>
+			</div>
+			<form ng-submit="procedureCtrl.submitCreate(newProcedureForm)" name="newProcedureForm" novalidate>
+				<procedure-files
+					id-procedure="procedureCtrl.idProcedure"
+					read-only="true"
+					show-import-button="procedureCtrl.showImportButton"
+					message = procedureCtrl.message;
+					alert-class = procedureCtrl.alertClass;>
+				</procedure-files>
+			</form>
+			<br/>
+			<br/>
+			<div class = "text-right">
+				<button type="button"
+		                       class="btn btn-default"
+		                       ng-click="procedureCtrl.goToTop()"
+		                       translate="{{'GO_TO_TOP' | translate}}">
+		        </button>
+				<button type="button" class="btn btn-default" id="back-button-bottom" ng-click="procedureCtrl.goBack()">
+					{{'BACK' | translate}}
+	               </button>
+			</div>
+		</div>
+	</div>
+</div>

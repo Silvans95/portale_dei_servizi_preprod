@@ -1,0 +1,333 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak>
+    <div class="panel-header text-uppercase pb10">
+        <div class="row" ng-if="ctrl.isProtocolling">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!ctrl.isProtocolling">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ng-switch="ctrl.procedureType">
+                <h4 ng-switch-when="SHELF"
+                    translate="{{ 'SHELF_PROCEDURE_INSTANCE' | translate }}">
+                </h4>
+                <h4 ng-switch-when="BUDGET"
+                    translate="{{ 'BUDGET_PROCEDURE_INSTANCE' | translate }}">
+                </h4>
+                <h4 ng-switch-when="PB5"
+                    translate="{{ 'PB5_PROCEDURE_INSTANCE' | translate }}">
+                </h4>
+                <h4 ng-switch-when="PB183"
+                    translate="{{ 'PB183_PROCEDURE_INSTANCE' | translate }}">
+                </h4>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="text-right" style="padding-right:15px;">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+                        {{'BACK' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  ng-show="ctrl.isProtocolling" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!ctrl.isProtocolling">
+        <div
+                ng-class="ctrl.alertClass"
+                ng-show="ctrl.message">
+            <strong translate="{{ctrl.message | translate}}"></strong>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                <h3 class="list-header" style="display: flex; justify-content: space-between; align-items: center;">{{ 'instance.PROCEDURES_LIST' | translate }}<a ng-if="showHelp" class="errorSummaryText" style="font-size: 14px; cursor: pointer" ng-click="help()">{{ 'instance.HELP' | translate }}</a></h3>
+                <div ng-if="data.length==0">
+                    <span>{{ 'instance.NO_INSTANCES' | translate }}</span>
+                </div>
+                <ul class="nav nav-pills nav-stacked" style="overflow:auto; height: 500px;">
+                    <li ng-repeat="item in data track by item.id" ng-class="{'active' : $index==selectedIndex}">
+                        <a href="" ng-click="changeSelectedEntry($index)">
+                            <span class="glyphicon glyphicon-warning-sign"
+                                  ng-style="{color: statusColor(item.status, item.procedure.phase)}"></span>
+                            <span id="{{'procedure' + item.procedure.year}}">{{item.procedure.description}}</span>
+                           <span></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+             
+            <div class="col-xs-6 col-sm-9 col-md-9 col-lg-9"
+                 ng-style=" index!=-1 && { 'border':'1px solid #DDD', 'padding':'20px' }">
+                <form ng-submit="ctrl.submitForm(myForm)" xt-form role="form" name="myForm">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="COMPANY" translate="{{'COMPANY'| translate}}">COMPANY</label>
+                            <div class="form-group" ng-class="addClass( 'COMPANY', filtersForm  )">
+                                <div style="height:0px;">
+                                    <input style="opacity: 0;"
+                                           class="form-control"
+                                           id="COMPANY"
+                                           name="COMPANY"
+                                           ng-model="ctrl.company"
+                                           ng-required="true"/>
+                                </div>
+                                <ui-select id="select-company"
+                                		   ng-model="ctrl.company"
+                                           ng-change="ctrl.onCompanyChange($select.selected.label)"
+                                           ng-disabled="lockedMode">
+                                    <ui-select-match allow-clear="true" placeholder="{{'COMPANY'| translate}}">
+                                        <span>{{ctrl.company}} - {{ctrl.companyName}}</span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                    		refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 									refresh-delay ="500"
+                                            repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+                                        <div>
+                                            <span>{{option.value}} - {{option.label != null ? option.label : option.value}}</span>
+                                        </div>
+                                        <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                            <button
+                                            		id="show-other"
+                                                    class="btn btn-xs btn-success"
+                                                    style="width: 100%; margin-top: 5px;"
+                                                    ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search )">
+                                                {{'SHOW_OTHER' | translate}}
+                                            </button>
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <xt-validation-inline for="COMPANIES"></xt-validation-inline>
+
+                            </div>
+                        </div>
+					</div>
+                     <div class="row">
+                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                             <label
+                                     for="startDate"
+                                     translate="{{'instance.DATA_APERTURA' | translate}}">
+                                 instance.DATA_APERTURA
+                             </label>
+                             <div class="input-group">
+                                 <input
+                                         uib-datepicker-popup="{{dateFormat}}"
+                                         type="text"
+                                         class="form-control"
+                                         id="startDate"
+                                         name="startDate"
+                                         is-open="datesOptions.startDate.opened"
+                                         disabled
+                                         ng-model="selectedInstance.procedure.startDate"
+                                         ng-model-options="{ timezone: 'UTC' }"
+                                         ng-required="true"/>
+                                 <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+										 disabled
+                                         ng-click="datesOptions.startDate.opened = !datesOptions.startDate.opened">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+                             </div>
+                             <xt-validation-inline for="startDate"></xt-validation-inline>
+                         </div>
+                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                             <label
+                                     for="endDate"
+                                     translate="{{'instance.DATA_CHIUSURA' | translate}}">
+                                 instance.DATA_CHIUSURA
+                             </label>
+                             <div class="input-group">
+                                 <input
+                                         uib-datepicker-popup="{{dateFormat}}"
+                                         type="text"
+                                         class="form-control"
+                                         id="endDate"
+                                         name="endDate"
+                                         is-open="datesOptions.endDate.opened"
+                                         disabled
+                                         ng-model="selectedInstance.procedure.endDate"
+                                         ng-model-options="{ timezone: 'UTC' }"
+                                         ng-required="true"/>
+                                 <span class="input-group-btn">
+						<button type="button" disabled class="btn btn-default"
+                                         ng-click="datesOptions.endDate.opened = !datesOptions.endDate.opened">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+                             </div>
+                             <xt-validation-inline for="endDate"></xt-validation-inline>
+                         </div>
+                     </div>
+                     <br/>
+                      <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <label
+                                      for="startPeriodDate"
+                                      translate="{{'instance.DATA_INIZIO_PERIODO' | translate}}">
+                                  instance.DATA_INIZIO_PERIODO
+                              </label>
+                              <div class="input-group">
+                                  <input
+                                          uib-datepicker-popup="{{dateFormat}}"
+                                          type="text"
+                                          class="form-control"
+                                          id="startPeriodDate"
+                                          name="startPeriodDate"
+                                          is-open="datesOptions.startPeriodDate.opened"
+                                          disabled
+                                          ng-model="selectedInstance.procedure.startPeriodDate"
+                                          ng-model-options="{ timezone: 'UTC' }"
+                                          ng-required="true"/>
+                                  <span class="input-group-btn">
+							<button type="button" disabled class="btn btn-default"
+                                          ng-click="datesOptions.startPeriodDate.opened = !datesOptions.startPeriodDate.opened">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+                              </div>
+                              <xt-validation-inline for="startPeriodDate"></xt-validation-inline>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <label
+                                      for="endPeriodDate"
+                                      translate="{{'instance.DATA_FINE_PERIODO' | translate}}">
+                                  instance.DATA_FINE_PERIODO
+                              </label>
+                              <div class="input-group">
+                                  <input
+                                          uib-datepicker-popup="{{dateFormat}}"
+                                          type="text"
+                                          class="form-control"
+                                          id="endPeriodDate"
+                                          name="endPeriodDate"
+                                          is-open="datesOptions.endPeriodDate.opened"
+                                          disabled
+                                          ng-model="selectedInstance.procedure.endPeriodDate"
+                                          ng-model-options="{ timezone: 'UTC' }"
+                                          ng-required="true"/>
+                                  <span class="input-group-btn">
+							<button type="button" disabled class="btn btn-default"
+                                          ng-click="datesOptions.endPeriodDate.opened = !datesOptions.endPeriodDate.opened">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+                              </div>
+                              <xt-validation-inline for="endPeriodDate"></xt-validation-inline>
+                          </div>
+                      </div>
+                        <br>
+                        <div class="page-links col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                            <dl>
+                                <dt ng-repeat="link in ctrl.links" ng-if="$index == 0 && link.queryType != 'SUSPENDED'"><h4>Esplora Dati:</h4></dt>
+                                <dd style="display: list-item;" ng-repeat="link in ctrl.links" ng-if="link.queryType != 'VERSARE' && link.queryType != 'EXPORT' && link.queryType != 'ACCETTARE' && link.queryType != 'SUSPENDED'">
+                                    <a
+                                            id="{{link.sref}}"
+                                            ng-class="{linkDisabled: !foundedProcedure}"
+                                            ui-sref="{{link.sref}}({queryType: link.queryType , 
+                                                                    procedureType: ctrl.procedureType, 
+                                                                    procedureId: selectedInstance.procedure.id,
+                                                                    procedureInstanceId: selectedInstance.id})"
+                                            translate="{{ link.text | translate}}"
+                                            title="{{ link.title | translate}}">
+                                    </a>
+                                     <span   ng-if="canEnableSubmission && link.sref =='spha.acceptanceAifaManagement'">
+                                     		<a ng-class="{linkDisabled: !foundedProcedure}">
+                                     			&nbsp;
+                                             	<span  ng-class="{linkDisabled: !foundedProcedure}"  ng-if="!selectedInstance.compileAcceptance"  class="fa fa-lock" title="{{'DISABLE_SUBMISSION_TOOLTIP' | translate}}"></span>
+                                             	<span  ng-class="{linkDisabled: !foundedProcedure}" ng-if="selectedInstance.compileAcceptance"  class="fa fa-unlock" title="{{'ENABLE_SUBMISSION_TOOLTIP' | translate}}"></span>
+                                             </a>
+                                     </span>
+                                 </dd>
+
+                                <dd style="display: list-item;" ng-repeat="link in ctrl.links" ng-if="link.queryType == 'ACCETTARE'">
+                                    <div class="page-links-list">
+                                        <a
+                                               id="{{link.sref}}"
+                                               ng-class="{linkDisabled: procedureClosed && !selectedInstance.compileAcceptance}"
+                                               ng-click="clickAcceptance(link)"
+                                               style="cursor: pointer;"
+                                               translate="{{ link.text | translate}}"
+                                               title="{{ link.title | translate}}  ">
+                                        </a>
+                                            <a	ng-if="selectedInstance.actions.indexOf('PROCEDURE_INSTANCE_READ_ACCEPTANCE') !== -1" 
+                                                class="buttons table-button-directive-space" 
+                                                ng-click="showAcceptanceProtcolNumber()">
+                                                <span class="fa fa-info-circle" title="{{'SHOW_PROTOCOL_NUMBER' | translate}}"></span>
+                                            </a>
+                                            
+              
+                                    </div>
+                                </dd>
+
+                                <dt ng-repeat="link in ctrl.links" ng-if="link.queryType == 'EXPORT'"><h4>
+		 						
+                                    <a
+                                               id="{{link.sref}}"
+                                               ng-class="{linkDisabled: !foundedProcedure}"
+                                               translate="{{ link.text | translate}}"
+                                               style="cursor: pointer;"
+                                               ng-click="ctrl.exportAll()"
+                                               title="{{ link.title | translate}}  ">
+                                           
+                                               
+                                       </a>
+                                     </h4></dt>
+                                
+		 						<dt ng-repeat="link in ctrl.links" ng-if="link.queryType == 'VERSARE'">
+		 							<h4>
+		 								<a 
+                                            id="{{link.sref}}"
+                                            ng-class="{linkDisabled: !foundedProcedure }"
+                                            ng-click="showCanSubmissionPB5( link.queryType ,ctrl.procedureType, selectedInstance.procedure.id, selectedInstance.id)" 
+                                     
+                                             ui-sref="{{link.sref}}({queryType: link.queryType , 
+                                                                    procedureType: ctrl.procedureType, 
+                                                                    procedureId: selectedInstance.procedure.id,
+                                                                    procedureInstanceId: selectedInstance.id})"
+                                            translate="{{ link.text | translate}}"
+                                            title="{{ link.title | translate}}">
+                                    	</a>
+ 		 						 </h4></dt>
+
+                                <dt ng-repeat="link in ctrl.links" ng-if="link.queryType == 'SUSPENDED'">
+                                    <h4
+                                            id="{{link.sref}}"
+                                            ng-class="{linkSuspended: true}"
+                                            translate="{{ link.text | translate}}"
+                                            title="{{ link.title | translate}}">
+
+                                    </h4>
+                                </dt>
+
+                                  
+                                 	
+                            </dl>
+                            
+                        </div>  
+                </form>
+            </div>            
+        </div>
+        <br/>
+        <div class="text-right">
+                <button ng-if="canCreateInstance" type="button" id="new-istance-button" class="btn btn-default" ng-click="ctrl.newInstance()">
+                   {{'NEW_INSTANCE' | translate}}
+               	</button>
+             
+            	 <span class="text-right"  ng-if="canEnableSubmission">
+                    <button ng-if="!selectedInstance.compileAcceptance" type="button" id="new-istance-button" class="btn btn-default" ng-click="ctrl.reactivateAcceptanceSubmission()">
+                        {{'ENABLE_SUBMISSION' | translate}}
+                    </button>
+                    <button ng-if="selectedInstance.compileAcceptance" type="button" id="new-istance-button" class="btn btn-default" ng-click="ctrl.suspendAcceptanceSubmission()">
+                        {{'DISABLE_SUBMISSION' | translate}}
+                    </button>
+                </span>
+
+                <button type="button" class="btn btn-default" ng-click="ctrl.goBack()">
+                    {{'BACK' | translate}}
+                </button>
+            </div>
+
+    </div>
+</div> 

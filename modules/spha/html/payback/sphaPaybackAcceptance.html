@@ -1,0 +1,1122 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak>
+	<div class="panel-header text-uppercase pb10">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h4>
+					{{ 'PAYBACK_ACCEPTANCE' | translate }}
+				</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" id="back-button-top" ng-click="ctrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-body">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="ctrl.alertClass" ng-show="ctrl.message">
+						<strong translate="{{ctrl.message | translate}}"></strong>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<form xt-form ng-submit="ctrl.submitSearch()" name="filtersForm" novalidate>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+								<custom-popover-spha
+									custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" class="form-control" id="COMPANIES" name="COMPANIES"
+											ng-model="ctrl.companies" />
+									</div>
+									<ui-select multiple id="select-company" ng-model="ctrl.companies"
+										ng-disabled="lockedMode">
+										<ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+											<span>{{$item.label != null ? $item.value + ' - ' + $item.label : $item.value}}</span>
+										</ui-select-match>
+										<ui-select-choices
+											refresh="getCompaniesPossibleValues(0, $select.search, form )"
+											refresh-delay="500"
+											repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+											</div>
+											<div
+												ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+												<button class="btn btn-xs btn-success"
+													style="width: 100%; margin-top: 5px;"
+													ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search, form )">
+													{{'SHOW_OTHER' | translate}}
+												</button>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+
+
+							</div>
+
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<span translate="{{ 'SUBJECT' | translate}}"></span>
+								<input size="{{!ctrl.soggetto || ctrl.soggetto.length < 20 ? 20 : ctrl.soggetto.length}}" class="form-inline" id="SUBJECT" name="SUBJECT" ng-model="ctrl.soggetto" />
+								<span translate="{{ 'AS' | translate}}"></span>
+								<input size="{{!ctrl.qualificaSoggetto || ctrl.qualificaSoggetto.length < 20 ? 20 : ctrl.qualificaSoggetto.length}}" class="form-inline" id="AS" name="AS" ng-model="ctrl.qualificaSoggetto" />
+								<span translate="{{ 'PT_SUBJECT' | translate}}"></span>
+								<span class="bold">{{ctrl.companyName}}</span>
+								<span translate="{{ 'SITE_SUBJECT' | translate}}"></span>
+								<input size="{{!ctrl.sedeAzienda || ctrl.sedeAzienda.length < 20 ? 20 : ctrl.sedeAzienda.length}}" class="form-inline" id="SITE_COMPANY" name="SITE_COMPANY"
+									ng-model="ctrl.sedeAzienda" />
+								<span translate="{{ 'POWER_SUBJECT' | translate}}"></span>
+								<input size="{{!ctrl.potereSoggetto || ctrl.potereSoggetto.length < 20 ? 20 : ctrl.potereSoggetto.length}}" class="form-inline" id="POWER_SUBJECT" name="POWER_SUBJECT"
+									ng-model="ctrl.potereSoggetto" />
+								<span translate="{{ 'END_FORM' | translate}}"></span>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<h4 class="text-center bold">
+									{{ 'DECLARES' | translate }}
+								</h4>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+								<div class="radio" ng-class="addClass( 'NOT_ACCEPTANCE' )">
+									<label class="radio" style="text-decoration:underline;">
+										<input type="radio" value="NOT_ACCEPTANCE" id="NOT_ACCEPTANCE"
+											name="NOT_ACCEPTANCE" ng-change="changefield( 'NOT_ACCEPTANCE' )"
+											ng-model="moduleOption" />
+										<span class="bold">{{'NOT_ACCEPTANCE'| translate}}</span>{{'PERIOD_NOT_ACCEPTANCE'| translate}}
+									</label>
+									<div class="row" ng-if="moduleOption === 'NOT_ACCEPTANCE' ">
+										<br>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<span translate="{{'NOT_ACCEPTANCE_A_1' | translate}}"></span>
+											<span><b>{{ctrl.prevYear}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_A_2' | translate}}"></span>
+											<span><b>{{ctrl.year}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_A_3' | translate}}"></span>
+											<span><b>{{ctrl.notAcceptanceDate | date : 'dd/MM/yy'}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_A_4' | translate}}"></span>
+										</div>
+										<br>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<table ng-table="ctrl.notAcceptanceFullTable" class="table table-bordered">
+												<tbody>
+													<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+														ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+														<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+															data-title="'AIC' | translate">
+															<div class="text-center">
+																<a title="{{'AIC' | translate}}">
+																	{{row.aic9 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+															data-title="'PRODOTTO' | translate">
+															<div class="text-center">
+																<a title="{{'PRODOTTO' | translate}}">
+																	{{row.prodotto }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+															data-title="'CONV_A_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'CONV_A_DINIEGO' | translate}}">
+																	{{row.convClasseADiniego | number:2}}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+															data-title="'NON_CONV_A_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_A_DINIEGO' | translate}}">
+																	{{row.nonConClasseADiniego | number:2 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+															data-title="'NON_CONV_H_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_H_DINIEGO' | translate}}">
+																	{{ row.nonConvClasseHDiniego | number:2 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+															data-title="'TOT_PB_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'TOT_PB_DINIEGO' | translate}}">
+																	{{ row.totaleImportoDiniego | number:2 }}
+																</a>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+												<tfoot ng-if="$data.length > 0">
+													<tr class="tableFooter text-center">
+								         				<td colspan="2" ><span translate="{{'TOTAL' | translate}}"></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineAConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineANonConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineHNonConv| number : 2}}</b></span></td>
+			                    						<td ><span><b>{{ctrl.notAcceptanceTotalImport| number : 2}}</b></span></td>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+
+										<br>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<span translate="{{'NOT_ACCEPTANCE_B_1' | translate}}"></span>
+											<span><b>{{ctrl.totals.notAcceptance.totalAmount | number : 2}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_B_2' | translate}}"></span>
+											<span><b>01/01/{{ctrl.year.toString().substring(2)}} - {{ctrl.notAcceptanceDate | date : 'dd/MM/yy'}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_B_3' | translate}}"></span>
+											<span><b>{{ctrl.totals.notAcceptance.totalAmount | number : 2}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_B_4' | translate}}"></span>
+											<span>{{ctrl.feeNumber}}</span>
+											<span translate="{{'NOT_ACCEPTANCE_B_5' | translate}}"></span>
+											<span><b>{{(ctrl.totals.notAcceptance.totalAmount / ctrl.feeNumber) | number:
+												2}}</b></span>
+											<span translate="{{'NOT_ACCEPTANCE_B_6' | translate}}"></span>
+											<span><b>{{ctrl.paymentFeeDates}}</b></span>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+												<br>
+												<label for="SUMMARY_AMOUNT_PAYBACK"
+													translate="{{'SUMMARY_AMOUNT_PAYBACK'| translate}}">SUMMARY_AMOUNT_PAYBACK</label>
+												<custom-popover-spha
+													custom-popover-text="{{'SUMMARY_AMOUNT_PAYBACK' | translate}}"></custom-popover-spha>
+
+												<table class="table table-bordered">
+													<thead>
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading">
+															<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.ACCEPTANCE_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.DENIAL_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.TOTAL_AMOUNTS' | translate}}"></span></td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineAConv + ctrl.notAcceptanceMedicineAConv)| number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineANonConv + ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_H_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineHNonConv + ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+														</tr>
+													</tbody>
+													<tfoot ng-if="$data.length > 0">
+														<tr>
+															<td class="tableNoBorder" colspan="2" rowspan="2"></td>
+			                    							<td class="tableFooter text-right"><span translate="{{'TOT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{ctrl.totalImport | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+			                    							<td class="tableFooter text-right"><span translate="{{'FIRST_FEE_IMPORT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{(ctrl.totalImport / ctrl.feeNumber)| number : 2}}</b></span></td>
+														</tr>
+														
+													</tfoot>
+												</table>
+											</div>
+
+										</div>
+
+										<div class="panel-body-section">
+
+											<div class="row">
+
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+													<br>
+												<label for="SUMMARY_AMOUNT_REGION"
+													translate="{{'SUMMARY_AMOUNT_REGION'| translate}}">SUMMARY_AMOUNT_REGION</label>
+												<custom-popover-spha
+													custom-popover-text="{{'SUMMARY_AMOUNT_REGION' | translate}}"></custom-popover-spha>
+											
+											
+													<table ng-table="ctrl.amountTable" class="table table-bordered">
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+															ng-init="ctrl.isCollapsed[$index] = true;"
+															ng-repeat="row in $data">
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"	data-title="'REGION' | translate">
+																<div class="text-center">
+																	<a title="{{'REGION' | translate}}">
+																		{{row.region }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'CONV_A' | translate}}">
+																		{{row.convClasseADiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'NON_CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConClasseADiniego | number:2}}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+																data-title="'NON_CONV_H' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConvClasseHDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB' | translate}}">
+																		{{row.totaleImportoDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB_FEE' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB_FEE' | translate}}">
+																		{{ (row.totaleImportoDiniego / ctrl.feeNumber) |
+																		number:2 }}
+																	</a>
+																</div>
+															</td>
+														</tr>
+														<tfoot ng-if="$data.length > 0" >
+															
+												            <tr class="tableFooter">
+	                    										<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span translate="{{'TOTAL' | translate}}"></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.notAcceptanceMedicineAConv )| number : 2}}</b></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.notAcceptanceTotalImport) | number: 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{((ctrl.notAcceptanceTotalImport) /ctrl.feeNumber) | number: 2}}</b></span></td>
+										                    </tr>
+												            
+												            
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+									<br>
+									
+									<label class="radio" style="text-decoration:underline;">
+										<input type="radio" value="PARTIALLY_ACCEPTANCE" id="PARTIALLY_ACCEPTANCE"
+											name="PARTIALLY_ACCEPTANCE"
+											ng-change="changefield( 'PARTIALLY_ACCEPTANCE' )" ng-model="moduleOption" />
+										<span class="bold">{{'PARTIALLY_ACCEPTANCE'| translate}}</span>{{'PERIOD_PARTIALLY_ACCEPTANCE'| translate}}
+									</label>
+									<div class="row" ng-if="moduleOption === 'PARTIALLY_ACCEPTANCE' ">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+											<table ng-table="ctrl.acceptanceTable" class="table table-bordered">
+												<tbody>
+													<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+														ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+														<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1 text-center"
+															data-title="'ACCEPT' | translate">
+															<input type="checkbox" ng-model="checkboxes.items[row.aic9]" ng-change="ctrl.onChangeAic9(row.aic9)" />
+	
+														</td>
+														<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+															data-title="'AIC' | translate">
+															<div class="text-center">
+																<a title="{{'AIC' | translate}}">
+																	{{row.aic9 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+															data-title="'PRODOTTO' | translate">
+															<div class="text-center">
+																<a title="{{'PRODOTTO' | translate}}">
+																	{{row.prodotto }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
+															data-title="'CONV_A_ACCETTAZIONE' | translate">
+															<div class="text-center">
+																<a title="{{'CONV_A_ACCETTAZIONE' | translate}}">
+																	{{row.convClasseAAccettazione | number:2}}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-6 col-sm-6 col-md-1 col-lg-1"
+															data-title="'NON_CONV_A_ACCETTAZIONE' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_A_ACCETTAZIONE' | translate}}">
+																	{{row.nonConvClasseAAccettazione | number:2 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-3 col-sm-3 col-md-1 col-lg-1"
+															data-title="'NON_CONV_H_ACCETTAZIONE' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_H_ACCETTAZIONE' | translate}}">
+																	{{ row.nonConvClasseHAccettazione | number:2 }}
+																</a>
+															</div>
+														</td>
+	
+														<td class="col-xs-4 col-sm-4 col-md-1 col-lg-1"
+															data-title="'CONV_A_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'CONV_A_DINIEGO' | translate}}">
+																	{{row.convClasseADiniego | number:2}}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-6 col-sm-6 col-md-1 col-lg-1"
+															data-title="'NON_CONV_A_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_A_DINIEGO' | translate}}">
+																	{{row.nonConClasseADiniego | number:2 }}
+																</a>
+															</div>
+														</td>
+														<td class="col-xs-3 col-sm-3 col-md-1 col-lg-1"
+															data-title="'NON_CONV_H_DINIEGO' | translate">
+															<div class="text-center">
+																<a title="{{'NON_CONV_H_DINIEGO' | translate}}">
+																	{{ row.nonConvClasseHDiniego | number:2 }}
+																</a>
+															</div>
+														</td>
+	
+													</tr>
+												</tbody>
+												
+												
+											</table>
+											<div class="text-center">
+												<button type="button" class="btn btn-primary text-uppercase"
+													id="reset-button" ng-click="ctrl.populateSubTables()"
+													translate="{{'OK' | translate}}">
+												</button>
+											</div>
+
+											<br>
+
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<span translate="{{'PARTIAL_ACCEPTANCE_A_1' | translate}}"></span>
+												<span><b>31/12/{{ctrl.year}}</b>;</span>
+											</div>
+											<br>
+
+											<table ng-table="ctrl.partialAcceptanceTable" class="table table-bordered">
+												<tbody>
+												<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+													ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'AIC' | translate">
+														<div class="text-center">
+															<a title="{{'AIC' | translate}}">
+																{{row.aic9 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'PRODOTTO' | translate">
+														<div class="text-center">
+															<a title="{{'PRODOTTO' | translate}}">
+																{{row.prodotto }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'CONV_A_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'CONV_A_ACCETTAZIONE' | translate}}">
+																{{row.convClasseAAccettazione | number:2}}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+														data-title="'NON_CONV_A_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_A_ACCETTAZIONE' | translate}}">
+																{{row.nonConvClasseAAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'NON_CONV_H_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_H_ACCETTAZIONE' | translate}}">
+																{{ row.nonConvClasseHAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'TOT_PB_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'TOT_PB_ACCETTAZIONE' | translate}}">
+																{{ row.totaleImportAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+												</tr>
+												</tbody>
+												<tfoot ng-if="$data.length > 0">
+													<tr class="tableFooter text-center">
+								         				<td colspan="2" ><span translate="{{'TOTAL' | translate}}"></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineAConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineANonConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineHNonConv| number : 2}}</b></span></td>
+			                    						<td ><span><b>{{ctrl.acceptanceTotalImport| number : 2}}</b></span></td>
+													</tr>
+													
+												</tfoot>
+											</table>
+											<br>
+											
+
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<br>
+												<span translate="{{'PARTIAL_ACCEPTANCE_B_1' | translate}}"></span>
+												<span><b>{{ctrl.totals.partialAcceptance.totalAmount | number: 2}}</b>.</span>
+											</div>
+
+											<br>
+											
+
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<span translate="{{'PARTIAL_ACCEPTANCE_C_1' | translate}}"></span>
+												<span><b>{{ctrl.prevYear}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_C_2' | translate}}"></span>
+												<span><b>{{ctrl.year}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_C_3' | translate}}"></span>
+												<span><b>{{ctrl.notAcceptanceDate | date: 'dd/MM/yy'}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_C_4' | translate}}"></span>
+											</div>
+
+											<br>
+
+											<table ng-table="ctrl.partialNotAcceptanceTable"
+												class="table table-bordered">
+												<body>
+												<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+													ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'AIC' | translate">
+														<div class="text-center">
+															<a title="{{'AIC' | translate}}">
+																{{row.aic9 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'PRODOTTO' | translate">
+														<div class="text-center">
+															<a title="{{'PRODOTTO' | translate}}">
+																{{row.prodotto }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'CONV_A_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'CONV_A_DINIEGO' | translate}}">
+																{{row.convClasseADiniego | number:2}}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+														data-title="'NON_CONV_A_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_A_DINIEGO' | translate}}">
+																{{row.nonConClasseADiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'NON_CONV_H_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_H_DINIEGO' | translate}}">
+																{{ row.nonConvClasseHDiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'TOT_PB_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'TOT_PB_DINIEGO' | translate}}">
+																{{ row.totaleImportoDiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+												</tr>
+												</tbody>
+													<tfoot ng-if="$data.length > 0">
+													<tr class="tableFooter text-center">
+								         				<td colspan="2" ><span translate="{{'TOTAL' | translate}}"></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineAConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineANonConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineHNonConv| number : 2}}</b></span></td>
+			                    						<td ><span><b>{{ctrl.notAcceptanceTotalImport| number : 2}}</b></span></td>
+													</tr>
+													
+												</tfoot>
+												
+											</table>
+
+											<br>
+											
+
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<span translate="{{'PARTIAL_ACCEPTANCE_D_1' | translate}}"></span>
+												<span><b>{{ctrl.totals.partialNotAcceptance.totalAmount | number: 2}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_D_2' | translate}}"></span>
+												<span><b>{{ctrl.prevYear}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_D_3' | translate}}"></span>
+												<span><b>{{ctrl.startDate | date : 'dd/MM/yy'}} - {{ctrl.notAcceptanceDate | date : 'dd/MM/yy'}}</b>.</span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_B_2' | translate}}"></span>
+												<span><b>{{ctrl.totals.partialNotAcceptance.totalAmount + ctrl.totals.partialAcceptance.totalAmount | number: 2}}</b>,</span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_B_3' | translate}}"></span>
+												<span><b>{{ctrl.feeNumber}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_B_4' | translate}}"></span>
+												<span><b>{{((ctrl.totals.partialNotAcceptance.totalAmount + ctrl.totals.partialAcceptance.totalAmount) / ctrl.feeNumber) | number : 2}}</b></span>
+												<span translate="{{'PARTIAL_ACCEPTANCE_B_5' | translate}}"></span>
+												<span><b>{{ctrl.paymentFeeDates}}</b>.</span>
+											</div>
+
+											<br>
+											<br>
+
+
+										<div class="row">
+											<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+												<br>
+												<label for="SUMMARY_AMOUNT_PAYBACK"	translate="{{'SUMMARY_AMOUNT_PAYBACK'| translate}}">SUMMARY_AMOUNT_PAYBACK</label>
+												<custom-popover-spha custom-popover-text="{{'SUMMARY_AMOUNT_PAYBACK' | translate}}"></custom-popover-spha>
+												<table class="table table-bordered">
+													<thead>
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading">
+															<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.ACCEPTANCE_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.DENIAL_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.TOTAL_AMOUNTS' | translate}}"></span></td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineAConv + ctrl.notAcceptanceMedicineAConv) | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineANonConv + ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_H_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineHNonConv + ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+														</tr>
+													</tbody>
+													<tfoot ng-if="$data.length > 0">
+														<tr>
+														<td class="tableNoBorder" colspan="2" rowspan="2"></td>
+			                    							<td class="tableFooter text-right"><span translate="{{'TOT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{ctrl.totalImport | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+			                    							<td class="tableFooter text-right"><span translate="{{'FIRST_FEE_IMPORT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{(ctrl.totalImport / ctrl.feeNumber)| number : 2}}</b></span></td>
+														</tr>
+														
+													</tfoot>
+												</table>
+											</div>
+
+										</div>
+
+									<br>
+											
+										<div class="panel-body-section">
+
+											<div class="row">
+
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+														<br>
+												<label for="SUMMARY_AMOUNT_REGION"
+													translate="{{'SUMMARY_AMOUNT_REGION'| translate}}">SUMMARY_AMOUNT_REGION</label>
+												<custom-popover-spha
+													custom-popover-text="{{'SUMMARY_AMOUNT_REGION' | translate}}"></custom-popover-spha>
+												
+													<table ng-table="ctrl.amountTable" class="table table-bordered">
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+															ng-init="ctrl.isCollapsed[$index] = true;"
+															ng-repeat="row in $data">
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'REGION' | translate">
+																<div class="text-center">
+																	<a title="{{'REGION' | translate}}">
+																		{{row.region }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'CONV_A' | translate}}">
+																		{{row.convClasseAAccettazione +
+																		row.convClasseADiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'NON_CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConvClasseAAccettazione +
+																		row.nonConClasseADiniego | number:2}}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+																data-title="'NON_CONV_H' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConvClasseHAccettazione +
+																		row.nonConvClasseHDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB' | translate}}">
+																		{{ row.totaleImportAccettazione +
+																		row.totaleImportoDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB_FEE' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB_FEE' | translate}}">
+																		{{ (row.totaleImportAccettazione +
+																		row.totaleImportoDiniego) / ctrl.feeNumber |
+																		number:2 }}
+																	</a>
+																</div>
+															</td>
+														</tr>
+														<tfoot ng-if="$data.length > 0" >
+															<tr class="tableFooter">
+	                    										<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span translate="{{'TOTAL' | translate}}"></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineAConv  +ctrl.notAcceptanceMedicineAConv )| number : 2}}</b></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineANonConv + ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineHNonConv+ ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceTotalImport + ctrl.notAcceptanceTotalImport) | number: 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{((ctrl.acceptanceTotalImport + ctrl.notAcceptanceTotalImport) /ctrl.feeNumber) | number: 2}}</b></span></td>
+										                    </tr>
+										                    
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										</div>											
+										</div>
+									</div>
+									<br>
+									
+									<label class="radio" style="text-decoration:underline;">
+										<input type="radio" value="ACCEPTANCE" id="ACCEPTANCE" name="ACCEPTANCE"
+											ng-change="changefield( 'ACCEPTANCE' )" ng-model="moduleOption" />
+										<span class="bold">{{'ACCEPTANCE'| translate}}</span>{{'PERIOD_ACCEPTANCE'| translate}}
+									</label>
+									<div class="row" ng-if="moduleOption === 'ACCEPTANCE' ">
+										<br>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<span
+												translate="{{'a) ' + ('ACCEPTANCE_A' | translate) + ' '}}"></span>&nbsp;<span><b>{{ ctrl.endDate | date : 'dd/MM/yy'}}</b></span><span>;</span>
+												<br>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+											<table ng-table="ctrl.acceptanceTable" class="table table-bordered">
+											<body>
+												<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+													ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'AIC' | translate">
+														<div class="text-center">
+															<a title="{{'AIC' | translate}}">
+																{{row.aic9 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'PRODOTTO' | translate">
+														<div class="text-center">
+															<a title="{{'PRODOTTO' | translate}}">
+																{{row.prodotto }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'CONV_A_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'CONV_A_ACCETTAZIONE' | translate}}">
+																{{row.convClasseAAccettazione | number:2}}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+														data-title="'NON_CONV_A_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_A_ACCETTAZIONE' | translate}}">
+																{{row.nonConvClasseAAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'NON_CONV_H_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_H_ACCETTAZIONE' | translate}}">
+																{{ row.nonConvClasseHAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'TOT_PB_ACCETTAZIONE' | translate">
+														<div class="text-center">
+															<a title="{{'TOT_PB_ACCETTAZIONE' | translate}}">
+																{{ row.totaleImportAccettazione | number:2 }}
+															</a>
+														</div>
+													</td>
+												</tr>
+												</tbody>
+												<tfoot ng-if="$data.length > 0">
+													<tr class="tableFooter text-center">
+								         				<td colspan="2" ><span translate="{{'TOTAL' | translate}}"></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineAConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineANonConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.acceptanceMedicineHNonConv| number : 2}}</b></span></td>
+			                    						<td ><span><b>{{ctrl.acceptanceTotalImport| number : 2}}</b></span></td>
+													</tr>
+													
+												</tfoot>
+											</table>
+										</div>
+										<br>
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<span translate="{{ 'IMPORT_TO_PAY' | translate}}"></span>
+											<span class="bold">{{ctrl.totals.acceptance.totalAmount | number:2}}</span>
+											<span translate="{{ 'PERIOD_ACCEPTANCE' | translate}}"></span>
+											<span class="bold">{{ctrl.periodNotAcceptance}}</span>
+											<br>
+										</div>
+
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<br>
+											<span>b) </span>
+											<span translate="{{'ACCEPTANCE_B_1' | translate}}"></span>
+											<span><b>{{ctrl.prevYear}}</b></span>
+											<span translate="{{'ACCEPTANCE_B_2' | translate}}"></span>
+											<span><b>{{ctrl.year}}</b></span>
+											<span translate="{{'ACCEPTANCE_B_3' | translate}}"></span>
+											<span><b>{{ctrl.acceptancePrevDate | date : 'dd/MM/yy'}}</b></span>
+											<span translate="{{'ACCEPTANCE_B_4' | translate}}"></span>
+											<br>
+										</div>
+
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<span translate="{{ 'TOTAL_IMPORT' | translate}}"></span>
+											<span class="bold">{{ctrl.totals.acceptance.totalAmount | number:2}}</span>
+											<span translate="{{ 'FEE_IMPORT' | translate}}"></span>
+											<span class="bold">{{ctrl.feeNumber}}</span>
+											<span translate="{{ 'FEE' | translate}}"></span>
+											<span class="bold">{{(ctrl.totals.acceptance.totalAmount / ctrl.feeNumber) |
+												number:2}}</span>
+											<span translate="{{ 'PAYMENT_DATE_REQUIRED' | translate}}"></span>
+											<span><b>{{ctrl.paymentFeeDates}}</b></span>
+										</div>
+										<br>
+
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+											<table ng-table="ctrl.notAcceptanceTable" class="table table-bordered">
+											<tbody>
+												<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+													ng-init="ctrl.isCollapsed[$index] = true;" ng-repeat="row in $data">
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'AIC' | translate">
+														<div class="text-center">
+															<a title="{{'AIC' | translate}}">
+																{{row.aic9 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'PRODOTTO' | translate">
+														<div class="text-center">
+															<a title="{{'PRODOTTO' | translate}}">
+																{{row.prodotto }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+														data-title="'CONV_A_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'CONV_A_DINIEGO' | translate}}">
+																{{row.convClasseADiniego | number:2}}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+														data-title="'NON_CONV_A_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_A_DINIEGO' | translate}}">
+																{{row.nonConClasseADiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'NON_CONV_H_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'NON_CONV_H_DINIEGO' | translate}}">
+																{{ row.nonConvClasseHDiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+													<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+														data-title="'TOT_PB_DINIEGO' | translate">
+														<div class="text-center">
+															<a title="{{'TOT_PB_DINIEGO' | translate}}">
+																{{ row.totaleImportoDiniego | number:2 }}
+															</a>
+														</div>
+													</td>
+												</tr>
+												
+												</tbody>
+													<tfoot ng-if="$data.length > 0">
+													<tr class="tableFooter text-center">
+								         				<td colspan="2" ><span translate="{{'TOTAL' | translate}}"></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineAConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineANonConv| number : 2}}</b></span></td>
+								         				<td ><span><b>{{ctrl.notAcceptanceMedicineHNonConv| number : 2}}</b></span></td>
+			                    						<td ><span><b>{{ctrl.notAcceptanceTotalImport| number : 2}}</b></span></td>
+													</tr>
+													
+												</tfoot>
+											</table>
+										</div>
+
+										<br>
+
+					
+										<div class="row">
+											<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+												<br>
+												<label for="SUMMARY_AMOUNT_PAYBACK"	translate="{{'SUMMARY_AMOUNT_PAYBACK'| translate}}">SUMMARY_AMOUNT_PAYBACK</label>
+												<custom-popover-spha custom-popover-text="{{'SUMMARY_AMOUNT_PAYBACK' | translate}}"></custom-popover-spha>
+												<table class="table table-bordered">
+													<thead>
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading">
+															<td class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.ACCEPTANCE_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.DENIAL_AMOUNTS' | translate}}"></span></td>
+															<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center"><span translate="{{'PB5.TOTAL_AMOUNTS' | translate}}"></span></td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineAConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineAConv + ctrl.notAcceptanceMedicineAConv) | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_A_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.acceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineANonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.acceptanceMedicineANonConv + ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+														</tr>
+														<tr>
+															<th class="text-right"><span translate="{{'TOT_MEDICINE_H_NON_CONV' | translate}}"></span>	</th>														</th>
+															<td class="text-center"><span><b>{{ctrl.aceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{ctrl.notAcceptanceMedicineHNonConv | number : 2}}</b></span></td>
+															<td class="text-center"><span><b>{{(ctrl.aceptanceMedicineHNonConv + ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+														</tr>
+													</tbody>
+													<tfoot ng-if="$data.length > 0">
+														<tr>
+														<td class="tableNoBorder" colspan="2" rowspan="2"></td>
+			                    							<td class="tableFooter text-right"><span translate="{{'TOT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{ctrl.totalImport| number : 2}}</b></span></td>
+														</tr>
+														<tr>
+			                    							<td class="tableFooter text-right"><span translate="{{'FIRST_FEE_IMPORT' | translate}}"></span></td>
+			                    							<td class="text-center"><span><b>{{(ctrl.totalImport / ctrl.feeNumber)| number : 2}}</b></span></td>
+														</tr>
+														
+													</tfoot>
+												</table>
+											</div>
+
+										</div>
+
+
+										<div class="panel-body-section">
+
+											<div class="row">
+
+												<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+														<br>
+												<label for="SUMMARY_AMOUNT_REGION"
+													translate="{{'SUMMARY_AMOUNT_REGION'| translate}}">SUMMARY_AMOUNT_REGION</label>
+												<custom-popover-spha
+													custom-popover-text="{{'SUMMARY_AMOUNT_REGION' | translate}}"></custom-popover-spha>
+												
+													<table ng-table="ctrl.amountTable" class="table table-bordered">
+														<tr role="row" id="rows" ng-hide="ctrl.isLoading"
+															ng-init="ctrl.isCollapsed[$index] = true;"
+															ng-repeat="row in $data">
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'REGION' | translate">
+																<div class="text-center">
+																	<a title="{{'REGION' | translate}}">
+																		{{row.region }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'CONV_A' | translate}}">
+																		{{row.convClasseAAccettazione +
+																		row.convClasseADiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2"
+																data-title="'NON_CONV_A' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConvClasseAAccettazione +
+																		row.nonConClasseADiniego | number:2}}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2"
+																data-title="'NON_CONV_H' | translate">
+																<div class="text-center">
+																	<a title="{{'NON_CONV_H' | translate}}">
+																		{{row.nonConvClasseHAccettazione +
+																		row.nonConvClasseHDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB' | translate}}">
+																		{{ row.totaleImportAccettazione +
+																		row.totaleImportoDiniego | number:2 }}
+																	</a>
+																</div>
+															</td>
+															<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2"
+																data-title="'TOT_PB_FEE' | translate">
+																<div class="text-center">
+																	<a title="{{'TOT_PB_FEE' | translate}}">
+																		{{ (row.totaleImportAccettazione +
+																		row.totaleImportoDiniego) / ctrl.feeNumber |
+																		number:2 }}
+																	</a>
+																</div>
+															</td>
+														</tr>
+														
+														<tfoot ng-if="$data.length > 0" >
+															
+												             <tr class="tableFooter">
+	                    										<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span translate="{{'TOTAL' | translate}}"></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineAConv  +ctrl.notAcceptanceMedicineAConv )| number : 2}}</b></span></td>
+																<td class="col-xs-4 col-sm-4 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineANonConv + ctrl.notAcceptanceMedicineANonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-6 col-sm-6 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceMedicineHNonConv+ ctrl.notAcceptanceMedicineHNonConv) | number : 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{(ctrl.acceptanceTotalImport + ctrl.notAcceptanceTotalImport) | number: 2}}</b></span></td>
+																<td class="col-xs-3 col-sm-3 col-md-2 col-lg-2 text-center"	><span><b>{{((ctrl.acceptanceTotalImport + ctrl.notAcceptanceTotalImport) /ctrl.feeNumber) | number: 2}}</b></span></td>
+										                    </tr>
+												             
+														</tfoot>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div class="text-right">
+			<button type="button" class="btn btn-default" id="top-button" ng-click="ctrl.goToTop()">
+				{{'GO_TO_TOP' | translate}}
+			</button>
+			<button type="button" id="back-button-bottom" class="btn btn-default" ng-click="ctrl.goBack()">
+				{{'BACK' | translate}}
+			</button>
+			<button type="button" id="submit-button-bottom" class="btn btn-default" ng-click="ctrl.submit()">
+				{{'SUBMIT' | translate}}
+			</button>
+		</div>
+	</div>
+</div>
+</div>

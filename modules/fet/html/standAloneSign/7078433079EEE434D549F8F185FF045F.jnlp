@@ -1,0 +1,61 @@
+<jnlp spec="1.0+" href="http://localhost:8080/portale-aifa-fet/modules/fet/html/standAloneSign/7078433079EEE434D549F8F185FF045F.jnlp">
+    <information>
+        <title>ASOnline</title>
+        <vendor>ArubaPEC</vendor>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <java version="1.7+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/asonline-wsclient.jar"/>      
+    </resources>
+    <resources>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/ArubaSignCommon.jar"  main="false" />
+    </resources>
+    <resources>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/esecurity-logging.jar"  main="false" />
+    </resources>
+    <resources>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/esecurity-core.jar"  main="false" />
+    </resources>
+    <resources>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/capi-rs.jar"  main="false" />
+    </resources>
+    <resources>
+        <jar href="http://100.64.153.39:8080/asonline-wsserver/applets/capi-provider.jar"  main="false" />
+    </resources>
+    <resources os = "Windows" arch ="i386 x86">
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/win-nativelibs.jar"  main="false"/>
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/win-hid-nativelibs.jar" main="false"/>
+    </resources>
+    <resources os = "Windows" arch="amd64 x86_64">
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/win-nativelibs.jar"  main="false"/>
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/win-hid-nativelibs-64.jar" main="false"/>
+    </resources>
+    <resources os = "Linux" arch="amd64 x86_64">
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/linux-nativelibs-64.jar" main="false" />
+    </resources>
+    <resources os = "Linux" arch ="i386 x86" >
+        <nativelib  href="http://100.64.153.39:8080/asonline-wsserver/applets/linux-nativelibs.jar" main="false" />
+    </resources>
+    <resources os = "Mac OS X">
+        <nativelib href="http://100.64.153.39:8080/asonline-wsserver/applets/mac-nativelibs.jar"  main="false" />
+    </resources>
+    <property key="java.library.path" value="." />
+    <application-desc main-class="esecurity.asonline.websocket.client.ASOnlineClientStarter">
+        <argument>7078433079EEE434D549F8F185FF045F</argument>
+        <argument>http://100.64.153.39:8080/asonline-wsserver/asonline/</argument>
+        <argument>false</argument>
+        <argument>http://localhost/iStrumentum/drivers/</argument>
+        <argument>http://localhost/iStrumentum/images/</argument>
+        <argument>test</argument>
+        <argument>test</argument>
+        <argument>http://localhost/iStrumentum/installer/Installer.exe</argument>
+        <argument>STANDARD</argument>
+        <argument>false</argument>
+        <argument>null</argument>
+        <argument>null</argument>
+    </application-desc>
+    <update check="always" policy="always"/>
+</jnlp>

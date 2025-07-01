@@ -1,0 +1,38 @@
+<label for="{{filterElem.code}}_tooltip" translate="{{filterElem.code| translate}}">{{filterElem.code}}</label>
+<custom-popover-spha custom-popover-text="{{filterElem.code+'_TOOLTIP' | translate}}"></custom-popover-spha>
+<div class="form-group" ng-class="addClass( filterElem.code, filtersForm  )">
+    <div style="height:0px;">
+        <input style="opacity: 0;"
+               class="form-control"
+               id="{{filterElem.code}}"
+               name="{{filterElem.code}}"
+               ng-model="data[filterElem.ngModelName]"
+               ng-required="lockedMode || filterElem.required"/>
+    </div>
+    <ui-select multiple id="select-company" 
+               ng-model="data[filterElem.ngModelName]"
+               ng-disabled="lockedMode"
+               on-remove="removeCompanies($item, $model)"
+               on-select="addCompanies($item, $model)">
+        <ui-select-match allow-clear="true" placeholder="{{filterElem.code| translate}}">
+            <span>{{$item.label != null ? $item.value + ' - ' + $item.label : $item.value}}</span>
+        </ui-select-match>
+        <ui-select-choices
+                refresh="getCompaniesPossibleValues(0, $select.search )"
+                refresh-delay="500"
+                repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+            <div>
+                <span>{{option.label != null ? option.value + ' - ' +  option.label : option.value}}</span>
+            </div>
+            <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                <button
+                        class="btn btn-xs btn-success"
+                        style="width: 100%; margin-top: 5px;"
+                        ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search)">
+                    {{'SHOW_OTHER' | translate}}
+                </button>
+            </div>
+        </ui-select-choices>
+    </ui-select>
+</div>
+<xt-validation-inline for="{{filterElem.code}}"></xt-validation-inline>

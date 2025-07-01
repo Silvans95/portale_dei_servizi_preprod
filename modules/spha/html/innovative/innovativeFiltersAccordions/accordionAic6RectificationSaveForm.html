@@ -1,0 +1,110 @@
+<form ng-submit="innovativeCtrl.saveAic6Rectification(aic6RectificationForm)" xt-form role="form" name="aic6RectificationForm">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+            <uib-accordion>
+                <div uib-accordion-group class="panel-default" is-open="innovativeCtrl.accordionAic6RectificationSave">
+                    <div uib-accordion-heading>
+                        <div ng-class="{'missing-element' : aic6RectificationForm.$invalid}">               
+                    <span uib-tooltip="{{'REQUIRED_FIELDS' | translate}}" tooltip-placement="right"
+                          ng-if="(aic6RectificationForm.$invalid)">  
+                        {{'OWNERSHIP_CHANGE' | translate}} 
+                    </span>
+                            <span ng-if="!(aic6RectificationForm.$invalid)"> 
+                        {{'OWNERSHIP_CHANGE' | translate}} 
+                    </span>
+                            <custom-popover-spha
+                                    custom-popover-text="{{'OWNERSHIP_CHANGE' | translate}}"></custom-popover-spha>
+                            <div class="pull-right">
+                                <i class="glyphicon" ng-class="{'glyphicon-chevron-down': innovativeCtrl.accordionAic6RectificationSave, 
+                                                        'glyphicon-chevron-right': !innovativeCtrl.accordionAic6RectificationSave}">
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div ng-if="innovativeCtrl.isRectificationAic6DEL" class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label for="companyForRectification" translate="{{'COMPANY'| translate}}">COMPANY</label>
+                            <div class="form-group"
+                                 ng-class="addClass( 'companyForRectification', aic6RectificationForm  )">
+                                <div style="height:0px;">
+                                    <input style="opacity: 0;"
+                                           class="form-control"
+                                           id="companyForRectification"
+                                           name="companyForRectification"
+                                           ng-model="innovativeCtrl.companyForRectification"
+                                           ng-required="true"/>
+                                </div>
+                                <ui-select id="select-companyForRectification"
+                                           ng-model="innovativeCtrl.companyForRectification"
+                                           ng-required="true"
+                                           on-select="innovativeCtrl.companyNameForRectification = $item.label">
+                                    <ui-select-match allow-clear="true" placeholder="{{'COMPANY'| translate}}">
+                                        <span>{{$select.selected.label ? $select.selected.label : $select.selected.value}}</span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            refresh="getCompaniesPossibleValues(0, $select.search )"
+                                            refresh-delay="500"
+                                            repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+                                        <div>
+                                            <span>{{option.label != null ? option.label : option.value}}</span>
+                                        </div>
+                                        <div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+                                            <button
+                                                    id="show-other"
+                                                    class="btn btn-xs btn-success"
+                                                    style="width: 100%; margin-top: 5px;"
+                                                    ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search )">
+                                                {{'SHOW_OTHER' | translate}}
+                                            </button>
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <xt-validation-inline for="companyForRectification"></xt-validation-inline>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label
+                                    for="validMarketingForRectification">
+                                {{'detail.validMarketing' | translate}}
+                            </label>
+                            <custom-popover-spha
+                                    custom-popover-text="{{'detail.validMarketing' | translate}}"></custom-popover-spha>
+                            <div class="input-group">
+                                <input
+                                        uib-datepicker-popup="dd/MM/yyyy"
+                                        placeholder="{{'detail.validMarketing' | translate}}"
+                                        type="text"
+                                        class="form-control"
+                                        id="validMarketingForRectification"
+                                        name="validMarketingForRectification"
+                                        is-open="datesOptions.validMarketingForRectification.opened"
+                                        ng-class="addClass( 'validMarketingForRectification', aic6RectificationForm )"
+                                        ng-model="innovativeCtrl.validMarketingForRectification"
+                                        ng-model-options="{ timezone: 'UTC' }"
+                                        datepicker-options="datesOptions.validMarketingForRectification.datepickerOptions"
+                                        msg-daterange="ERROR_DATE_RANGE"
+                                        required="true"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"
+                                            ng-click="openDatePopup('validMarketingForRectification')">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <xt-validation-inline for="validMarketingForRectification"></xt-validation-inline>
+                        </div>
+                    </div>
+
+                    <div class="text-right" ng-if="innovativeCtrl.isRectificationAic6ADD || innovativeCtrl.isRectificationAic6DEL">
+                        <button type="submit" class="btn btn-primary" ng-if="actions['SAVE']"
+                                ng-disabled="aic6RectificationForm.$invalid || !actions['SAVE_RECTIFICATION_AIC6']">
+                            {{'SAVE' | translate}}
+                        </button>
+                    </div>
+
+                </div>
+            </uib-accordion>
+        </div>
+    </div>
+</form>

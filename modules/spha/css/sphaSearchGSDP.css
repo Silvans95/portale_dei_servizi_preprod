@@ -1,0 +1,97 @@
+.companyList-Text{
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.companyList-Text-disabled{
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #cccccc;
+}
+.gsdp_list{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+}
+.gsdp_list_create{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    border-color: #449D44;
+    border-style: solid;
+}
+.container {
+    width: 600px;
+    border: 1px solid #CCC;
+    box-shadow: 0 1px 5px #CCC;
+    border-radius: 5px;
+    font-family: verdana;
+    margin: 25px auto;
+}
+
+.container header {
+    background: #f1f1f1;
+    background-image: -webkit-linear-gradient( top, #f1f1f1, #CCC );
+    background-image: -ms-linear-gradient( top, #f1f1f1, #CCC );
+    background-image: -moz-linear-gradient( top, #f1f1f1, #CCC );
+    background-image: -o-linear-gradient( top, #f1f1f1, #CCC );
+    box-shadow: 0 1px 2px #888;
+    padding: 10px;
+}
+
+.container h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-weight: normal;
+    text-shadow: 0 1px 2px white;
+    color: #888;
+    text-align: center;
+}
+
+.container section {
+    padding: 10px 30px;
+    font-size: 12px;
+    line-height: 175%;
+    color: #333;
+}
+
+.scrollable-div{
+    max-height: 200px;
+    overflow-y: auto;
+}
+.button-group-edit{
+    margin-right: 10px;
+    padding: 5px;
+    color: #FFC107;
+    font-size: 25px;
+}
+.button-group-add{
+    margin-right: 10px;
+    padding: 5px;
+    color: #449D44;
+    font-size: 25px;
+}
+.gsdp_list_edit{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    border-color: #FFC107;
+    border-style: solid;
+}
+.button-group-delete{
+    margin-right: 10px;
+    padding: 5px;
+    color: #DC3545;
+    font-size: 25px;
+}
+.gsdp_list_delete{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 4px;
+    border-color: #DC3545;
+    border-style: solid;
+}

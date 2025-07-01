@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="modules/spha/css/templateCollapsibleMenu.css">
+<div class="container-fluid" ng-cloak>
+  <div id="wrapper">
+    <div class="row">
+      <div style="margin-left:-14px" ng-show="isOpen" class="col-xs-11 col-sm-3 col-md-3 col-lg-3 divMenu">
+	      <div ui-view="menu" ng-if="$root.vociMenu.length > 0" class="affix" ng-class="{'sidebar': $root.vociMenu.length > 0}"></div>
+      </div>
+      <div ng-show="$root.vociMenu.length > 0" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 divButtonMenu">
+	      <div class="buttonMenu affix" ng-click="isOpen = !isOpen">
+	      	<a href="" >
+				<span class="fa fa-bars faBars"></span>
+				<br/>
+				<br/>
+				<div class="buttonText">MENU'</div>
+			</a>
+		  </div>
+	  </div>
+      <div ng-class="{'col-xs-12 col-sm-8 col-md-8 col-lg-8' : isOpen, 'col-xs-11 col-sm-11 col-md-11 col-lg-11' : !isOpen }" class="faq">
+        <div class="main-content">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	          <div ncy-breadcrumb="">
+                <ol class="breadcrumb">
+                  <li>
+                    <i class="fa fa-dashboard icon hide" aria-hidden="true"></i>
+                    <a href="./index.html" title="Dashboard" translate>DASHBOARD</a>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div ui-view="content" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,399 @@
+<link rel="stylesheet" href="modules/spha/css/spha.css">
+<div class="panel spha" ng-cloak ng-if="rectificationCtrl">
+  	<div class="panel-header text-uppercase pb10">
+  		
+  		<div class="row" ng-if="rectificationCtrl.isProtocolling">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+            		translate="{{'PROTOCOLLATION' | translate }}">
+            	</h4>
+        	</div>
+     	</div>
+  		<div class="row" ng-if="!rectificationCtrl.isProtocolling">
+     		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        		<h4 
+        			translate="{{'RECTIFICATIONS' | translate }}">
+            	</h4>
+			</div>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="text-right" style="padding-right:15px;">
+					<button type="button" class="btn btn-default" ng-click="rectificationCtrl.goBack()">
+						{{'BACK' | translate}}
+					</button>
+				</div>
+			</div>
+     	</div>
+  	</div>
+	<div  ng-show="rectificationCtrl.isProtocolling" class="text-center"><img src="modules/spha/images/loading.gif"></div>
+	<div class="panel-body" ng-if="!rectificationCtrl.isProtocolling">
+		<div class="panel-body-section">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div ng-class="rectificationCtrl.alertClass" ng-show="rectificationCtrl.message">
+						<strong translate="{{rectificationCtrl.message | translate}}"></strong>
+					</div>
+					<form ng-submit="rectificationCtrl.submitSearch(filtersForm)" xt-form role="form" name="filtersForm" >
+						<div class="row">
+							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+								<label translate="{{'TYPE'| translate}}" for="TYPE"></label>
+								<custom-popover-spha custom-popover-text="{{'TYPE' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'TYPE', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="TYPE"
+											name="TYPE"
+											ng-model="rectificationCtrl.type"
+											/>		
+									</div>
+									<ui-select 
+										ng-model="rectificationCtrl.type">
+										<ui-select-match allow-clear="true">
+											<span translate="{{$select.selected | translate}}"></span>
+										</ui-select-match> 
+										<ui-select-choices 
+										repeat="option in filters.type | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option | translate}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="TYPE"></xt-validation-inline>
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-6 col-lg-6">
+								<label translate="{{'STATUS'| translate}}" for="STATUS"></label>
+								<custom-popover-spha custom-popover-text="{{'STATUS' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'STATUS', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;" 
+											class="form-control"
+											id="STATUS"
+											name="STATUS"
+											ng-model="rectificationCtrl.status"/>		
+									</div>
+									<ui-select 
+										multiple
+										ng-model="rectificationCtrl.status">
+										<ui-select-match allow-clear="true">
+											<span>{{$item.label}}</span>
+											
+										</ui-select-match> 
+										<ui-select-choices 
+										repeat="option.object as option in statutes | filter: $select.search track by $index">
+											<div>
+												<span translate="{{option.label}}"></span>
+											</div>
+										</ui-select-choices> 
+									</ui-select>
+								</div>
+								<xt-validation-inline for="STATUS"></xt-validation-inline>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" ng-if="filtersForm.TYPE.$viewValue != 'GSDBDF'">
+								<label for="COMPANIES" translate="{{'COMPANIES'| translate}}">COMPANIES</label>
+								<custom-popover-spha custom-popover-text="{{'COMPANIES_TOOLTIP' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'COMPANIES', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;"
+											   class="form-control"
+											   id="COMPANIES"
+											   name="COMPANIES"
+											   ng-model="rectificationCtrl.companies"
+											   />
+									</div>
+									<ui-select id="select-company" 
+                                               ng-model="rectificationCtrl.companies"
+                                               ng-change="rectificationCtrl.onCompanyChange($select.selected.label)">
+										<ui-select-match allow-clear="true" placeholder="{{'COMPANIES'| translate}}">
+											<span>{{$select.selected.label != null ? $select.selected.value + ' - ' + $select.selected.label : $select.selected.value}}</span>
+										</ui-select-match>
+										<ui-select-choices 
+										refresh = "getCompaniesPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.companies.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label ? option.value + ' - ' + option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.companies.total-1">
+												<button
+														class="btn btn-xs btn-success"
+														style="width: 100%; margin-top: 5px;"
+														ng-mouseover="getCompaniesPossibleValues( filters.companies.page + 1, $select.search )">
+													{{'SHOW_OTHER' | translate}}
+												</button>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="COMPANIES"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" ng-if="filtersForm.TYPE.$viewValue == 'GSDBDF'">
+								<label for="GROUPS" translate="{{'GROUPS'| translate}}">GROUPS</label>
+								<custom-popover-spha custom-popover-text="{{'GROUPS' | translate}}"></custom-popover-spha>
+								<div class="form-group" ng-class="addClass( 'GROUPS', filtersForm  )">
+									<div style="height:0px;">
+										<input style="opacity: 0;"
+											   class="form-control"
+											   id="GROUPS"
+											   name="GROUPS"
+											   ng-model="rectificationCtrl.gsdbdf"
+											   />
+									</div>
+									<ui-select id="select-gsdbdf" 
+                                               ng-model="rectificationCtrl.gsdbdf" 
+                                               ng-change="rectificationCtrl.onGroupChange($select.selected.label)" >
+										<ui-select-match allow-clear="true" placeholder="{{'GROUPS'| translate}}">
+											<span>{{$select.selected.label != null ? $select.selected.value + ' - ' + $select.selected.label : $select.selected.value}}</span>
+										</ui-select-match>
+										<ui-select-choices 
+										refresh = "getGsdbdfPossibleValues(0, $select.search )" 
+		 								refresh-delay ="500"
+										repeat="option.value as option in filters.gsdbdf.elements | filter: $select.search track by $index">
+											<div>
+												<span>{{option.label ? option.value + ' - ' + option.label : option.value}}</span>
+											</div>
+											<div ng-if="$index == $select.items.length-1 && $index < filters.gsdbdf.total-1">
+												<button
+														class="btn btn-xs btn-success"
+														style="width: 100%; margin-top: 5px;"
+														ng-mouseover="getGsdbdfPossibleValues( filters.gsdbdf.page + 1, $select.search )">
+													{{'SHOW_OTHER' | translate}}
+												</button>
+											</div>
+										</ui-select-choices>
+									</ui-select>
+								</div>
+								<xt-validation-inline for="GROUPS"></xt-validation-inline>
+							</div>							
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+								<label translate="{{'DESCRIPTION'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'DESCRIPTION' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'DESCRIPTION'| translate}}"
+											type="text"
+											ng-model="rectificationCtrl.description"
+											id="description"
+											maxlength="100"
+											class="form-control"/>
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+								<label translate="{{'RECTIFICATION_ID'| translate}}"></label>
+								<custom-popover-spha custom-popover-text="{{'RECTIFICATION_ID' | translate}}"></custom-popover-spha>
+								<div class="form-group">
+									<input  placeholder="{{'RECTIFICATION_ID'| translate}}"
+											ng-model="rectificationCtrl.rectificationId"
+											id="rectificationId"
+											class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_FROM"
+										translate="{{'TIME_FROM' | translate}}">
+										TIME_FROM 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_FROM_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_FROM' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_FROM"
+										name="TIME_FROM"
+										is-open="datesOptions.TIME_FROM.opened"
+										ng-class="addClass( 'TIME_FROM', filtersForm )"
+										ng-model="rectificationCtrl.timeFrom"
+										datepicker-options="datesOptions.TIME_FROM.datepickerOptions"
+										ng-change="validateDate(filtersForm,rectificationCtrl.timeFrom,'TIME_FROM')"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_FROM')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_FROM"></xt-validation-inline>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<label 
+										for="TIME_TO"
+										translate="{{'TIME_TO' | translate}}">
+										TIME_TO 
+								</label>
+								<custom-popover-spha custom-popover-text="{{'TIME_TO_TT' | translate}}"></custom-popover-spha>
+								<div class="input-group">
+									<input 
+										uib-datepicker-popup="dd/MM/yyyy"
+										placeholder="{{'TIME_TO' | translate}}"
+										type="text"
+										class="form-control"
+										id="TIME_TO"
+										name="TIME_TO"
+										is-open="datesOptions.TIME_TO.opened"
+										ng-class="addClass( 'TIME_TO, filtersForm' )"
+										ng-model="rectificationCtrl.timeTo"
+										datepicker-options="datesOptions.TIME_TO.datepickerOptions"
+										ng-change="validateDate(filtersForm,rectificationCtrl.timeTo,'TIME_TO')"
+										msg-daterange="ERROR_DATE_RANGE"
+										ng-model-options="{ timezone: 'UTC' }"/>
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDatePopup('TIME_TO')">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</div>
+								<xt-validation-inline for="TIME_TO"></xt-validation-inline>
+							</div>
+						</div>
+						<br>
+
+						<div class="text-right">
+							<button type="button"
+										class="btn btn-primary"
+										ng-click="rectificationCtrl.reset()"
+										translate="{{'RESET' | translate}}">
+							</button>
+							<button type="submit"
+									class="btn btn-primary text-uppercase"
+									translate="{{'SEARCH' | translate}}"
+									id="search-button"
+									ng-disabled="filtersForm.$invalid" >
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="panel-body-section" ng-if="rectificationCtrl.showData">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
+
+					<table ng-table="rectificationCtrl.rectificationTable"
+							class="table table-bordered">
+						<tr role="row"
+							id="rows"
+							ng-hide="rectificationCtrl.isLoading"
+							ng-init="rectificationCtrl.isCollapsed[$index] = true;"
+							ng-repeat="row in $data">
+
+							<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1"
+									data-title="'GROUPS' | translate"
+									sortable="'companyCode'">
+								<div class="text-center">
+									<a title="{{'GROUPS' | translate}}" >
+										{{row.companyCode}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+									data-title="'RECTIFICATION_ID' | translate"
+									sortable="'rectificationId'">
+								<div class="text-center">
+									<a title="{{'RECTIFICATION_ID' | translate}}" >
+										{{row.rectificationId}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-2 col-sm-2 col-md-1 col-lg-1"
+									data-title="'TYPE' | translate"
+									sortable="'type'">
+								<div class="text-center">
+									<a title="{{'TYPE' | translate}}" >
+										{{row.type | translate}}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+									data-title="'DESCRIPTION' | translate"
+									sortable="'description'">
+								<div class="text-center">
+									<a title="{{'DESCRIPTION' | translate}}"  >
+										{{ row.description  }}
+									</a>
+								</div>
+							</td>
+							<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1"
+                                    data-title="'CREATED_DATE' | translate"
+                                    sortable="'createdDate'">
+                                <div class="text-center">
+                                    <a title="{{'CREATED_DATE' | translate}}" >
+                                        {{row.createdDate | date : "dd/MM/yyyy"}}
+                                    </a>
+                                </div>
+							</td>
+							<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1"
+                                    data-title="'CLOSING_DATE' | translate"
+                                    sortable="'closingDate'">
+                                <div class="text-center">
+                                    <a title="{{'CLOSING_DATE' | translate}}" href="">
+                                        {{row.closingDate | date : "dd/MM/yyyy"}}
+                                    </a>
+                                </div>
+							</td>
+							
+							<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1"
+                                    data-title="'ATTACHMENT' | translate"
+                                    >
+                                <div class="text-center">
+                                    <a ng-if="rectificationCtrl.showAttachment(row)" title="{{'RECTIFICATION_DETAIL' | translate}}" 
+                                     href=""
+                                    ng-click="rectificationCtrl.showProtocolledFile(row.id)">
+					    				<img ng-src="{{ 'modules/spha/images/file/pdf.png' }}" width="25" height="25">
+                                    </a>
+                                </div>
+							</td>
+							<td class="col-xs-1 col-sm-1 col-md-1 col-lg-1"
+                                    data-title="'STATUS' | translate"       
+                                    ng-style="{'background-color': getColorForClosingDate(row.status)}"                             
+                                    sortable="'status'">
+                                <div class="text-center">
+                                    <a title="{{'STATUS' | translate}}" href="">
+                                        {{row.status + '_FILTER' | translate }}
+                                    </a>
+                                </div>
+							</td>
+							<td class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+                                    data-title="'ACTIONS' | translate">
+                                <div class="text-center">
+                                     <ng-rectification-operations operations="row.operations"/>
+                                </div>
+							</td>
+
+						</tr>
+					</table>
+				</div>
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+							class="btn btn-primary"
+							ng-click="rectificationCtrl.exportReport(filtersForm)"
+							translate="{{'EXPORT' | translate}}">
+				</button>
+				
+			</div>
+			<br>
+			<div class = "text-right">
+				<button type="button"
+	                       class="btn btn-default"
+	                       ng-click="rectificationCtrl.goToTop()"
+	                       translate="{{'GO_TO_TOP' | translate}}">
+	        	</button>
+				<button type="button" class="btn btn-default" ng-click="rectificationCtrl.goBack()">
+					{{'BACK' | translate}}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

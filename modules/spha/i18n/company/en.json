@@ -1,0 +1,19 @@
+{
+	"COMPANY_SEARCH": "Company search",
+	"COMPANY_DETAIL" : "Company search",
+	"COMPANY_EDIT" : "Company edit",
+	"COMPANIES": "Pharmaceutical company",
+	"COMPANIES_TOOLTIP": "Pharmaceutical company (SIS code a/o description)",
+	"COMPANY_CODE" : "Company SIS",
+	"COMPANY_NAME": "SIS owner",
+	"COMPANY": "Pharmaceutical company",
+	"PMI": "PMI",
+	"AP": "AP",
+	"END_PROCEDURE": "End date procedure",
+	"SIS": "SIS",
+	"PUBLIC": "Public company",
+    "companyCode" : "Company SIS code",
+	"companyName": "Company name",
+    "pmi": "PMI",
+    "ap": "AP"
+}

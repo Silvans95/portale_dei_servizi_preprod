@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom: -15px;">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" is-open="acc.open">
+                <div uib-accordion-heading>
+                    <div id="acc.id" ng-class="{'missing-element' : (filtersForm.$invalid), '': !(filtersForm.$invalid)}"> 
+                        <span uib-tooltip="{{'REQUIRED_FIELDS' | translate}}" tooltip-placement="right" ng-if="filtersForm.$invalid">  
+                            {{'FILTERS' | translate}} 
+                        </span>
+                        <span ng-if="!filtersForm.$invalid"> 
+                            {{'FILTERS' | translate}} 
+                        </span>
+                        <custom-popover-spha
+                                custom-popover-text="{{'FILTERS' | translate}}"></custom-popover-spha>
+                        <div class="pull-right">
+                            <i class="glyphicon" ng-class="{'glyphicon-chevron-down': acc.open, 'glyphicon-chevron-right': !acc.open}"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-repeat="row in acc.filters">
+                        <div class="row">
+                            <div ng-repeat="filterE in row">
+                                <div ng-init="filterElem = filterE"
+                                     ng-include="'modules/spha/js/directives/dynamicFilters/inputTypeSwitch.html'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-accordion>
+    </div>
+</div>
