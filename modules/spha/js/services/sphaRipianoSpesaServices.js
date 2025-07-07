@@ -80,7 +80,7 @@
             allFieldsMenu6: {
                 sortable: true,
                 headerToObject: true,
-                header: ['codiceSis', 'titolareSis', 'to', 'no', 'si', 'valTracciaNonInnoJ07', 'spesa', 'importoPB', 'spesaNettoPB', 'franchigia', 
+                header: ['codiceSis', 'titolareSis', 'to', 'si', 'no', 'valTracciaNonInnoJ07', 'spesa', 'importoPB', 'spesaNettoPB', 'franchigia',
                     'spesaNettoPBeFranchigia', 'spesaPerQuotaMercato', 'totaleMercato', 'quotaMercato', 'sfondamento', 'ripiano', 'importoRipianoDMTetti'
                 ]
             }
